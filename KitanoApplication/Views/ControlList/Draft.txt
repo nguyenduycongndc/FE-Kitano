@@ -1,0 +1,28 @@
+fa fa-pencil
+fas fa-pencil-alt
+
+ btn-sm btn-outline-
+ 
+ <i class="fas fa-history"></i>
+ 
+ <i class="far fa-file-word"></i>
+ 
+ 
+ catrisk
+ unitid
+ activationid
+ processid
+ code
+ name
+ 
+ Quy trình 
+ 
+ Dựng phần view done
+ Dựng phần JS
+ Dựng code Search
+ 
+ Dựng phần 
+ 
+ Menu hoạt động liên quan lấy từ bảng bussiness activity
+ Menu đơn vị liên quan lấy từ bảng audit Facility
+ Menu duy trình lấy từ bảng audit process 

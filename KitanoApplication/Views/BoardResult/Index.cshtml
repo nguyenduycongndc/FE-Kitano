@@ -1,0 +1,40 @@
+﻿@using RiskAssessment.Resource;
+
+@{
+    ViewData["Title"] = Resource.AssessmentResult;
+    Layout = "_Layout";
+    var now = DateTime.Now.Year;
+}
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">@Resource.Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:location.reload()">@Resource.AssessmentResult</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            @Resource.ScoreBoardResult
+        </div>
+        <div class="card-body card-custom mt-2" id="card-index">
+            <div class="row " id="panelSearch">
+                <div class="col-12">
+                    <partial name="~/Views/BoardResult/partial/SearchPanel.cshtml" />
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <partial name="~/Views/BoardResult/partial/PanelScoreBoard.cshtml" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="~/Views/BoardResult/partial/AuditHistory.cshtml" />
+<partial name="~/Views/BoardResult/partial/ResultUpdate.cshtml" />
+
+@section Scripts{
+    <script src="~/js/jsApp/boardresult.js" type="text/javascript"></script>
+}

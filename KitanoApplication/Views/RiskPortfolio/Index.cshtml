@@ -1,0 +1,665 @@
+﻿@{ Layout = "_Layout"; }
+@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+
+<link rel="stylesheet" type="text/css" href="~/css/riskPortfolio.css">
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.RiskPortfolio</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.RiskPortfolio
+        </div>
+        <div class="card-body card-custom">
+            <form id="formView" action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @if (Utils.IsCheckPemission("M_RP", "PER_ADD") == true)
+                    {
+                        <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info"> @Resource.Create</a>
+                    }
+                    @if (Utils.IsCheckPemission("M_RP", "PER_EXPORT") == true)
+                    {
+                        <a class="btn btn-info" style="color:white" onclick="Export()">Xuất excel</a>
+                    }
+                    @if (Utils.IsCheckPemission("M_RP", "PER_IMPORT") == true)
+                    {
+                        <a href="javascript:void(0);" class="btn btn-info" style="color:white" onclick="openView(4,0)">Import</a>
+                    }
+                    <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i>@Resource.SearchOption</a>
+                </div>
+                <div class="collapse" id="collapseSearch" style="margin-top:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="UnitDepartment">
+                                    Đơn vị/Phòng ban
+                                </label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="UnitDepartment" onchange="getValueUnit(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="Status">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="Status">
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Sử dụng</option>
+                                        <option value="0">Không sử dụng</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="Active">
+                                    Hoạt động
+                                </label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="Active" onchange="getValueActive(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="RiskCode">
+                                    Mã rủi ro
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="Code" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="BusinessProcess">
+                                    Quy trình nghiệp vụ
+                                </label>
+                                <div class="col-lg-9">
+                                    <select class="form-control" id="BusinessProcess">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3" for="Name">
+                                    Tên rủi ro
+                                </label>
+                                <div class="col-lg-9">
+                                    <input type="text" class="form-control" id="Name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3 btn-search-custom">
+                        <div style="text-align:center; ">
+                            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()">@Resource.Search</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <hr />
+            <div class="row mt-2">
+                <div class="col-4">
+                    <div class="table-responsive custom-table-scroll" style="margin-top:0px !important;height:700px">
+                        <table id="riskPortfolioTable" class="table table-bordered table-striped table-hover dataTable" style="table-layout:fixed;width:100%">
+                            <thead class="contain-header-custom m-gray">
+                                <tr class="nosticky">
+                                    <th>Danh sách</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                    <partial name="_PaginationCategory" />
+                </div>
+
+                <div class="col-8">
+                    <h5>Xem chi tiết rủi ro</h5>
+                    <form action="javascript:void(0)" id="formDetail">
+                        <div style="padding: 15px 0px;">
+                            @if (Utils.IsCheckPemission("M_RP", "PER_EDIT") == true)
+                            {
+                                <button class="btn btn-info" style="color:white" onclick="openView(2)">Sửa</button>
+                            }
+                            @if (Utils.IsCheckPemission("M_RP", "PER_DEL") == true)
+                            {
+                                <button class="btn btn-outline-danger" onclick="Delete()">Xóa</button>
+                            }
+                        </div>
+                        <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="Unit">
+                                Đơn vị liên quan
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="UnitDetail" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="RiskCode">
+                                Hoạt động liên quan
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="ActivationDetail" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="Process">
+                                Quy trình
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="ProcessDetail" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="Step">
+                                Bước liên quan
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control" id="StepDetail" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="Code">
+                                Mã rủi ro
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" class="form-control" id="CodeDetail" disabled />
+                            </div>
+                            <label class="col-form-label col-lg-2" for="StatusDetail">
+                                @Resource.Status
+                            </label>
+                            <div class="col-lg-4">
+                                <select class="form-control" id="StatusDetail" disabled>
+                                    <option value="-1">--Chọn--</option>
+                                    <option value="1" selected="selected">Sử dụng</option>
+                                    <option value="0">Không sử dụng </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="NameDetail">
+                                Tên rủi ro
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="NameDetail" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="col-form-label col-lg-2" for="Description">
+                                Mô tả rủi ro
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control" id="DescriptionDetail" disabled></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label for="riskType" class="col-form-label col-lg-2">Loại rủi ro</label>
+                            <div class="col-lg-10">
+                                <select class="form-control required" id="riskType" name="riskType" disabled>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 mb-2">Kiểm soát hiện tại</div>
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="controlTable" class="table table-bordered table-striped table-hover dataTable" style="width:100%" text-align="center">
+                                <caption hidden></caption>
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center;width: 3%">STT</th>
+                                        <th style="text-align: center;width: 10%">Mã kiểm soát</th>
+                                        <th style="text-align: center">Tên kiểm soát</th>
+                                        <th style="text-align: center;width: 10%">Tần suất kiểm soát</th>
+                                        <th style="text-align: center;width: 10%">Loại kiểm soát</th>
+                                        <th style="text-align: center;width: 10%">Hình thức kiểm soát</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-7"></div>
+                                <div class="col-md-5">
+                                    @*<partial name="_Pagination" />*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row  mb-3">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="CreateDetail" class="col-form-label" hidden>Người tạo</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="CreateDetail" disabled hidden />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="CreateDateDetail" class="col-form-label" hidden>Ngày tạo</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="CreateDateDetail" disabled hidden />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row  mb-3">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="EditDetail" class="col-form-label" hidden>Người cập nhật</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="EditDetail" disabled hidden />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="EditDateDetail" class="col-form-label" hidden>Ngày cập nhật</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" id="EditDateDetail" disabled hidden />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="upload" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderCreate" style=" font-size: 1rem; ">
+            Upload dữ liệu
+        </div>
+        <div class="card-body card-custom">
+            <form id="formUpload" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-1" for="FileUpload">
+                                    File
+                                </label>
+                                <div class="col-lg-6">
+                                    <input type="file" class="form-control-file" id="FileUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                </div>
+
+                                <div class="col-lg-4 btn-search-custom">
+                                    <div style="width: 15%; display: inline-flex; flex-direction: row;  padding: 0 5px 0 5px; ">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 btn-search-custom">
+                                    <div style="width: 15%; display: inline-flex; flex-direction: row;  padding: 0 5px 0 5px; ">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%;">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                                    <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-outline" style="width:100%" onclick="Download()">Download file mẫu</button>
+                                    </div>
+                                    <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-outline" style="width:100%" onclick="fnUploadFile()">Upload</button>
+                                    </div>
+                                    <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive custom-table-scroll">
+                    <table id="tblUpload" class="table table-striped table-bordered zero-configuration">
+                        <caption hidden>Upload danh sách đơn vị</caption>
+                        <thead class="m-gray">
+                            <tr>
+                                <th scope="col" style="width: 50px; text-align: center"></th>
+                                <th scope="col">Đơn vị liên quan</th>
+                                <th scope="col">Hành động liên quan</th>
+                                <th scope="col">Quy trình</th>
+                                <th scope="col">Bước liên quan</th>
+                                <th scope="col">Mã rủi ro</th>
+                                <th scope="col">Tên rủi ro</th>
+                                <th scope="col">Mô tả rủi ro</th>
+                                <th scope="col">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="create" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderCreate" style=" font-size: 1rem; ">
+            Thêm mới rủi ro
+        </div>
+        <div class="card-body card-custom">
+            <form id="formCreate" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <div class="row">
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="unitCreate" class="col-form-label">Đơn vị liên quan</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="unitCreate" name="unitCreate" onchange="getValueUnitCreate(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="activityCreate" class="col-form-label">Hoạt động liên quan</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="activityCreate" name="activityCreate" onchange="getValueActiveCreate(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="processCreate" class="col-form-label">Quy trình</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="processCreate" name="processCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="stepCreate" class="col-form-label">Bước liên quan</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="stepCreate" name="stepCreate"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="codeCreate" class="col-form-label">Mã rủi ro</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control required" id="codeCreate" name="codeCreate">
+                                    <span id="codeCreateAlert" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="statusCreate" class="col-form-label">@Resource.Status</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="statusCreate" name="statusCreate">
+                                        <option value="1" selected="selected">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="nameCreate" class="col-form-label">Tên rủi ro</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="nameCreate" name="nameCreate">
+                                    <span id="nameCreateAlert" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="descriptionCreate" class="col-form-label">Mô tả</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control required" id="descriptionCreate" name="descriptionCreate"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="riskTypeCreate" class="col-form-label">Loại rủi ro</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="riskTypeCreate" name="riskTypeCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="submitCreate();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="edit" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderEdit" style=" font-size: 1rem; ">
+            Cập nhật rủi ro
+        </div>
+        <div class="card-body card-custom">
+            <form id="formEdit" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <div class="row">
+                    <input type="hidden" id="IdEdit" name="IdEdit" value="0" />
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="unitEdit" class="col-form-label">Đơn vị liên quan</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="unitEdit" name="unitEdit" onchange="getValueUnitEdit(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="activityEdit" class="col-form-label">Hoạt động liên quan</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="activityEdit" name="activityEdit" onchange="getValueActiveEdit(this)">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="processEdit" class="col-form-label">Quy trình</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="processEdit" name="processEdit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="stepEdit" class="col-form-label">Bước liên quan</label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="stepEdit" name="stepEdit"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="codeEdit" class="col-form-label">Mã rủi ro</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control required" id="codeEdit" name="codeEdit">
+                                    <span id="codeEditAlert" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="statusEdit" class="col-form-label">@Resource.Status</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="statusEdit" name="statusEdit">
+                                        <option value="1" selected="selected">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="nameEdit" class="col-form-label">Tên rủi ro</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="nameEdit" name="nameEdit">
+                                    <span id="nameEditAlert" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="descriptionEdit" class="col-form-label">Mô tả</label><span class="text-danger"> *</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control required" id="descriptionEdit" name="descriptionEdit"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="riskTypeEdit" class="col-form-label">Loại rủi ro</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="riskTypeEdit" name="riskTypeEdit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="submitEdit();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/riskPortfolio.js" type="text/javascript" asp-append-version="true"></script>
+    <script type="text/javascript">
+    </script>
+}

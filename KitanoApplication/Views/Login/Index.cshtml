@@ -1,0 +1,308 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "_LayoutLogin";
+}
+<style>
+    .login-form-bg {
+        background: url(images/img-01.jpg) no-repeat;
+        background-size: cover;
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        background-position: center;
+    }
+
+        .login-form-bg:before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            background-color: gray;
+            background-repeat: no-repeat;
+            background-position: 50% 0;
+            background-size: cover;
+        }
+    .nav-tabs li {
+        flex: 1;
+        text-align: center;
+    }
+    .nav-tabs li a{
+        color:black !important;
+    }
+    .nav-item{
+        /*border-bottom: 6px solid #ccc;*/
+        border-collapse: collapse;
+    }
+    .nav-link.active{
+        color: black !important;
+        font-weight: bold !important;
+        border-bottom: 6px solid #2f80ed !important;
+        font-size: larger;
+    }
+</style>
+<div class="login-form-bg h-100">
+    <div class="container h-100">
+        <div class="row justify-content-center h-100">
+            <div class="col-xl-6">
+                <div class="form-input-content">
+                    <div class="card login-form mb-0" style="background-color: #cde3f4 !important ">
+                        <div class="card-body">
+                            <a class="text-center" style="display: flex; justify-content: center; "><img src="images/Kitano-logo.png" alt="" style="border-width: 0px; position: absolute; width: 213px; height: 71px;"></a>
+                            <div class="mt-5 mb-5 login-input" style="margin: 7rem 2rem 0 2rem !important;">
+                                <h3 class="text-center" style=" margin-bottom: 10px; margin-top: 10px; ">ĐĂNG NHẬP VÀO HỆ THỐNG</h3>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tabSystem">Hệ thống</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabLDAP">LDAP</a></li>
+                            </ul>
+                            <div class="tab-content" style="margin-top: 20px;">
+                                <div class="tab-pane fade show active" id="tabSystem">
+                                    <form asp-action="Login" method="POST">
+                                        <input type="hidden" id="type_login" name="type_login" value="0" />
+                                        <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
+                                            <input class="input100" type="text" name="UserName" id="UserName" placeholder="Tài khoản" onfocus="this.placeholder = ''"
+                                                   onblur="this.placeholder = 'Tài khoản'">
+                                            <span class="focus-input100"></span>
+                                            <span class="symbol-input100">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="wrap-input100 validate-input m-b-10" data-validate="Password is required">
+                                            <input class="input100" type="password" name="Password" id="Password" placeholder="Mật khẩu" onfocus="this.placeholder = ''"
+                                                   onblur="this.placeholder = 'Mật khẩu'">
+                                            <span class="focus-input100"></span>
+                                            <span class="symbol-input100">
+                                                <i class="fa fa-lock"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="container-login100-form-btn p-t-10">
+                                            <button type="button" id="btnLogin" class="login100-form-btn">
+                                                Đăng nhập
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <div class="text-center w-full p-t-25">
+                                        <a href="#" style="color: black;">
+                                            Quên tài khoản / mật khẩu?
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tabLDAP">
+                                    <form asp-action="Login" method="POST" style="margin-bottom: 40px;">
+                                        <input type="hidden" id="type_loginLDAP" name="type_loginLDAP" value="1" />
+                                        <div class="wrap-input100 validate-input m-b-10" data-validate="Username is required">
+                                            <input class="input100" type="text" name="UserNameLDAP" id="UserNameLDAP" placeholder="Tài khoản" onfocus="this.placeholder = ''"
+                                                   onblur="this.placeholder = 'Tài khoản'">
+                                            <span class="focus-input100"></span>
+                                            <span class="symbol-input100">
+                                                <i class="fa fa-user"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="wrap-input100 validate-input m-b-10" data-validate="Password is required">
+                                            <input class="input100" type="password" name="PasswordLDAP" id="PasswordLDAP" placeholder="Mật khẩu" onfocus="this.placeholder = ''"
+                                                   onblur="this.placeholder = 'Mật khẩu'">
+                                            <span class="focus-input100"></span>
+                                            <span class="symbol-input100">
+                                                <i class="fa fa-lock"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="container-login100-form-btn p-t-10">
+                                            <button type="button" id="btnLoginLDAP" class="login100-form-btn">
+                                                Đăng nhập
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/host.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script>
+        $("#btnLogin").click(function () {
+            localStorage.clear();
+            showLoading();
+            SubmitLogin(0);
+            //var formdata = new FormData();
+            //formdata.append("userModel.UserName", $('#UserName').val());
+            //formdata.append("userModel.password", $('#Password').val());
+            //formdata.append("userModel.host", hostApi.host_user_service);
+            //formdata.append("userModel.actionmenu", apiConfig.api.roles.controller + apiConfig.api.roles.action.rendermenu.path);
+            //formdata.append("userModel.TypeLogin", $('#type_login').val());
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Login",
+            //    data: formdata,
+            //    processData: false,
+            //    contentType: false,
+            //    success: function (result) {
+            //        if (result.code == "1") {
+            //            sessionStorage['SessionToken'] = result.token;
+            //            localStorage['CurrentPermission'] = result.currentPermission;
+            //            localStorage['CurrentUser'] = result.currentUser;
+            //            localStorage['SystemParam'] = result.systemParam;
+            //            localStorage['ApprovalStatus'] = result.approvalStatus;
+            //            window.location.href = "/";
+            //        }
+            //        else {
+            //            swal("Thông báo!", "Tài khoản/Mật khẩu chưa đúng!", "warning");
+            //            hideLoading();
+            //        }
+            //    },
+            //});
+        });
+        $("#btnLoginLDAP").click(function () {
+            localStorage.clear();
+            showLoading();
+            SubmitLogin(1);
+            //var formdatanew = new FormData();
+            //formdatanew.append("userModel.UserName", $('#UserNameLDAP').val());
+            //formdatanew.append("userModel.password", $('#PasswordLDAP').val());
+            //formdatanew.append("userModel.host", hostApi.host_user_service);
+            //formdatanew.append("userModel.actionmenu", apiConfig.api.roles.controller + apiConfig.api.roles.action.rendermenu.path);
+            //formdatanew.append("userModel.TypeLogin", $('#type_loginLDAP').val());
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Login",
+            //    data: formdatanew,
+            //    processData: false,
+            //    contentType: false,
+            //    success: function (result) {
+            //        if (result.code == "1") {
+            //            sessionStorage['SessionToken'] = result.token;
+            //            localStorage['CurrentPermission'] = result.currentPermission;
+            //            localStorage['CurrentUser'] = result.currentUser;
+            //            localStorage['SystemParam'] = result.systemParam;
+            //            localStorage['ApprovalStatus'] = result.approvalStatus;
+            //            window.location.href = "/";
+            //        }
+            //        else {
+            //            swal("Thông báo!", "Tài khoản/Mật khẩu chưa đúng!", "warning");
+            //            hideLoading();
+            //        }
+            //    },
+            //});
+        });
+        function showLoading() {
+            $('#preloader').css('display', 'block');
+        }
+        function hideLoading() {
+            $('#preloader').css('display', 'none');
+        }
+        function SubmitLogin(type)
+        {
+            var formdata;
+            if(type == 0){
+               formdata = {
+                    'user_name': $('#UserName').val(),
+                    'password': $('#Password').val(),
+                    'host': hostApi.host_user_service,
+                    'type_login': $('#type_login').val(),
+                }
+            }
+            else if(type == 1){
+                formdata = {
+                    'user_name': $('#UserNameLDAP').val(),
+                    'password': $('#PasswordLDAP').val(),
+                    'host': hostApi.host_user_service,
+                    'type_login': $('#type_loginLDAP').val(),
+                }
+            }
+            $.ajax({
+                type: "POST",
+                url: hostApi.host_user_service + "/Login",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(formdata),
+                success: function (data) {
+                    if(!data.result){
+                        swal("Thông báo!", "Tài khoản/Mật khẩu chưa đúng!", "warning");
+                        hideLoading();
+                    }
+                    else{
+                        var objData = new FormData();
+                        objData.append("Token", data.token);
+                        objData.append("currentUsers", JSON.stringify(data.currentUsers));
+                        objData.append("host", hostApi.host_user_service);
+                        objData.append("actionmenu", apiConfig.api.roles.controller + apiConfig.api.roles.action.rendermenu.path);
+                        
+                        fetch('/ApplyLogin', {
+                              method: 'POST', // or 'PUT'
+                              body: objData,
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result){
+
+                                var currentUser = { 'id':data.currentUsers.id, 'user_name' : data.currentUsers.user_name, 'full_name':data.currentUsers.full_name, 'department_id' :data.currentUsers.department_id, 'user_type':data.currentUsers.users_type };
+                                sessionStorage['SessionToken'] = data.token;
+                                localStorage['CurrentPermission'] = JSON.stringify(data.currentUsers.role_list);
+                                localStorage['CurrentUser'] = JSON.stringify(currentUser);
+                                localStorage['SystemParam'] = JSON.stringify(data.systemParam);
+                                localStorage['ApprovalStatus'] = JSON.stringify(data.approvalstatus);
+                                GetMenu();                                
+                            }
+                            else
+                            {
+                                swal("Thông báo!", "Tài khoản/Mật khẩu chưa đúng!", "warning");
+                                hideLoading();
+                            }
+                        }).catch((error) => {
+                            console.error('Error:', error);
+                            swal("Thông báo!", "Tài khoản/Mật khẩu chưa đúng!", "warning");
+                            hideLoading();
+                        });
+                    }
+                    
+                },
+            });
+        }
+        function GetMenu()
+        {
+             $.ajax({
+                type: "GET",
+                url: apiConfig.api.host_user_service + apiConfig.api.roles.controller + apiConfig.api.roles.action.rendermenu.path,
+                headers: { 'Authorization': getSessionToken() },
+                success: function (data) {
+                    fetch('/Login/MenuComponent', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data),
+                    })
+                    .then(response => response.json())
+                    .then(result => {  
+                        window.location.href = "/";
+                    })
+                }
+            });   
+        }
+        function getSessionToken() {
+            if (sessionStorage['SessionToken'] != undefined)
+                return 'Bearer ' + sessionStorage['SessionToken'];
+            return null;
+        }
+    </script>
+}

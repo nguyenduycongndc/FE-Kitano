@@ -1,0 +1,107 @@
+﻿@using RiskAssessment.Resource;
+<!-- panelScoreBoard -->
+<div class="table-responsive custom-table-scroll" id="TableViewAll">
+    <table id="tblRiskScore" class="table">
+        <thead class="contain-header-custom m-gray">
+            <tr>
+                <th scope="col" style="width: 3rem; text-align: center">STT</th>
+                <th scope="col" style="width: 10rem">@Resource.Object</th>
+                <th scope="col" style="width: 20rem">@Resource.Name</th>
+                <th scope="col" style="width: 5rem">@Resource.Class</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskLevel</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkAll" name="checkAll" style="margin: auto;" /></th>
+            </tr>
+        </thead>
+        <tbody class="contain-tbody-custom">
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive custom-table-scroll" id="TableViewDonVi" style="display:none">
+    <table id="tblRiskScore" class="table">
+        <thead class="contain-header-custom m-gray">
+            <tr>
+                <th scope="col" style="width: 3rem; text-align: center"></th>
+                <th scope="col" style="width: 10rem">Mã đơn vị</th>
+                <th scope="col" style="width: 20rem">Đơn vị</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskLevel</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkDonViAll" name="checkDonViAll" style="margin: auto;" /></th>
+            </tr>
+        </thead>
+        <tbody class="contain-tbody-custom">
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive custom-table-scroll" id="TableViewHoatDong" style="display:none">
+    <table id="tblRiskScore" class="table">
+        <thead class="contain-header-custom m-gray">
+            <tr>
+                <th scope="col" style="width: 3rem; text-align: center"></th>
+                <th scope="col" style="width: 10rem">Mã hoạt động</th>
+                <th scope="col" style="width: 20rem">Hoạt động</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskLevel</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkHoatDongAll" name="checkHoatDongAll" style="margin: auto;"/></th>
+            </tr>
+        </thead>
+        <tbody class="contain-tbody-custom">
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive custom-table-scroll" id="TableViewQuyTrinh" style="display:none">
+    <table id="tblRiskScore" class="table">
+        <thead class="contain-header-custom m-gray">
+            <tr>
+                <th scope="col" style="width: 3rem; text-align: center">STT</th>
+                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                <th scope="col" style="width: 20rem">Quy trình</th>
+                <th scope="col" style="width: 20rem">Đơn vị liên quan</th>
+                <th scope="col" style="width: 20rem">Hoạt động liên quan</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskLevel</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkQuyTrinhAll" name="checkQuyTrinhAll" style="margin: auto;" /></th>
+            </tr>
+        </thead>
+        <tbody class="contain-tbody-custom">
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive" id="TableViewDetailDonVi" hidden>
+    <table id="tblRiskScoreDonViDetail" class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                <th scope="col" style="width: 20rem">Tên quy trình</th>
+                <th scope="col" style="width: 20rem">Hoạt động liên quan</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkDonViDetailAll" name="checkDonViDetailAll" style="margin: auto;" /></th>
+            </tr>
+        </thead>
+        <tbody id="tblRiskScoreDonViBody">
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive" id="TableViewDetailHoatDong" hidden>
+    <table id="tblRiskScoreHoatDongDetail" class="table">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                <th scope="col" style="width: 20rem">Tên quy trình</th>
+                <th scope="col" style="width: 20rem">Đơn vị liên quan</th>
+                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkHoatDongDetailAll" name="checkHoatDongDetailAll" style="margin: auto;" /></th>
+            </tr>
+        </thead>
+        <tbody id="tblRiskScoreHoatDongBody">
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,1558 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@{
+    ViewData["Title"] = "Kế hoạch kiểm toán năm";
+    Layout = "_Layout";
+}
+<style>
+    .row-custom {
+        display: flex;
+    }
+</style>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.AuditPlan</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            @Resource.AuditPlan
+        </div>
+        <div class="card-body card-custom">
+            <form action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @if (Utils.IsCheckPemission("M_RAW", "PER_ADD") == true)
+                    {
+                        <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info">@Resource.Create</a>
+                    }
+
+                    <button href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><span class="btn-label"><em class="fa fa-search"></em></span> @Resource.SearchOption</button>
+                </div>
+                <div class="collapse" id="collapseSearch" style="margin-top:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Year">
+                                    @Resource.Year
+                                </label>
+                                <div class="col-lg-8 form-group">
+                                    <input type="text" class="form-control" id="Year" name="Year">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Status">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8 form-group">
+                                    <select class="form-control" id="Status">
+                                        <option value="0">--@Resource.All--</option>
+                                        <option value="1">@Resource.Draft</option>
+                                        <option value="2">@Resource.Waiting</option>
+                                        <option value="3">@Resource.Approve</option>
+                                        <option value="4">@Resource.Refuse</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3 btn-search-custom">
+                            <div style="text-align:center; ">
+                                <a href="javascript:void(0)" class="btn btn-info" onclick="ResetPageSize();onSearch()">@Resource.Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive custom-table-scroll">
+                <table id="auditplantable" class="table dataTable">
+                    <thead class="contain-header-custom m-gray">
+                        <tr>
+                            <th class="text-center" scope="col" style="width: 5%"></th>
+                            <th class="text-center" scope="col" style="width: 10%">@Resource.Year</th>
+                            <th class="text-center" scope="col" style="width: 35%">@Resource.Name</th>
+                            <th class="text-center" scope="col" style="width: 10%">@Resource.Version</th>
+                            <th class="text-center" scope="col" style="width: 15%">@Resource.Status</th>
+                            <th class="text-center" scope="col" style="width: 15%">@Resource.Option</th>
+                        </tr>
+                    </thead>
+                    <tbody class="contain-tbody-custom">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="create" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderCreate" style=" font-size: 1rem; ">
+            @Resource.Create @Resource.AuditPlan
+        </div>
+        <div class="card-body card-custom">
+            <form id="formCreate" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-3"></div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3">@Resource.Year <span class="text-danger">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="yearCreate" name="yearCreate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-3"></div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-3">@Resource.Name kế hoạch <span class="text-danger">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="nameCreate" name="nameCreate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%;">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end;">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%">@Resource.Save</button>
+                            </div>
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="edit" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderEdit" style=" font-size: 1rem; ">
+            @Resource.Edit @Resource.AuditPlan
+        </div>
+        <div class="card-body card-custom">
+            <div style=" margin-bottom: 20px; ">
+                <form id="formEdit" class="form-valide" action="#" method="post" style="margin-top: 15px;" enctype="multipart/form-data">
+                    <input type="hidden" id="IdEdit" name="IdEdit" value="0" />
+                    <input type="hidden" id="PlanYear" name="PlanYear" value="-1" />
+                    <div style="border: 1px solid #ced4da;">
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px">
+                            <h5>1. Thông tin chung</h5>
+                        </div>
+                        <div class="row" style="margin-bottom:20px">
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">@Resource.Year <span class="text-danger">*</span></label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="yearEdit" name="yearEdit" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">Tên kế hoạch<span class="text-danger">*</span></label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control " id="nameEdit" name="nameEdit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-2">@Resource.Target </label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" id="targetEdit" name="targetEdit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                         <input type="hidden" id="statusCodeEdit" name="statusCodeEdit" />
+                                        <label class="col-form-label col-lg-4">@Resource.Status</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="statusEdit" name="statusEdit" disabled>
+                                            @*<select class="form-control" id="statusEdit" disabled>
+                                                <option value="3">@Resource.Approve</option>
+                                                <option value="4">@Resource.Refuse</option>
+                                                <option value="5">@Resource.UnUse</option>
+                                                <option value="1">@Resource.Draft</option>
+                                                <option value="2">@Resource.Waiting</option>
+                                            </select>*@
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @*<div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">@Resource.BrowseDate:</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="dateEdit" name="dateEdit" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-2">@Resource.Note:</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" rows="3" id="noteEdit" name="noteEdit"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">
+                                            File đính kèm
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <input type="file" class="form-control" id="FileDinhKemPlan" name="FileDinhKemPlan" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">
+                                        </label>
+                                        <div class="col-lg-8" style=" display: flex; flex-direction: column;" id="FileDetailPlan">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="col-md-12 row-custom">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">
+                                            File đính kèm
+                                        </label>
+                                        <div class="col-lg-8" style="display: flex;flex-direction: column;margin: auto;" id="FileDetail">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                        </div>
+                    </div>
+
+                    <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%; margin-top: 20px;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; ">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%">@Resource.Save</button>
+                            </div>
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="ExportWord()">Kết xuất</button>
+                            </div>
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+               <div style="border: 1px solid #ced4da;">
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px">
+                            <h5>2. Thiết lập các cuộc kiểm toán</h5>
+                            <div style="padding: 0px 0px 10px 0px; float: right;">
+                                <a href="javascript:void(0);" onclick="CallAddAuditWork()" class="btn btn-info">Thêm cuộc kiểm toán</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row-custom">
+                            <div class="table-responsive custom-table-scroll">
+                                <table id="audittable" class="table table-striped table-bordered zero-configuration">
+                                    <thead class="m-gray" text-align="center">
+                                        <tr>
+                                            <th class="text-center" scope="col" style="width:2%">@Resource.No</th>
+                                            <th class="text-center" scope="col" style="width:7%">Mã cuộc KT</th>
+                                            <th class="text-center" scope="col" style="width:15%">Tên cuộc kiểm toán</th>
+                                            <th class="text-center" scope="col">Đơn vị được kiểm toán</th>
+                                            @*<th class="text-center" scope="col">Đối tượng được KT</th>*@
+                                            <th class="text-center" scope="col">Thời gian bắt đầu</th>
+                                            <th class="text-center" scope="col">Thời gian kết thúc</th>
+                                            <th class="text-center" scope="col">@Resource.PersonCharge</th>
+                                            <th class="text-center" scope="col" style="width: 12%">@Resource.Option</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="contain-tbody-custom">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-12" style="margin-top: 30px;margin-bottom: 10px">
+                <h5>3. Thông tin khác </h5>
+            </div>
+            <textarea class="form-control col-md-12 row-custom" rows="3" id="OtherInformationEdit" name="OtherInformationEdit"></textarea>   
+        </div>
+    </div>
+    <div class="card" id="browse" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderBrowse" style=" font-size: 1rem; ">
+            @Resource.Approve @Resource.AuditPlan
+        </div>
+        <div class="card-body card-custom">
+            <form id="formBrowse" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdBrowse" name="IdBrowse" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="NameBrowse" class="col-form-label">@Resource.Name:</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <input type="text" class="form-control" id="nameBrowse" name="nameBrowse" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="YearBrowse" class="col-form-label">@Resource.Year:</label>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <input type="text" class="form-control" id="yearBrowse" name="yearBrowse" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="TargetBrowse" class="col-form-label">@Resource.Target:</label>
+                                </div>
+                                <div class="col-lg-10 form-group">
+                                    <input type="text" class="form-control" id="targetBrowse" name="targetBrowse" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="StatusBrowse" class="col-form-label">@Resource.Status:</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <select class="form-control" id="statusBrowse">
+                                        <option value="3">@Resource.Approve</option>
+                                        <option value="4">@Resource.Refuse</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="YearBrowse" class="col-form-label">@Resource.BrowseDate:</label>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <input type="text" class="form-control" id="dateBrowse" name="dateBrowse">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="NoteBrowse" class="col-form-label">@Resource.Note:</label>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <input type="text" class="form-control" id="noteBrowse" name="noteBrowse" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="file">File đã duyệt:</label>
+                                </div>
+                                <div class="col-lg-8 form-group">
+                                    <input type="file" name="file" id="file" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; ">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="submitApprove();">@Resource.Save</button>
+                            </div>
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="detail" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderDetail" style=" font-size: 1rem; ">
+            @Resource.Detail @Resource.AuditPlan
+        </div>
+        <div class="card-body card-custom">
+            <div style=" margin-bottom: 20px; ">
+                <form id="formDetail" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                    <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                    <iput type="hidden" id="ActionRole" name="ActionRole" />
+                    <iput type="hidden" id="versionDetail" name="versionDetail" />
+                    <div style="border: 1px solid #ced4da;">
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px">
+                            <h5>1. Thông tin chung</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label for="YearDetail" class="col-form-label col-lg-4">@Resource.Year</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="yearDetail" name="yearDetail" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">@Resource.Name </label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="nameDetail" name="nameDetail" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-2">@Resource.Target</label>
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control" id="targetDetail" name="targetDetail" disabled>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <input type="hidden" id="statusCodeDetail" name="statusCodeDetail" />
+                                        <label for="StatusDetail" class="col-form-label col-lg-4">@Resource.Status </label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="statusDetail" name="statusDetail" disabled>
+                                            @*<select class="form-control" id="statusDetail" disabled>
+                                    <option value="3">@Resource.Approve</option>
+                                    <option value="4">@Resource.Refuse</option>
+                                    <option value="5">@Resource.UnUse</option>
+                                    <option value="1">@Resource.Draft</option>
+                                    <option value="2">@Resource.Waiting</option>
+                                </select>*@
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label for="browsedateDetail" class="col-form-label col-lg-4">@Resource.BrowseDate</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="browsedateDetail" name="browsedateDetail" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom ">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-4">Người duyệt</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" class="form-control" id="ApproverDetail" name="ApproverDetail" disabled>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom ">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+                                    <div class="form-group row">
+                                        <label for="NoteDetail" class="col-form-label col-lg-2">@Resource.Note</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control" rows="3" id="noteDetail" name="noteDetail" disabled></textarea>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row-custom">
+                                <div class="col-md-12 mb-3">
+                                    <div class="form-group row">
+                                        <label class="col-form-label col-lg-2">
+                                            File đã duyệt
+                                        </label>
+                                        <div class="col-lg-10" style="display: flex;flex-direction: column;margin: auto;" id="FileDetail">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 row mb-3" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%;">
+                                <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end;">
+                                    <div id="showRequestApproval" style="display:none">
+                                        <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                            <a href="javascript:void(0);" class="btn btn-info" onclick="CallRequestModal('#formDetail','#IdDetail','#nameDetail','M_AP','Kế hoạch kiểm toán năm')" style="width:100%">Gửi phê duyệt</a>
+                                        </div>
+                                    </div>
+                                    <div id="showbuttonApproval" style="display:none">
+                                        <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                            <button type="button" class="btn btn-info" style="width:100%" onclick="SubmitApproval('#formDetail','#IdDetail','#nameDetail','M_AP','Kế hoạch kiểm toán năm','#yearDetail','#statusCodeDetail')">@Resource.Approve</button>
+                                        </div>
+                                        <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                            <button type="button" class="btn btn-info" onclick="CallRejectModal('#formDetail','#IdDetail','#nameDetail','M_AP','Kế hoạch kiểm toán năm')" style="width:100%">@Resource.Refuse</button>
+                                        </div>
+                                    </div>
+                                    <div style=" display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <form id="formAuditDetail" class="form-valide" action="#" method="post" style="margin-top: 15px;">
+                    <div style="border: 1px solid #ced4da;">
+                        <div class="col-md-12" style="margin-top: 10px;margin-bottom: 10px">
+                            <h5>2. Thiết lập các cuộc kiểm toán</h5>
+                        </div>
+                        <div class="col-md-12 row-custom">
+                            <div class="table-responsive custom-table-scroll">
+                                <table id="audittableDetail" class="table table-striped table-bordered zero-configuration">
+                                    <thead class="m-gray" text-align="center">
+                                        <tr>
+                                            <th class="text-center" scope="col" style="width:2%">@Resource.No</th>
+                                            <th class="text-center" scope="col" style="width:7%">Mã cuộc KT</th>
+                                            <th class="text-center" scope="col" style="width:15%">Tên cuộc kiểm toán</th>
+                                            <th class="text-center" scope="col">Đơn vị được kiểm toán</th>
+                                            @*<th class="text-center" scope="col">Đối tượng được KT</th>*@
+                                            <th class="text-center" scope="col">Thời gian bắt đầu</th>
+                                            <th class="text-center" scope="col">Thời gian kết thúc</th>
+                                            <th class="text-center" scope="col">@Resource.PersonCharge</th>
+                                            <th class="text-center" scope="col" style="width: 12%">@Resource.Option</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="contain-tbody-custom">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+             <div class="col-md-12" style="margin-top: 30px;margin-bottom: 10px">
+                <h5>3. Thông tin khác </h5>
+            </div>
+            <textarea class="form-control col-md-12 row-custom" rows="3" id="OtherInformationDetail" name="OtherInformationDetail"></textarea>  
+        </div>
+    </div>
+    <div class="card" id="addAuditWork" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Create
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-audit-work" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+
+                <div class="row">
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Tên cuộc kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="Name" name="Name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Mục tiêu kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="Target" name="Target"></textarea>
+                                    @*<input type="text" class="form-control" id="Target" name="Target">*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phạm vi kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="Scope" name="Scope"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian bắt đầu <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="StartDate" name="StartDate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian kết thúc <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="EndDate" name="EndDate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số ngày công
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control" id="NumOfWorkdays" name="NumOfWorkdays">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Người phụ trách <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="PersonInCharge" name="PersonInCharge">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số lượng KTV dự kiến <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="NumOfAuditor" name="NumOfAuditor" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Phân công kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-info" onclick="AddRow()" style="width:100%">Thêm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                </label>
+                                <div class="col-lg-10">
+                                    <table id="auditworktable" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                        <thead class="contain-header-custom m-gray ">
+                                            <tr>
+                                                <th class="text-center" scope="col">Tên kiểm toán viên</th>
+                                                <th class="text-center" scope="col"> Ngày bắt đầu tham gia</th>
+                                                <th class="text-center" scope="col">Ngày kết thúc tham gia</th>
+                                                <th class="text-center" scope="col"> Tác vụ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="auditworkbody" class="contain-tbody-custom ">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu về kỹ năng kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqSkillForAudit" name="ReqSkillForAudit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu thuê ngoài
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOutsourcing" name="ReqOutsourcing">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu khác
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOther" name="ReqOther">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Quy mô cuộc KT
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="ScaleOfAudit">
+                                        <option value="-1">---Chọn---</option>
+                                        <option value="0">Rất lớn</option>
+                                        <option value="1">Lớn</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="3">Nhỏ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    File đính kèm
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="file" class="form-control" id="FileDinhKem" name="FileDinhKem" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Đối tượng được KT
+                                </label>
+                                <div class="col-lg-8">
+                                    <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <a href="javascript:void(0);" class="btn btn-info" onclick="openView(8,0)">Chọn đối tượng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                    Đơn vị được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscopeFacility" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                        <th class="text-center" scope="col" style="width: 5%">Tác vụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                    Quy trình được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscope" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Quy trình được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Hoạt động được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                        <th class="text-center" scope="col" style="width: 5%">Tác vụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%">@Resource.Save</button>
+                            </div>
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openViewEdit(3, $('#formEdit').find('#IdEdit').val())">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="editAuditWork" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Edit
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-edit-audit-work" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdWorkEdit" name="IdWorkEdit" value="0" />
+
+                <div class="row">
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Tên cuộc kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="NameEdit" name="NameEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Mục tiêu kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="TargetEdit" name="TargetEdit"></textarea>
+                                    @*<input type="text" class="form-control" id="TargetEdit" name="TargetEdit">*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phạm vi kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="ScopeEdit" name="ScopeEdit"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian bắt đầu <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="StartDateEdit" name="StartDateEdit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian kết thúc <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="EndDateEdit" name="EndDateEdit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số ngày công
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="number" min="0" class="form-control" id="NumOfWorkdaysEdit" name="NumOfWorkdaysEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Người phụ trách <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="PersonInChargeEdit" name="PersonInChargeEdit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số lượng KTV dự kiến <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="NumOfAuditorEdit" name="NumOfAuditorEdit" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Phân công kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <button type="button" class="btn btn-info" onclick="AddRowEdit()" style="width:100%">Thêm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                </label>
+                                <div class="col-lg-10">
+                                    <table id="auditworktableEdit" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                        <thead class="contain-header-custom m-gray ">
+                                            <tr>
+                                                <th class="text-center">Tên kiểm toán viên</th>
+                                                <th class="text-center"> Ngày bắt đầu tham gia</th>
+                                                <th class="text-center">Ngày kết thúc tham gia</th>
+                                                <th class="text-center"> Tác vụ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="auditworkbodyEdit" class="contain-tbody-custom ">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu về kỹ năng kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqSkillForAuditEdit" name="ReqSkillForAuditEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu thuê ngoài
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOutsourcingEdit" name="ReqOutsourcingEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu khác
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOtherEdit" name="ReqOtherEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Quy mô cuộc KT
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="ScaleOfAuditEdit" name="ScaleOfAuditEdit">
+                                        <option value="-1">---Chọn---</option>
+                                        <option value="0">Rất lớn</option>
+                                        <option value="1">Lớn</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="3">Nhỏ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    File đính kèm
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="file" class="form-control" id="FileDinhKemEdit" name="FileDinhKemEdit" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                </label>
+                                <div class="col-lg-10" style=" display: flex; flex-direction: column;" id="FileDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Đối tượng được KT
+                                </label>
+                                <div class="col-lg-8">
+                                    <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                        <a href="javascript:void(0);" class="btn btn-info" onclick="openView(9,0)">Chọn đối tượng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                     Đơn vị được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscopeFacilityEdit" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                        <th class="text-center" scope="col" style="width: 5%">Tác vụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                    Quy trình được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscopeEdit" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Quy trình được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Hoạt động được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                        <th class="text-center" scope="col" style="width: 5%">Tác vụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%">@Resource.Edit</button>
+                            </div>
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="callBackView(3)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="detailAuditWork" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Detail
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-detail-audit-work" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdWorkDetail" name="IdWorkDetail" value="0" />
+                <input type="hidden" id="ActionEdit" name="ActionEdit" />
+                <input type="hidden" id="ActionRole" name="ActionRole" />
+                <div class="row">
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Tên cuộc kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="NameDetail" name="NameDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Mục tiêu kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="TargetDetail" name="TargetDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phạm vi kiểm toán <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="3" id="ScopeDetail" name="ScopeDetail"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian bắt đầu
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="StartDateDetail" name="StartDateDetail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Thời gian kết thúc
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" id="EndDateDetail" name="EndDateDetail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số ngày công
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="NumOfWorkdaysDetail" name="NumOfWorkdaysDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Người phụ trách
+                                </label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" id="PersonInChargeDetail" name="PersonInChargeDetail" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Số lượng KTV dự kiến
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="NumOfAuditorDetail" name="NumOfAuditorDetail" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phân công kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <table id="auditworktableDetail" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                        <thead class="contain-header-custom m-gray ">
+                                            <tr>
+                                                <th class="text-center">Tên kiểm toán viên</th>
+                                                <th class="text-center"> Ngày bắt đầu tham gia</th>
+                                                <th class="text-center">Ngày kết thúc tham gia</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="auditworkbodyDetail" class="contain-tbody-custom ">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu về kỹ năng kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqSkillForAuditDetail" name="ReqSkillForAuditDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu thuê ngoài
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOutsourcingDetail" name="ReqOutsourcingDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Yêu cầu khác
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="ReqOtherDetail" name="ReqOtherDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Quy mô cuộc KT
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="ScaleOfAuditDetail" name="ScaleOfAuditDetail">
+                                        <option value="-1">---Chọn---</option>
+                                        <option value="0">Rất lớn</option>
+                                        <option value="1">Lớn</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="3">Nhỏ</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    File đính kèm
+                                </label>
+                                <div class="col-lg-10" style=" display: flex; flex-direction: column;" id="FileDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    Đối tượng được KT
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                    Đơn vị được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscopeFacilityDetail" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" style="font-style: italic; text-align: left !important">
+                                    Quy trình được kiểm toán
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditscopeDetail" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 3%">STT</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Quy trình được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Đơn vị được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Hoạt động được kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Lý do đề xuất kiểm toán</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Mức xếp hạng rủi ro</th>
+                                        <th class="text-center" scope="col" style="width: 12%">Thời gian kiểm toán gần nhất</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="callBackView(3)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="AddScope" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            Thiết lập phạm vi cuộc kiểm toán dựa trên kết quả đánh giá rủi ro
+        </div>
+        <div class="card-body card-custom mt-2" id="card-index">
+            <div class="row " id="panelSearch">
+                <div class="col-12">
+                    <partial name="partial/SearchPanel.cshtml" />
+                </div>
+            </div>
+            <form id="formAddScope" class="form-valide" action="#" method="post" style="margin-top: 15px;">
+                <input type="hidden" id="DoAction" name="DoAction" value="0" />
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <partial name="partial/PanelScoreBoard.cshtml" />
+                    </div>
+                </div>
+                <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                    <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                        <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                            <button type="submit" class="btn btn-info" style="width:100%">@Resource.Save</button>
+                        </div>
+                        <div style=" display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                            <button type="button" class="btn btn-outline" style="width:100%" onclick="callBackView(5)">@Resource.Back</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="view-log" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderDetail" style=" font-size: 1rem; ">
+            Lịch sử cập nhật kế hoạch kiểm toán năm
+        </div>
+        <div class="card-body card-custom">
+            <form id="formHistoryLog" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Kế hoạch năm
+                                </label>
+                                <strong class="col-lg-10" style="margin-top:5px" id="namekehoachnam"></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="KitanoFunctionHistory" class="table dataTable">
+                                <caption hidden></caption>
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 15%">Thời gian</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Người thực hiện</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Thao tác</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Phiên bản</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Ý kiến</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-3" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end;">
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalChangeStatus" role="dialog" aria-labelledby="modalChangeStatusLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #544f90 !important ">
+                <h5 class="modal-title" id="changeStatusLabel" style="color:white">Cập nhật trạng thái</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmChangeStatus">
+                    <input type="hidden" id="IdAuditPlan" name="IdAuditPlan" value="0" />
+                    <div class="form-group mt-3">
+                        <label for="ChangeStatus" class="col-form-label">Trạng thái:</label><span class="text-danger">*</span>
+                        <select class="form-control required" onchange="showFileUpload()" id="StatusChange" name="StatusChange">
+                            <option value="3">Đã duyệt</option>
+                            <option value="4" selected="selected">Từ chối duyệt</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="DateChangeStatus" class="col-form-label">Ngày duyệt/từ chối duyệt:</label><span class="text-danger">*</span>
+                        <input type="date" class="form-control required" id="DateChangeStatus" placeholder="Ngày duyệt/từ chối duyệt" />
+                    </div>
+                    <div class="form-group mt-3" id="fileUpload" style="display: none">
+                        @*<label for="FileChangeStatus" class="col-form-label">File đính kèm:</label>
+                            <input type="file" class="form-control required" id="FileChangeStatus" />*@
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                <button type="button" onclick="updateChangeStatus()" class="btn btn-info">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/auditplan.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+}

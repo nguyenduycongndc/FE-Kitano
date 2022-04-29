@@ -1,0 +1,108 @@
+﻿@using RiskAssessment.Resource;
+<!-- panelObjectInfo -->
+<div id="panelObjectInfo" class="tab-pane fade" style="margin-top:5px">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="target_info" class="col-md-3 col-form-label">
+                    @Resource.Target/@Resource.Strategy
+                </label>
+                <div class="col-md-9">
+                    <textarea type="text" class="form-control" id="target_info" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="mainprocess_info" class="col-md-3 col-form-label">
+                    @Resource.MainProcess
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="mainprocess_info" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="itsystem_info" class="col-md-3 col-form-label">
+                    @Resource.ITSystem
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="itsystem_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="project_info" class="col-md-3 col-form-label">
+                    @Resource.Project
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="project_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="outsourcing_info" class="col-md-3 col-form-label">
+                    @Resource.Outsourcing
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="outsourcing_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="customer_info" class="col-md-3 col-form-label">
+                    @Resource.Customer
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="customer_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="supplier_info" class="col-md-3 col-form-label">
+                    @Resource.Supplier
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="supplier_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="internal_info" class="col-md-3 col-form-label">
+                    @Resource.InternalRegulations
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="internal_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-dv d-none">
+                <label for="law_info" class="col-md-3 col-form-label">
+                    @Resource.LawRegulations
+                </label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="law_info" />
+                </div>
+            </div>
+            <div class="form-group row mt-1 for-other d-none">
+                <label for="description" class="col-md-3 col-form-label">
+                    @Resource.Description
+                </label>
+                <div class="col-md-9">
+                    <textarea type="text" class="form-control" id="description" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="form-group row mt-1">
+                <label for="file_attach" class="col-md-3 col-form-label">
+                    @Resource.AttachFile
+                </label>
+                <div class="col-md-9" id="divDownloadAttach">
+                    <input type="file" class="form-control" id="file_attach" multiple />
+                </div>
+            </div>
+            <div class="form-group row mt-1">
+                <label class="col-md-3 col-form-label">
+                </label>
+                <div class="cold-md-9 listfile" style=" display: flex; flex-direction: column;" id="listfile">
+                </div>
+            </div>
+            <hr />
+            <div class="form-group row mt-5">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-info" onclick="saveScoreBoard()">@Resource.Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

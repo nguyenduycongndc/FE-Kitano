@@ -1,0 +1,71 @@
+﻿tr th.number1 {
+    width: 1% !important;
+}
+
+tr th.number2 {
+    width: 10% !important;
+}
+
+tr th.number3 {
+    width: 10% !important;
+}
+
+tr th.number4 {
+    width: 40% !important;
+}
+
+tr th.number5 {
+    width: 50% !important;
+}
+tr th.number6 {
+    width: 10% !important;
+}
+@media only screen and (width : 2560px) {
+    #optionSystemParam {
+        width: 6% !important
+    }
+}
+
+@media only screen and (width : 1903px) {
+    #optionSystemParam {
+        width: 12% !important
+    }
+}
+
+@media only screen and (width : 1440px) {
+    #optionSystemParam {
+        width: 12% !important
+    }
+}
+
+@media only screen and (width : 1366px) {
+    #optionSystemParam {
+        width: 13% !important
+    }
+}
+
+@media only screen and (width : 1280px) {
+    #optionSystemParam {
+        width: 20% !important
+    }
+}
+@media only screen and (width : 1024px) {
+    #optionSystemParam {
+        width: 20% !important
+    }
+}
+
+@media only screen and (min-device-width : 814px) and (max-device-width : 991px) {
+    #optionSystemParam {
+        width: 10% !important
+    }
+}
+
+@media only screen and (min-device-width : 719px) and (max-device-width : 767px) {
+    #optionSystemParam {
+        width: 10% !important
+    }
+}
+#optionSystemParam {
+    min-width: 117px !important
+}

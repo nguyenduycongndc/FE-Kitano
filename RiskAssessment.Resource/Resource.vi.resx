@@ -1,0 +1,1707 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Đồng ý</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Tác vụ</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Đang hoạt động</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
+  <data name="AndSub" xml:space="preserve">
+    <value> và tất cả các đối tượng con!</value>
+  </data>
+  <data name="ApplyFor" xml:space="preserve">
+    <value>Đối tượng áp dụng</value>
+  </data>
+  <data name="AuditCycle" xml:space="preserve">
+    <value>Chu kỳ kiểm toán</value>
+  </data>
+  <data name="AuditCycleManager" xml:space="preserve">
+    <value>Quản lý Chu kỳ kiểm toán</value>
+  </data>
+  <data name="AuditProcess" xml:space="preserve">
+    <value>Quy trình</value>
+  </data>
+  <data name="AuditProcessManagerment" xml:space="preserve">
+    <value>Danh mục quy trình có thể được kiểm toán</value>
+  </data>
+  <data name="Automation" xml:space="preserve">
+    <value>Tự động</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Có sẵn</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Trở lại</value>
+  </data>
+  <data name="BOManagerment" xml:space="preserve">
+    <value>Danh mục hoạt động có thể được kiểm toán</value>
+  </data>
+  <data name="BusinessActivity" xml:space="preserve">
+    <value>Hoạt động</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="CanNotNull" xml:space="preserve">
+    <value>Không được để trống</value>
+  </data>
+  <data name="CatAuditRequest" xml:space="preserve">
+    <value>Loại kiến nghị kiểm toán</value>
+  </data>
+  <data name="CategoryManagement" xml:space="preserve">
+    <value>Quản lý danh mục</value>
+  </data>
+  <data name="CatDetectType" xml:space="preserve">
+    <value>Loại phát hiện</value>
+  </data>
+  <data name="CatRiskLevel" xml:space="preserve">
+    <value>Mức độ rủi ro</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Cập nhật mật khẩu</value>
+  </data>
+  <data name="ChangeWorkPlace" xml:space="preserve">
+    <value>Cập nhật nơi làm việc</value>
+  </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Chọn</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Loại đối tượng</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Mã</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Xác nhận</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Xác nhận mật khẩu mới</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Tạo mới</value>
+  </data>
+  <data name="CreateFormula" xml:space="preserve">
+    <value>Thiết lập công thức tính giá trị</value>
+  </data>
+  <data name="DateOfJoining" xml:space="preserve">
+    <value>Ngày bắt đầu làm việc</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Đã xóa!</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="DoDelete" xml:space="preserve">
+    <value>Bạn có muốn xóa: </value>
+  </data>
+  <data name="DownloadTemp" xml:space="preserve">
+    <value>Tải xuống tệp mẫu!</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Lỗi</value>
+  </data>
+  <data name="Error401" xml:space="preserve">
+    <value>Bạn phải đăng nhập vào hệ thống trước khi thao tác!</value>
+  </data>
+  <data name="Error404" xml:space="preserve">
+    <value>Không tìm thấy đối tượng để xử lý!</value>
+  </data>
+  <data name="Error500" xml:space="preserve">
+    <value>Có lỗi xảy ra trong quá trình xử lý!</value>
+  </data>
+  <data name="ExcelAllow" xml:space="preserve">
+    <value>Chỉ cho phép các tệp Excel!</value>
+  </data>
+  <data name="ExcelError" xml:space="preserve">
+    <value>Tệp Excel có dòng bị lỗi!\nXem cột "Lỗi" để có thêm thông tin</value>
+  </data>
+  <data name="Existed" xml:space="preserve">
+    <value>Đã tồn tại</value>
+  </data>
+  <data name="Facility" xml:space="preserve">
+    <value>Đơn vị</value>
+  </data>
+  <data name="FacilityManagerment" xml:space="preserve">
+    <value>Danh mục đơn vị có thể được kiểm toán</value>
+  </data>
+  <data name="FacilityType" xml:space="preserve">
+    <value>Loại đơn vị</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Thất bại</value>
+  </data>
+  <data name="Formula" xml:space="preserve">
+    <value>Công thức</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Họ và tên</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>Cao</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang Chủ</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Nhập</value>
+  </data>
+  <data name="InActive" xml:space="preserve">
+    <value>Dừng hoạt động</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Không tồn tại</value>
+  </data>
+  <data name="LastOnlineAt" xml:space="preserve">
+    <value>Lần đăng nhập cuối</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Xếp hạng</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Danh sách</value>
+  </data>
+  <data name="ListUnitType" xml:space="preserve">
+    <value>Danh sách loại đơn vị</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Thấp</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Quản lý</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Thủ công</value>
+  </data>
+  <data name="Mid" xml:space="preserve">
+    <value>Trung bình</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Mật khẩu mới</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>STT</value>
+  </data>
+  <data name="Option" xml:space="preserve">
+    <value>Thao tác</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Cấp cha</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="PersonCharge" xml:space="preserve">
+    <value>Người phụ trách</value>
+  </data>
+  <data name="PersonChargeNotSelected" xml:space="preserve">
+    <value>Người phụ trách chư được chọn</value>
+  </data>
+  <data name="Proportion" xml:space="preserve">
+    <value>Trọng số</value>
+  </data>
+  <data name="RatingPoint" xml:space="preserve">
+    <value>Chấm điểm</value>
+  </data>
+  <data name="RiskIssue" xml:space="preserve">
+    <value>Yếu tố rủi ro</value>
+  </data>
+  <data name="RiskIssueManagerment" xml:space="preserve">
+    <value>Quản lý Yếu tố rủi ro</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Vai trò</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="SaveAndClose" xml:space="preserve">
+    <value>Lưu và Đóng</value>
+  </data>
+  <data name="SaveFail" xml:space="preserve">
+    <value>Lưu dữ liệu thất bại!</value>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Lưu dữ liệu thành công</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="SearchOption" xml:space="preserve">
+    <value>Tùy chọn tìm kiếm</value>
+  </data>
+  <data name="SelectFacility" xml:space="preserve">
+    <value>Chọn đơn vị</value>
+  </data>
+  <data name="SelectUserType" xml:space="preserve">
+    <value>Chọn loại người dùng</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="Successfully" xml:space="preserve">
+    <value>Thành công</value>
+  </data>
+  <data name="SystemManagement" xml:space="preserve">
+    <value>Quản trị hệ thống</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Không có</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Cập nhật</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Người dùng</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>Nhóm người dùng</value>
+  </data>
+  <data name="UserGroupManagement" xml:space="preserve">
+    <value>Quản lý nhóm người dùng</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>Quản lý người dùng</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>Loại người dùng</value>
+  </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Tồn tại</value>
+  </data>
+  <data name="WayToMark" xml:space="preserve">
+    <value>Phương thức chấm điểm</value>
+  </data>
+  <data name="WayToSum" xml:space="preserve">
+    <value>Cách tính tổng điểm</value>
+  </data>
+  <data name="NotUsed" xml:space="preserve">
+    <value>Không sử dụng</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Sử dụng</value>
+  </data>
+  <data name="SystemManagements" xml:space="preserve">
+    <value>Quản lý hệ thống</value>
+  </data>
+  <data name="SystemParameter" xml:space="preserve">
+    <value>Tham số hệ thống</value>
+  </data>
+  <data name="RolesManagement" xml:space="preserve">
+    <value>Quản lý vai trò</value>
+  </data>
+  <data name="ListSystemParameter" xml:space="preserve">
+    <value>Danh sách tham số hệ thống</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Tham số</value>
+  </data>
+  <data name="Subsystem" xml:space="preserve">
+    <value>Phân hệ</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Giá trị</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>Từ</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Khoảng</value>
+  </data>
+  <data name="RatingScale" xml:space="preserve">
+    <value>Thang điểm xếp hạng</value>
+  </data>
+  <data name="RatingScaleManager" xml:space="preserve">
+    <value>Quản lý thang điểm xếp hạng</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Đến</value>
+  </data>
+  <data name="LowerLimit" xml:space="preserve">
+    <value>Giới hạn dưới</value>
+  </data>
+  <data name="Point" xml:space="preserve">
+    <value>Điểm</value>
+  </data>
+  <data name="QualitativeConditions" xml:space="preserve">
+    <value>Điều kiện đạt điểm yếu tố định tính</value>
+  </data>
+  <data name="QuantitativeConditions" xml:space="preserve">
+    <value>Điều kiện đạt điểm yếu tố định lượng</value>
+  </data>
+  <data name="RiskAssessmentScale" xml:space="preserve">
+    <value>Thang điểm chấm điểm</value>
+  </data>
+  <data name="RiskAssessmentScaleManager" xml:space="preserve">
+    <value>Quản lý Thang điểm đánh giá rủi ro</value>
+  </data>
+  <data name="UpperLimit" xml:space="preserve">
+    <value>Giới hạn trên</value>
+  </data>
+  <data name="ApplyForAll" xml:space="preserve">
+    <value>Áp dụng cho tất cả</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Điều kiện</value>
+  </data>
+  <data name="LowerCondition" xml:space="preserve">
+    <value>Điều kiện cận dưới</value>
+  </data>
+  <data name="UpperCondition" xml:space="preserve">
+    <value>Điều kiện cận trên</value>
+  </data>
+  <data name="InputInvalid" xml:space="preserve">
+    <value>Giá trị nhập vào không hợp lệ</value>
+  </data>
+  <data name="RiskLevel" xml:space="preserve">
+    <value>Mức độ rủi ro</value>
+  </data>
+  <data name="ValueInvalid" xml:space="preserve">
+    <value>Giá trị không hợp lệ!</value>
+  </data>
+  <data name="RangeOfPoint" xml:space="preserve">
+    <value>Mức điểm tổng</value>
+  </data>
+  <data name="AuditPlan" xml:space="preserve">
+    <value>Kế hoạch kiểm toán năm</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Phiên bản</value>
+  </data>
+  <data name="AssessmentStage" xml:space="preserve">
+    <value>Kỳ đánh giá</value>
+  </data>
+  <data name="AssessmentState" xml:space="preserve">
+    <value>Trạng thái đánh giá</value>
+  </data>
+  <data name="LastPullRequest" xml:space="preserve">
+    <value>Thời gian lấy dữ liệu gần nhất</value>
+  </data>
+  <data name="RiskAssessmentStage" xml:space="preserve">
+    <value>Kỳ đánh giá rủi ro</value>
+  </data>
+  <data name="Stage" xml:space="preserve">
+    <value>Kỳ</value>
+  </data>
+  <data name="StageValue" xml:space="preserve">
+    <value>Giá trị kỳ</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="StatePullData" xml:space="preserve">
+    <value>Trạng thái lấy dữ liệu</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Năm</value>
+  </data>
+  <data name="ExecutionTime" xml:space="preserve">
+    <value>Thời gian thực hiện</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>Từ ngày</value>
+  </data>
+  <data name="ListSystemLog" xml:space="preserve">
+    <value>Danh sách nhật ký hệ thống</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="PerformTasks" xml:space="preserve">
+    <value>Thao tác thực hiện</value>
+  </data>
+  <data name="SystemLog" xml:space="preserve">
+    <value>Nhật ký hệ thống</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>Đến ngày</value>
+  </data>
+  <data name="HalfYear" xml:space="preserve">
+    <value>Bán niên</value>
+  </data>
+  <data name="Quarter" xml:space="preserve">
+    <value>Quý</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Đã hoàn thành</value>
+  </data>
+  <data name="InComplete" xml:space="preserve">
+    <value>Chưa hoàn thành</value>
+  </data>
+  <data name="ScoreBoard" xml:space="preserve">
+    <value>Bảng chấm điểm</value>
+  </data>
+  <data name="GeneralInfo" xml:space="preserve">
+    <value>Thông tin tổng quan</value>
+  </data>
+  <data name="ObjectInfo" xml:space="preserve">
+    <value>Thông tin đối tượng</value>
+  </data>
+  <data name="AssessmentObject" xml:space="preserve">
+    <value>Đối tượng được đánh giá</value>
+  </data>
+  <data name="AttachFile" xml:space="preserve">
+    <value>Tệp đính kèm</value>
+  </data>
+  <data name="InternalRegulations" xml:space="preserve">
+    <value>Quy định nội bộ liên quan</value>
+  </data>
+  <data name="ITSystem" xml:space="preserve">
+    <value>Hệ thống CNTT</value>
+  </data>
+  <data name="LawRegulations" xml:space="preserve">
+    <value>Quy định pháp luật liên quan</value>
+  </data>
+  <data name="MainProcess" xml:space="preserve">
+    <value>Quy trình chính</value>
+  </data>
+  <data name="Outsourcing" xml:space="preserve">
+    <value>Dịch vụ thuê ngoài</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Dự án</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Chiến lược</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Nhà cung cấp</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Mục tiêu</value>
+  </data>
+  <data name="AssessmentStageInvalid" xml:space="preserve">
+    <value>Kỳ đánh giá không tồn tại!</value>
+  </data>
+  <data name="FacilityInvalid" xml:space="preserve">
+    <value>Đơn vị không tồn tại</value>
+  </data>
+  <data name="NotHaveIssue" xml:space="preserve">
+    <value>Không có Yếu tố rủi ro</value>
+  </data>
+  <data name="ScoreBoardExists" xml:space="preserve">
+    <value>Bảng điểm đánh giá đã tồn tại</value>
+  </data>
+  <data name="ScoreBoardInited" xml:space="preserve">
+    <value>Bảng điểm đánh giá đã được tạo!</value>
+  </data>
+  <data name="ScoreBoardNotInit" xml:space="preserve">
+    <value>Bảng điểm đánh giá chưa được khởi tạo!</value>
+  </data>
+  <data name="InitNow" xml:space="preserve">
+    <value>Khởi tạo ngay</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Bản nháp</value>
+  </data>
+  <data name="Refuse" xml:space="preserve">
+    <value>Từ chối duyệt</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Chờ Duyệt</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Phê duyệt</value>
+  </data>
+  <data name="AuditCreate" xml:space="preserve">
+    <value>Thêm cuộc kiểm toán</value>
+  </data>
+  <data name="BrowseDate" xml:space="preserve">
+    <value>Ngày duyệt</value>
+  </data>
+  <data name="AttachDenied" xml:space="preserve">
+    <value>Định dạng không hợp lệ</value>
+  </data>
+  <data name="BoardDone" xml:space="preserve">
+    <value>Bảng chấm điểm đã kết thúc!</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Lý do</value>
+  </data>
+  <data name="UnUse" xml:space="preserve">
+    <value>Không sử dụng</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Sử dụng</value>
+  </data>
+  <data name="Object" xml:space="preserve">
+    <value>Đối tượng</value>
+  </data>
+  <data name="ControlList" xml:space="preserve">
+    <value>Danh mục kiểm soát</value>
+  </data>
+  <data name="PrepareAudit" xml:space="preserve">
+    <value>Chuẩn bị cho kiểm toán</value>
+  </data>
+  <data name="ProceduresList" xml:space="preserve">
+    <value>Danh sách thủ tục</value>
+  </data>
+  <data name="RiskPortfolio" xml:space="preserve">
+    <value>Danh mục rủi ro</value>
+  </data>
+  <data name="RiskAssessment" xml:space="preserve">
+    <value>Đánh giá rủi ro</value>
+  </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>Thực hiện đánh giá</value>
+  </data>
+  <data name="AssessmentResult" xml:space="preserve">
+    <value>Kết quả đánh giá</value>
+  </data>
+  <data name="AuditedObject" xml:space="preserve">
+    <value>Đối tượng được kiểm toán</value>
+  </data>
+  <data name="AuditFacilities" xml:space="preserve">
+    <value>Đơn vị</value>
+  </data>
+  <data name="AuditProgram" xml:space="preserve">
+    <value>Chương trình kiểm toán</value>
+  </data>
+  <data name="ConductAudit" xml:space="preserve">
+    <value>Thực hiện kiểm toán</value>
+  </data>
+  <data name="GeneralParameter" xml:space="preserve">
+    <value>Tham số chung</value>
+  </data>
+  <data name="PrepareAuditPlan" xml:space="preserve">
+    <value>Kế hoạch cuộc kiểm toán</value>
+  </data>
+  <data name="ReportAudit" xml:space="preserve">
+    <value>Báo cáo kiểm toán</value>
+  </data>
+  <data name="ReportAuditWork" xml:space="preserve">
+    <value>Báo cáo cuộc kiểm toán</value>
+  </data>
+  <data name="WorkingPapers" xml:space="preserve">
+    <value>Giấy tờ làm việc</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Cuộc kiểm toán</value>
+  </data>
+  <data name="AuditUnit" xml:space="preserve">
+    <value>Đơn vị được kiểm toán</value>
+  </data>
+  <data name="PaperCode" xml:space="preserve">
+    <value>Mã giấy tờ</value>
+  </data>
+  <data name="WorkingPaper" xml:space="preserve">
+    <value>Giấy tờ làm việc</value>
+  </data>
+  <data name="ActivityCode" xml:space="preserve">
+    <value>Mã hoạt động</value>
+  </data>
+  <data name="ActivityName" xml:space="preserve">
+    <value>Tên hoạt động</value>
+  </data>
+  <data name="ActivityParent" xml:space="preserve">
+    <value>Hoạt động cha</value>
+  </data>
+  <data name="Error003" xml:space="preserve">
+    <value>Mã đã tồn tại</value>
+  </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>Cập nhật dữ liệu thành công</value>
+  </data>
+  <data name="AuditDetect" xml:space="preserve">
+    <value>Danh sách phát hiện</value>
+  </data>
+  <data name="AuditDetectList" xml:space="preserve">
+    <value>Danh sách phát hiện</value>
+  </data>
+  <data name="AuditObserve" xml:space="preserve">
+    <value>Danh sách quan sát</value>
+  </data>
+  <data name="LevelRiskAssessment" xml:space="preserve">
+    <value>Đánh giá rủi ro cấp độ quy trình</value>
+  </data>
+  <data name="AuditProposal" xml:space="preserve">
+    <value>Đề xuất kiểm toán</value>
+  </data>
+  <data name="EndStage" xml:space="preserve">
+    <value>Kết thúc kỳ đánh giá</value>
+  </data>
+  <data name="ExportExcel" xml:space="preserve">
+    <value>Xuất excel</value>
+  </data>
+  <data name="InProcess" xml:space="preserve">
+    <value>Đang thực hiện</value>
+  </data>
+  <data name="NoAnswer" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="ScoreBoardResult" xml:space="preserve">
+    <value>Tổng hợp kết quả đánh giá rủi ro cấp độ tổ chức</value>
+  </data>
+  <data name="YesAnswer" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="AuditReason" xml:space="preserve">
+    <value>Lý do đưa vào kiểm toán</value>
+  </data>
+  <data name="AuditResult" xml:space="preserve">
+    <value>Lý do đưa vào kế hoạch</value>
+  </data>
+  <data name="LastAuditDate" xml:space="preserve">
+    <value>Thời gian KT gần nhất</value>
+  </data>
+  <data name="LastAuditResult" xml:space="preserve">
+    <value>Kết quả đánh giá gần nhất</value>
+  </data>
+  <data name="RiskLevelEdit" xml:space="preserve">
+    <value>Xếp hạng rủi ro điều chỉnh</value>
+  </data>
+  <data name="StageState" xml:space="preserve">
+    <value>Trạng thái chấm điểm</value>
+  </data>
+  <data name="AuditDate" xml:space="preserve">
+    <value>Thời gian kiểm toán</value>
+  </data>
+  <data name="AuditEvent" xml:space="preserve">
+    <value>Cuộc KT</value>
+  </data>
+  <data name="AuditHistory" xml:space="preserve">
+    <value>Lịch sử đánh giá, kiểm toán</value>
+  </data>
+  <data name="AuditLevel" xml:space="preserve">
+    <value>Xếp hạng kiểm toán</value>
+  </data>
+  <data name="LastAssessment" xml:space="preserve">
+    <value>Lần đánh giá gần nhất</value>
+  </data>
+  <data name="LastAudit" xml:space="preserve">
+    <value>Lần kiểm toán gần nhất</value>
+  </data>
+  <data name="ClassType" xml:space="preserve">
+    <value>Loại đối tượng</value>
+  </data>
+  <data name="CurrentRiskLevel" xml:space="preserve">
+    <value>Mức xếp hạng rủi ro hiện tại</value>
+  </data>
+  <data name="ReasonForEdit" xml:space="preserve">
+    <value>Lý do điều chỉnh</value>
+  </data>
+  <data name="ReasonPassAudit" xml:space="preserve">
+    <value>Lý do không đưa vào kiểm toán</value>
+  </data>
+  <data name="CreatorAt" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="CreatorName" xml:space="preserve">
+    <value>Người tạo</value>
+  </data>
+  <data name="EditorAt" xml:space="preserve">
+    <value>Ngày sửa</value>
+  </data>
+  <data name="EditorName" xml:space="preserve">
+    <value>Người sửa</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Loại kiến nghị</value>
+  </data>
+  <data name="UserDistribution" xml:space="preserve">
+    <value>Phân bổ người dùng</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Xóa dữ liệu thành công</value>
+  </data>
+  <data name="UserGroupContaintUser" xml:space="preserve">
+    <value>Nhóm người dùng đang chứa người dùng, bạn không thể xoá</value>
+  </data>
+  <data name="PermissionOfRole" xml:space="preserve">
+    <value>Phân quyền vai trò</value>
+  </data>
+  <data name="Error101" xml:space="preserve">
+    <value>Tổng trọng số của yếu tố lớn hơn 100%. Vui lòng điều chỉnh lại các trọng số</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Ngày tạo</value>
+  </data>
+  <data name="CreateUser" xml:space="preserve">
+    <value>Người tạo</value>
+  </data>
+  <data name="DetectType" xml:space="preserve">
+    <value>Loại phát hiện</value>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Ngày cập nhật</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>Người cập nhật</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Tên vai trò</value>
+  </data>
+  <data name="Actived" xml:space="preserve">
+    <value>Hoạt Động</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Khóa</value>
+  </data>
+  <data name="ChangePasswordFailed" xml:space="preserve">
+    <value>Cập nhật mật khẩu thất bại</value>
+  </data>
+  <data name="ChangePasswordSuccess" xml:space="preserve">
+    <value>Cập nhật mật khẩu thành công</value>
+  </data>
+  <data name="ChangeWorkPlaceFailed" xml:space="preserve">
+    <value>Cập nhật nơi làm việc thất bại</value>
+  </data>
+  <data name="ChangeWorkPlaceSuccess" xml:space="preserve">
+    <value>Cập nhật nơi làm việc thành công</value>
+  </data>
+  <data name="CheckMatchPassword" xml:space="preserve">
+    <value>Mật khẩu không trùng khớp</value>
+  </data>
+  <data name="DeletedFailed" xml:space="preserve">
+    <value>Xóa dữ liệu không thành công</value>
+  </data>
+  <data name="HasDoubleWhiteSpace" xml:space="preserve">
+    <value>Vui lòng nhập dữ liệu không có khoảng trắng liên tiếp</value>
+  </data>
+  <data name="HasWhiteSpace" xml:space="preserve">
+    <value>Vui lòng nhập dữ liệu không có khoảng trắng</value>
+  </data>
+  <data name="MaillCheck" xml:space="preserve">
+    <value>Vui lòng nhập địa chỉ email hợp lệ</value>
+  </data>
+  <data name="NoSpechars" xml:space="preserve">
+    <value>Vui lòng nhập dữ liệu không có ký tự đặc biệt</value>
+  </data>
+  <data name="PwCheckDigit" xml:space="preserve">
+    <value>Mật khẩu gồm ít nhất 1 chữ số</value>
+  </data>
+  <data name="PwCheckLower" xml:space="preserve">
+    <value>Mật khẩu gồm ít nhất 1 chữ cái viết thường</value>
+  </data>
+  <data name="PwCheckSpechars" xml:space="preserve">
+    <value>Mật khẩu gồm ít nhất 1 ký tự đăc biệt</value>
+  </data>
+  <data name="PwCheckUpper" xml:space="preserve">
+    <value>Mật khẩu gồm ít nhất 1 chữ cái viết hoa</value>
+  </data>
+  <data name="UpdateStatusFailed" xml:space="preserve">
+    <value>Cập nhật trạng thái thất bại</value>
+  </data>
+  <data name="UpdateStatusSuccess" xml:space="preserve">
+    <value>Cập nhật trạng thái thành công</value>
+  </data>
+  <data name="Validate_Max" xml:space="preserve">
+    <value>Vui lòng nhập giá trị nhỏ hơn hoặc bằng {0}</value>
+  </data>
+  <data name="Validate_MaxLength" xml:space="preserve">
+    <value>Vui lòng nhập không quá {0} ký tự</value>
+  </data>
+  <data name="Validate_Min" xml:space="preserve">
+    <value>Vui lòng nhập giá trị lớn hơn hoặc bằng {0}</value>
+  </data>
+  <data name="Validate_MinLength" xml:space="preserve">
+    <value>Vui lòng nhập ít nhất {0} ký tự</value>
+  </data>
+  <data name="Validate_Required" xml:space="preserve">
+    <value>Trường này là bắt buộc</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Tên nhóm</value>
+  </data>
+  <data name="UserManipulateData" xml:space="preserve">
+    <value>Người dùng đã thao tác tạo dữ liệu trên hệ thống</value>
+  </data>
+  <data name="ActRelate" xml:space="preserve">
+    <value>Hoạt động liên quan</value>
+  </data>
+  <data name="Error006" xml:space="preserve">
+    <value>Không thể xóa đối tượng do người khác tạo!</value>
+  </data>
+  <data name="Error007" xml:space="preserve">
+    <value>Đối tượng đang được sử dụng. Không thể xóa!</value>
+  </data>
+  <data name="Error008" xml:space="preserve">
+    <value>Đối tượng có bao gồm cấp con. Không thể xóa!</value>
+  </data>
+  <data name="FacRelate" xml:space="preserve">
+    <value>Đơn vị liên quan</value>
+  </data>
+  <data name="ProcessCode" xml:space="preserve">
+    <value>Mã quy trình</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Tên quy trình</value>
+  </data>
+  <data name="FacCode" xml:space="preserve">
+    <value>Mã đơn vị</value>
+  </data>
+  <data name="FacName" xml:space="preserve">
+    <value>Tên đơn vị</value>
+  </data>
+  <data name="FacParent" xml:space="preserve">
+    <value>Đơn vị cha</value>
+  </data>
+  <data name="MucXepHang" xml:space="preserve">
+    <value>Mức xếp hạng</value>
+  </data>
+  <data name="PointFrom" xml:space="preserve">
+    <value>Mức điểm từ</value>
+  </data>
+  <data name="PointTo" xml:space="preserve">
+    <value>Mức điểm đến</value>
+  </data>
+  <data name="RiskIssueCode" xml:space="preserve">
+    <value>Mã yếu tố</value>
+  </data>
+  <data name="RiskIssueName" xml:space="preserve">
+    <value>Tên yếu tố</value>
+  </data>
+  <data name="ConditionPoint" xml:space="preserve">
+    <value>Điều kiện đạt điểm</value>
+  </data>
+  <data name="StageQar" xml:space="preserve">
+    <value>Kỳ đánh giá</value>
+  </data>
+  <data name="StageYear" xml:space="preserve">
+    <value>Năm đánh giá</value>
+  </data>
+  <data name="ControlCode" xml:space="preserve">
+    <value>Mã kiểm soát</value>
+  </data>
+  <data name="ControlName" xml:space="preserve">
+    <value>Tên kiểm soát</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Quy trình</value>
+  </data>
+  <data name="RelateActivation" xml:space="preserve">
+    <value>Hoạt động liên quan</value>
+  </data>
+  <data name="RelateUnit" xml:space="preserve">
+    <value>Đơn vị liên quan</value>
+  </data>
+  <data name="Error102" xml:space="preserve">
+    <value>Kỳ đánh giá không thể kết thúc khi có đối tượng chưa hoàn thành đánh giá.</value>
+  </data>
+  <data name="Error103" xml:space="preserve">
+    <value>Kỳ đánh giá đã kết thúc</value>
+  </data>
+  <data name="Error201" xml:space="preserve">
+    <value>Yếu tố rủi ro chưa được khai báo thang điểm chấm điểm.</value>
+  </data>
+  <data name="NotStart" xml:space="preserve">
+    <value>Chưa bắt đầu</value>
+  </data>
+  <data name="NoDataImport" xml:space="preserve">
+    <value>File import không có dữ liệu</value>
+  </data>
+  <data name="Error800" xml:space="preserve">
+    <value>Có lỗi trong quá trình nhập, kiểm tra lại file dữ liệu import!</value>
+  </data>
+  <data name="ImportEmptyCode" xml:space="preserve">
+    <value>Mã không được đẻ trống!</value>
+  </data>
+  <data name="ImportEmptyName" xml:space="preserve">
+    <value>Tên không được đẻ trống!</value>
+  </data>
+  <data name="ImportDublicateCode" xml:space="preserve">
+    <value>Mã đã tồn tại trong hệ thống!</value>
+  </data>
+  <data name="ImportDublicateCodeInExcel" xml:space="preserve">
+    <value>Trùng mã với một hoặc nhiều bản ghi khác trong file Excel!</value>
+  </data>
+  <data name="ImportInvalidMail" xml:space="preserve">
+    <value>Địa chỉ Email không hợp lệ!</value>
+  </data>
+  <data name="ImportFacilityEmpty" xml:space="preserve">
+    <value>Đơn vị không được để trống!</value>
+  </data>
+  <data name="ImportFacilityNotFound" xml:space="preserve">
+    <value>Không tìm thấy đơn vị ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportActivityEmpty" xml:space="preserve">
+    <value>Hoạt động không được để trống!</value>
+  </data>
+  <data name="ImportActivityNotFound" xml:space="preserve">
+    <value>Không tìm thấy hoạt động ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportStatusNotValid" xml:space="preserve">
+    <value>Trạng thái không hợp lệ!</value>
+  </data>
+  <data name="Import801" xml:space="preserve">
+    <value>Mã đã tồn tại!</value>
+  </data>
+  <data name="Import802" xml:space="preserve">
+    <value>Mã không được để trống!</value>
+  </data>
+  <data name="Import803" xml:space="preserve">
+    <value>Tên không được để trống!</value>
+  </data>
+  <data name="Import804" xml:space="preserve">
+    <value>Mã cấp cha không tồn tại!</value>
+  </data>
+  <data name="Import805" xml:space="preserve">
+    <value>Loại đối tượng không hợp lệ!</value>
+  </data>
+  <data name="Import806" xml:space="preserve">
+    <value>Mã đối tượng và mã cấp cha không hợp lệ!</value>
+  </data>
+  <data name="EditAssessmentResult" xml:space="preserve">
+    <value>Chấm điểm yếu tố rủi ro</value>
+  </data>
+  <data name="Error104" xml:space="preserve">
+    <value>Chưa có cấu hình thang điểm chấm điểm cho giá trị!</value>
+  </data>
+  <data name="Error105" xml:space="preserve">
+    <value>Chưa có cấu hình thang điểm cho tổng giá trị rủi ro</value>
+  </data>
+  <data name="Import807" xml:space="preserve">
+    <value>Tồn tại dòng nhập cùng mã</value>
+  </data>
+  <data name="Import000" xml:space="preserve">
+    <value>Nhập thành công</value>
+  </data>
+  <data name="IssueRefresh" xml:space="preserve">
+    <value>Làm mới danh sách yếu tố</value>
+  </data>
+  <data name="Error009" xml:space="preserve">
+    <value>Tồn tại dữ liệu đánh giá rủi ro liên quan đến quy trình này, bạn không thể xoá</value>
+  </data>
+  <data name="Error106" xml:space="preserve">
+    <value>Đã tồn tại thang điểm xếp hạng trùng khoảng điểm</value>
+  </data>
+  <data name="Error202" xml:space="preserve">
+    <value>Giá trị yếu tố rủi ro không hợp lệ</value>
+  </data>
+  <data name="Error203" xml:space="preserve">
+    <value>Giá trị điều kiện cận dưới không hợp lệ</value>
+  </data>
+  <data name="Error204" xml:space="preserve">
+    <value>Giá trị điều kiện cận trên không hợp lệ</value>
+  </data>
+  <data name="Error205" xml:space="preserve">
+    <value>Đã tồn tại khai báo cấu hình với điều kiện điểm tương ứng</value>
+  </data>
+  <data name="Error301" xml:space="preserve">
+    <value>Giá trị kỳ đánh giá không hợp lệ</value>
+  </data>
+  <data name="Error302" xml:space="preserve">
+    <value>Kỳ đánh giá đã tồn tại</value>
+  </data>
+  <data name="Error303" xml:space="preserve">
+    <value>Kỳ đánh giá đã kết thúc</value>
+  </data>
+  <data name="BsCode" xml:space="preserve">
+    <value>Mã hoạt động</value>
+  </data>
+  <data name="BsName" xml:space="preserve">
+    <value>Tên hoạt động</value>
+  </data>
+  <data name="AuditProProcess" xml:space="preserve">
+    <value>Quy trình</value>
+  </data>
+  <data name="BsProcess" xml:space="preserve">
+    <value>Hoạt động liên quan</value>
+  </data>
+  <data name="FacProcess" xml:space="preserve">
+    <value>Đơn vị liên quan</value>
+  </data>
+  <data name="EditAssessmentProporsal" xml:space="preserve">
+    <value>Điều chỉnh yếu tố</value>
+  </data>
+  <data name="RiskScale" xml:space="preserve">
+    <value>Xếp hạng rủi ro</value>
+  </data>
+  <data name="EditAuditResult" xml:space="preserve">
+    <value>Điều chỉnh kết quả đánh giá</value>
+  </data>
+  <data name="ConfirmDisable" xml:space="preserve">
+    <value>Tạm dừng cấp cha sẽ tạm dừng tất cả các cấp con của nó.</value>
+  </data>
+  <data name="ModifiedDate" xml:space="preserve">
+    <value>Ngày sửa</value>
+  </data>
+  <data name="ModifiedUser" xml:space="preserve">
+    <value>Người sửa</value>
+  </data>
+  <data name="FacApply" xml:space="preserve">
+    <value>Loại đơn vị áp dụng</value>
+  </data>
+  <data name="Error206" xml:space="preserve">
+    <value>Yếu tố rủi ro đã không hiệu lực!</value>
+  </data>
+  <data name="Error601" xml:space="preserve">
+    <value>Thang điểm chấm điểm đã được sử dụng cho bảng chấm điểm, không thể xóa!</value>
+  </data>
+  <data name="RatingScaleDelConf" xml:space="preserve">
+    <value>Bạn có chắc chắn muốn xóa thang điểm xếp hạng này không?</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Khách hàng</value>
+  </data>
+  <data name="Error107" xml:space="preserve">
+    <value>Xếp hạng rủi ro không tồn tại</value>
+  </data>
+  <data name="Error109" xml:space="preserve">
+    <value>Tỷ trọng không hợp lệ</value>
+  </data>
+  <data name="AuditCycleDelCfn" xml:space="preserve">
+    <value>Bạn có muốn xóa chu kỳ kiểm toán này?</value>
+  </data>
+  <data name="ParentIssue" xml:space="preserve">
+    <value>Yếu tố cha</value>
+  </data>
+  <data name="RiskIssueApplyFor" xml:space="preserve">
+    <value>Loại đối tượng áp dụng</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Trọng số (%)</value>
+  </data>
+  <data name="DelCfnAssessmentStage" xml:space="preserve">
+    <value>Bạn có muốn xóa kỳ đánh giá này?</value>
+  </data>
+  <data name="Audited_Activity" xml:space="preserve">
+    <value>Hoạt động được kiểm toán</value>
+  </data>
+  <data name="Audited_Process" xml:space="preserve">
+    <value>Quy trình được kiểm toán</value>
+  </data>
+  <data name="Auditor" xml:space="preserve">
+    <value>Kiểm toán viên</value>
+  </data>
+  <data name="Audit_Reason" xml:space="preserve">
+    <value>Lý do kiểm toán</value>
+  </data>
+  <data name="Audit_Scope_OutSide" xml:space="preserve">
+    <value>Giới hạn kiểm toán</value>
+  </data>
+  <data name="Audit_Team_Leader" xml:space="preserve">
+    <value>Trưởng nhóm kiểm toán</value>
+  </data>
+  <data name="Browsing_Status" xml:space="preserve">
+    <value>Trạng thái duyệt</value>
+  </data>
+  <data name="Estimated_Working_Days" xml:space="preserve">
+    <value>Số ngày công dự kiến</value>
+  </data>
+  <data name="Execution_Status" xml:space="preserve">
+    <value>Trạng thái thực hiện</value>
+  </data>
+  <data name="Expected_Number_Audits" xml:space="preserve">
+    <value>Số lượng KTV dự kiến</value>
+  </data>
+  <data name="Last_Audit_Time" xml:space="preserve">
+    <value>Thời gian kiểm toán gần nhất</value>
+  </data>
+  <data name="Actual_Date" xml:space="preserve">
+    <value>Ngày thực tế thực hiện</value>
+  </data>
+  <data name="Auditing_Censorship" xml:space="preserve">
+    <value>Kiểm duyệt cuộc kiểm toán</value>
+  </data>
+  <data name="Audit_Entity" xml:space="preserve">
+    <value>Thông tin ĐVĐKT</value>
+  </data>
+  <data name="Audit_Personnel" xml:space="preserve">
+    <value>Nhân sự KT</value>
+  </data>
+  <data name="Audit_Purpose" xml:space="preserve">
+    <value>Mục đích kiểm toán</value>
+  </data>
+  <data name="Classify" xml:space="preserve">
+    <value>Phân loại</value>
+  </data>
+  <data name="Code_Audit" xml:space="preserve">
+    <value>Mã cuộc kiểm toán</value>
+  </data>
+  <data name="Create_Audit" xml:space="preserve">
+    <value>Tạo mới cuộc kiểm toán</value>
+  </data>
+  <data name="Details_Audit" xml:space="preserve">
+    <value>Chi tiết cuộc kiểm toán</value>
+  </data>
+  <data name="End_Time" xml:space="preserve">
+    <value>Thời gian kết thúc</value>
+  </data>
+  <data name="Expected_Date" xml:space="preserve">
+    <value>Ngày dự kiến thực hiện</value>
+  </data>
+  <data name="General_Information" xml:space="preserve">
+    <value>Thông tin chung</value>
+  </data>
+  <data name="List_Audit" xml:space="preserve">
+    <value>Danh sách cuộc kiểm toán</value>
+  </data>
+  <data name="Name_Audit" xml:space="preserve">
+    <value>Tên cuộc kiểm toán</value>
+  </data>
+  <data name="Responsible_Person" xml:space="preserve">
+    <value>Người chịu trách nhiệm</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Lịch trình</value>
+  </data>
+  <data name="Scope_Assignment" xml:space="preserve">
+    <value>Phạm vi &amp; Phân công KT</value>
+  </data>
+  <data name="Start_Time" xml:space="preserve">
+    <value>Thời gian bắt đầu</value>
+  </data>
+  <data name="Update_Audit" xml:space="preserve">
+    <value>Cập nhật Kế hoạch cuộc kiểm toán</value>
+  </data>
+  <data name="Work" xml:space="preserve">
+    <value>Công việc</value>
+  </data>
+  <data name="Year_Audit" xml:space="preserve">
+    <value>Năm kiểm toán</value>
+  </data>
+  <data name="AuditProcedures" xml:space="preserve">
+    <value>Thủ tục kiểm toán</value>
+  </data>
+  <data name="BrowseUser" xml:space="preserve">
+    <value>Người duyệt</value>
+  </data>
+  <data name="ControlAssessment" xml:space="preserve">
+    <value>Đánh giá kiểm soát</value>
+  </data>
+  <data name="ControlDesignAssessment" xml:space="preserve">
+    <value>Đánh giá thiết kế kiểm soát</value>
+  </data>
+  <data name="ControlDesignConclusion" xml:space="preserve">
+    <value>Kết luận về thiết kế kiểm soát</value>
+  </data>
+  <data name="ControlDesignObserve" xml:space="preserve">
+    <value>Phát hiện về thiết kế kiểm soát</value>
+  </data>
+  <data name="InformationFor" xml:space="preserve">
+    <value>Thông tin về</value>
+  </data>
+  <data name="ObserveCode" xml:space="preserve">
+    <value>Mã phát hiện</value>
+  </data>
+  <data name="ObserveCreate" xml:space="preserve">
+    <value>Thêm phát hiện</value>
+  </data>
+  <data name="ObserveDescription" xml:space="preserve">
+    <value>Mô tả phát hiện</value>
+  </data>
+  <data name="ObserveName" xml:space="preserve">
+    <value>Tên phát hiện</value>
+  </data>
+  <data name="Perform" xml:space="preserve">
+    <value>Thực hiện</value>
+  </data>
+  <data name="Reviewer" xml:space="preserve">
+    <value>Người rà soát</value>
+  </data>
+  <data name="Risk" xml:space="preserve">
+    <value>Rủi ro</value>
+  </data>
+  <data name="RiskCode" xml:space="preserve">
+    <value>Mã rủi ro</value>
+  </data>
+  <data name="RiskDescription" xml:space="preserve">
+    <value>Mô tả rủi ro</value>
+  </data>
+  <data name="RiskName" xml:space="preserve">
+    <value>Tên rủi ro</value>
+  </data>
+  <data name="SampleChoose" xml:space="preserve">
+    <value>Chọn mẫu</value>
+  </data>
+  <data name="SampleDescription" xml:space="preserve">
+    <value>Mô tả mẫu</value>
+  </data>
+  <data name="WorkAndResult" xml:space="preserve">
+    <value>Công việc thực hiện và kết quả</value>
+  </data>
+  <data name="ControlEvidence" xml:space="preserve">
+    <value>Bằng chứng kiểm toán</value>
+  </data>
+  <data name="ControlWorkAssessment" xml:space="preserve">
+    <value>Đánh giá hiệu quả hoạt động kiểm soát</value>
+  </data>
+  <data name="ControlWorkConclusion" xml:space="preserve">
+    <value>Kết luận về hiệu quả vận hành</value>
+  </data>
+  <data name="ControlWorkObserve" xml:space="preserve">
+    <value>Phát hiện kiểm toán về hiệu quả vận hành</value>
+  </data>
+  <data name="ObserveCreateNew" xml:space="preserve">
+    <value>Thêm mới phát hiện kiểm toán</value>
+  </data>
+  <data name="SendBrowse" xml:space="preserve">
+    <value>Gửi phê duyệt</value>
+  </data>
+  <data name="PersonBrowse" xml:space="preserve">
+    <value>Người duyệt</value>
+  </data>
+  <data name="CensorshipSuccess" xml:space="preserve">
+    <value>Kiểm duyệt thành công</value>
+  </data>
+  <data name="CreateSuccess" xml:space="preserve">
+    <value>Thêm mới thành công</value>
+  </data>
+  <data name="Error416" xml:space="preserve">
+    <value>Tên đã tồn tại</value>
+  </data>
+  <data name="Error426" xml:space="preserve">
+    <value>Tên không được để trống</value>
+  </data>
+  <data name="ResetSuccess" xml:space="preserve">
+    <value>Thiết lập dữ liệu thành công</value>
+  </data>
+  <data name="Error499" xml:space="preserve">
+    <value>Ngày bắt đầu không được lớn hơn ngày kết thúc</value>
+  </data>
+  <data name="Error403" xml:space="preserve">
+    <value>Người dùng này không có quyền xóa dữ liệu</value>
+  </data>
+  <data name="Error407" xml:space="preserve">
+    <value>Tồn tại đơn vị liên quan đến loại đơn vị này</value>
+  </data>
+  <data name="Evaluation_Criteria" xml:space="preserve">
+    <value>Tiêu chí đánh giá</value>
+  </data>
+  <data name="Evaluation_Criteria_Code" xml:space="preserve">
+    <value>Mã tiêu chí</value>
+  </data>
+  <data name="Evaluation_Criteria_Group" xml:space="preserve">
+    <value>Nhóm tiêu chí</value>
+  </data>
+  <data name="Evaluation_Criteria_Header" xml:space="preserve">
+    <value>Tiêu chí đánh giá (KPI) chất lượng kiểm toán nội bộ</value>
+  </data>
+  <data name="Evaluation_Criteria_Name" xml:space="preserve">
+    <value>Tên tiêu chí</value>
+  </data>
+  <data name="Evaluation_Criteria_Parent" xml:space="preserve">
+    <value>Tiêu chí cha</value>
+  </data>
+  <data name="Error002" xml:space="preserve">
+    <value>Điểm đã tồn tại</value>
+  </data>
+  <data name="Evaluation_Scale" xml:space="preserve">
+    <value>Thang điểm đánh giá</value>
+  </data>
+  <data name="Evaluation_Scale_Header" xml:space="preserve">
+    <value>Thang điểm đánh giá chất lượng kiểm toán</value>
+  </data>
+  <data name="Evaluation_Scale_Point" xml:space="preserve">
+    <value>Mức điểm</value>
+  </data>
+  <data name="Evaluation_Standard" xml:space="preserve">
+    <value>Chuẩn mực KTNB</value>
+  </data>
+  <data name="Evaluation_Standard_Code" xml:space="preserve">
+    <value>Số hiệu</value>
+  </data>
+  <data name="Evaluation_Standard_Header" xml:space="preserve">
+    <value>Chuẩn mực kiểm toán nội bộ Việt Nam</value>
+  </data>
+  <data name="Evaluation_Standard_Request" xml:space="preserve">
+    <value>Yêu cầu</value>
+  </data>
+  <data name="Evaluation_Standard_Title" xml:space="preserve">
+    <value>Tiêu đề chuẩn mực</value>
+  </data>
+  <data name="Actual" xml:space="preserve">
+    <value>Thực tế</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Tiêu chí</value>
+  </data>
+  <data name="CriteriaRefresh" xml:space="preserve">
+    <value>Làm mới các tiêu chí</value>
+  </data>
+  <data name="Evaluation" xml:space="preserve">
+    <value>Đánh giá chất lượng cuộc kiểm toán</value>
+  </data>
+  <data name="Explain" xml:space="preserve">
+    <value>Giải thích</value>
+  </data>
+  <data name="Plan" xml:space="preserve">
+    <value>Kế hoạch</value>
+  </data>
+  <data name="EvaluationNotInit" xml:space="preserve">
+    <value>Đánh giá chất lượng cuộc kiểm toán chưa được khởi tạo</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Tuân thủ</value>
+  </data>
+  <data name="Evaluation_Compliance" xml:space="preserve">
+    <value>Đánh giá tuân thủ chuẩn mực KTNB Việt Nam</value>
+  </data>
+  <data name="Evaluation_Compliance_Header" xml:space="preserve">
+    <value>Đánh giá tuân thủ</value>
+  </data>
+  <data name="Evaluation_Compliance_Plan" xml:space="preserve">
+    <value>Kế hoạch khắc phục</value>
+  </data>
+  <data name="Evaluation_Compliance_Reason" xml:space="preserve">
+    <value>Lý do không tuân thủ</value>
+  </data>
+  <data name="Evaluation_Compliance_Refresh" xml:space="preserve">
+    <value>Làm mới danh sách</value>
+  </data>
+  <data name="Evaluation_Compliance_Reponsible" xml:space="preserve">
+    <value>Người chịu trách nhiệm</value>
+  </data>
+  <data name="Evaluation_Compliance_Time" xml:space="preserve">
+    <value>Thời gian cam kết hoàn thành</value>
+  </data>
+  <data name="Browsed" xml:space="preserve">
+    <value>Đã duyệt</value>
+  </data>
+  <data name="Observe" xml:space="preserve">
+    <value>Phát hiện</value>
+  </data>
+  <data name="Report_Year_Concerns" xml:space="preserve">
+    <value>Quan ngại chính của KTNB</value>
+  </data>
+  <data name="Report_Year_Evaluation" xml:space="preserve">
+    <value>Đánh giá tổng quan của KTNB</value>
+  </data>
+  <data name="Report_Year_Header_1" xml:space="preserve">
+    <value>Đánh giá tổng quan của kiểm toán nội bộ</value>
+  </data>
+  <data name="Report_Year_Header_2" xml:space="preserve">
+    <value>Tình hình thực hiện kế hoạch kiểm toán nội bộ năm</value>
+  </data>
+  <data name="Report_Year_Header_2_1" xml:space="preserve">
+    <value>Tình hình thực hiện Kế hoạch kiểm toán nội bộ</value>
+  </data>
+  <data name="Report_Year_Header_2_2" xml:space="preserve">
+    <value>Kết quả các cuộc kiểm toán đã phát hành báo cáo trong năm</value>
+  </data>
+  <data name="Report_Year_Header_2_3" xml:space="preserve">
+    <value>Các phát hiện kiểm toán trọng yếu</value>
+  </data>
+  <data name="Report_Year_Header_2_4" xml:space="preserve">
+    <value>Tình hình thực hiện các kiến nghị của kiểm toán nội bộ</value>
+  </data>
+  <data name="Report_Year_Header_3" xml:space="preserve">
+    <value>Công tác quản trị chất lượng hoạt động KTNB</value>
+  </data>
+  <data name="Report_Year_Name" xml:space="preserve">
+    <value>Tên báo cáo</value>
+  </data>
+  <data name="Report_Year_Note" xml:space="preserve">
+    <value>Các vấn đề cần lưu ý</value>
+  </data>
+  <data name="Report_Year_Quality" xml:space="preserve">
+    <value>Công tác quản trị chất lượng hoạt động KTNB</value>
+  </data>
+  <data name="Report_Year_Reason" xml:space="preserve">
+    <value>Lý do không hoàn thành kế hoạch</value>
+  </data>
+  <data name="Report_Year_Title" xml:space="preserve">
+    <value>Báo cáo kiểm toán năm</value>
+  </data>
+  <data name="Report_Year_Audit_Complete" xml:space="preserve">
+    <value>Số lượng cuộc KT đã hoàn thành</value>
+  </data>
+  <data name="Report_Year_Audit_Plan" xml:space="preserve">
+    <value>Số lượng cuộc KT theo kế hoạch</value>
+  </data>
+  <data name="Report_Year_Audit_Unexpected" xml:space="preserve">
+    <value>Số lượng cuộc KT đột xuất</value>
+  </data>
+  <data name="Report_Year_Complete_Date" xml:space="preserve">
+    <value>Ngày hoàn thành báo cáo</value>
+  </data>
+  <data name="Report_Year_Content_Request" xml:space="preserve">
+    <value>Nội dung kiến nghị</value>
+  </data>
+  <data name="Report_Year_Current" xml:space="preserve">
+    <value>Năm hiện tại (N)</value>
+  </data>
+  <data name="Report_Year_Implementation" xml:space="preserve">
+    <value>Tình hình thực hiện</value>
+  </data>
+  <data name="Report_Year_Level_Audit" xml:space="preserve">
+    <value>Mức xếp hạng kiểm toán</value>
+  </data>
+  <data name="Report_Year_Number_Audit" xml:space="preserve">
+    <value>Số lượng phát hiện kiểm toán</value>
+  </data>
+  <data name="Report_Year_Previous" xml:space="preserve">
+    <value>Năm liền trước (N-1)</value>
+  </data>
+  <data name="Report_Year_Risk_High" xml:space="preserve">
+    <value>Mức rủi ro cao</value>
+  </data>
+  <data name="Report_Year_Risk_Medium" xml:space="preserve">
+    <value>Mức rủi ro trung bình</value>
+  </data>
+  <data name="Report_Year_Summon_Observe" xml:space="preserve">
+    <value>Tóm tắt phát hiện</value>
+  </data>
+  <data name="Report_Year_Time" xml:space="preserve">
+    <value>Thời gian</value>
+  </data>
+  <data name="Report_Year_Volatility" xml:space="preserve">
+    <value>Biến động (%)</value>
+  </data>
+  <data name="Report_Yeart_Audit_High" xml:space="preserve">
+    <value>Phát hiện kiểm toán rủi ro cao</value>
+  </data>
+  <data name="Report_Year_Audit_Medium" xml:space="preserve">
+    <value>Phát hiển kiểm toán rủi ro trung bình</value>
+  </data>
+  <data name="Report_Year_Beginning" xml:space="preserve">
+    <value>Đầu kỳ</value>
+  </data>
+  <data name="Report_Year_Close" xml:space="preserve">
+    <value>Đã đóng trong kỳ</value>
+  </data>
+  <data name="Report_Year_Ending" xml:space="preserve">
+    <value>Cuối kỳ</value>
+  </data>
+  <data name="Report_Year_Header_2_5" xml:space="preserve">
+    <value>Công tác theo dõi khắc phục các vấn đề do Thanh tra/Kiểm toán nhà nước/Kiểm toán độc lập đưa ra (nếu có)</value>
+  </data>
+  <data name="Report_Year_Notclose" xml:space="preserve">
+    <value>Chưa đóng trong kỳ</value>
+  </data>
+  <data name="Report_Year_Total" xml:space="preserve">
+    <value>Tổng số</value>
+  </data>
+  <data name="Error417" xml:space="preserve">
+    <value>Có chương trình kiểm toán liên quan</value>
+  </data>
+  <data name="Error108" xml:space="preserve">
+    <value>Đã tồn tại chu kỳ kiểm toán cùng mức độ</value>
+  </data>
+  <data name="ObjectCode" xml:space="preserve">
+    <value>Mã đối tượng</value>
+  </data>
+  <data name="TotalPoint" xml:space="preserve">
+    <value>Tổng điểm</value>
+  </data>
+  <data name="Error010" xml:space="preserve">
+    <value>Yếu tố rủi ro đã được dùng để chấm điểm . Không thể xóa!</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Khác</value>
+  </data>
+  <data name="Error011" xml:space="preserve">
+    <value>Yếu tố rủi ro đã có thang điểm chấm điểm. Không thể xóa!</value>
+  </data>
+  <data name="Error498" xml:space="preserve">
+    <value>Thời hiệu kiểm toán từ không được lớn hơn thời hiệu kiểm toán kết thúc</value>
+  </data>
+  <data name="ProvideUnit" xml:space="preserve">
+    <value>Đơn vị cung cấp</value>
+  </data>
+  <data name="Error497" xml:space="preserve">
+    <value>Ngày phát hành báo cáo không được nhỏ hơn ngày kết thúc thực địa</value>
+  </data>
+  <data name="ImportCodeControlEmpty" xml:space="preserve">
+    <value>Mã kiểm soát không được để trống</value>
+  </data>
+  <data name="ImportCodeControlExisting" xml:space="preserve">
+    <value>Mã kiểm soát đã tồn tại!</value>
+  </data>
+  <data name="ImportCodeControlExistingInImportFile" xml:space="preserve">
+    <value>Mã kiểm soát đã tồn tại trong file nhập!</value>
+  </data>
+  <data name="ImportControlFormalEmpty" xml:space="preserve">
+    <value>Hình thức kiểm soát không được để trống!</value>
+  </data>
+  <data name="ImportControlFormalNotFound" xml:space="preserve">
+    <value>Không tìm thấy hình thức kiểm soát ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportControlFrequencyNotFound" xml:space="preserve">
+    <value>Không tìm thấy tần suất kiểm soát ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportControlFrequencyEmpty" xml:space="preserve">
+    <value>Tần suất kiểm soát không được để trống!</value>
+  </data>
+  <data name="ImportProcessNameEmpty" xml:space="preserve">
+    <value>Tên quy trình không được để trống!</value>
+  </data>
+  <data name="ImportProcessNameNotFound" xml:space="preserve">
+    <value>Không tìm thấy tên quy trình ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportControlTypeEmpty" xml:space="preserve">
+    <value>Loại kiểm soát không được để trống!</value>
+  </data>
+  <data name="ImportControlTypeNotFound" xml:space="preserve">
+    <value>Không tìm thấy loại kiểm soát ứng với dữ liệu đã cho!</value>
+  </data>
+  <data name="ImportDescriptionEmpty" xml:space="preserve">
+    <value>Kiểm soát theo quy định không được để trống!</value>
+  </data>
+  <data name="ImportDocNameExistingInImportFile" xml:space="preserve">
+    <value>Tên tài liệu đã tồn tại trong file</value>
+  </data>
+  <data name="ImportDocumentExisting" xml:space="preserve">
+    <value>Tên tài liệu đã tồn tại trong Db</value>
+  </data>
+  <data name="ImportDocumentNameEmpty" xml:space="preserve">
+    <value>Tên tài liệu không được bỏ trống</value>
+  </data>
+  <data name="EmailResponNotEmpty" xml:space="preserve">
+    <value>Email người phụ trách không được bỏ trống</value>
+  </data>
+  <data name="FormatDateError" xml:space="preserve">
+    <value>Nhập đúng định dạng dd/MM/yyyy</value>
+  </data>
+  <data name="ImportProvideDateLessThanCurrentDateError" xml:space="preserve">
+    <value>Thời gian cung cấp &lt;= ngày hiện tại</value>
+  </data>
+  <data name="ImportProvideDateNotEmpty" xml:space="preserve">
+    <value>Thời hạn cung cấp không được bỏ trống</value>
+  </data>
+</root>

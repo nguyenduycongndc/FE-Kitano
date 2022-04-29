@@ -1,0 +1,55 @@
+﻿@using RiskAssessment.Resource;
+<div class="modal fade" id="modalAuditHistory" tabindex="-1" role="dialog" aria-labelledby="modalAuditHistoryLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAuditHistoryLabel">@Resource.AuditHistory</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>3 @Resource.LastAssessment</h5>
+                <div class="table-responsive custom-table-scroll">
+                    <table id="tblAssessmentHistory" class="table" style="table-layout: fixed">
+                        <caption hidden="true">Lịch sử đánh giá</caption>
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col">@Resource.Year</th>
+                                <th scope="col">@Resource.Stage</th>
+                                <th scope="col">@Resource.StageValue</th>
+                                <th scope="col">@Resource.RiskLevel</th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+
+                <h5>3 @Resource.LastAudit</h5>
+                <div class="table-responsive custom-table-scroll">
+                    <table id="tblAuditHistory" class="table" style="table-layout: fixed">
+                        <caption hidden="true">Lịch sử kiểm toán</caption>
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col">@Resource.Year</th>
+                                <th scope="col">@Resource.AuditEvent</th>
+                                <th scope="col">@Resource.AuditDate</th>
+                                <th scope="col">@Resource.AuditLevel</th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer btn-action-group">
+                <div>
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

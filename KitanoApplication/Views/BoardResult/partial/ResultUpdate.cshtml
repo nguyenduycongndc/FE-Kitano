@@ -1,0 +1,90 @@
+﻿@using RiskAssessment.Resource;
+<div class="modal fade" id="modalResultUpdate" tabindex="-1" role="dialog" aria-labelledby="modalResultUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <input type="hidden" id="result_id" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalResultUpdateLabel">@Resource.EditAuditResult</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="result_applyfor" class="col-md-3 col-form-label">
+                        @Resource.ClassType
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="result_applyfor" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_object" class="col-md-3 col-form-label">
+                        @Resource.Object
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="result_object" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_risklevel" class="col-md-3 col-form-label">
+                        @Resource.CurrentRiskLevel
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" min="0" max="100" class="form-control" id="result_risklevel" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_riskleveledit" class="col-md-3 col-form-label">
+                        @Resource.RiskLevelEdit
+                    </label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="result_riskleveledit">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_auditedit" class="col-md-3 col-form-label">
+                        @Resource.ReasonForEdit
+                    </label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="3" id="result_auditedit"></textarea>
+                    </div>
+                </div>
+                <div class="form-group form-check row mt-1">
+                    <label for="result_auditproposal" class="col-md-3 col-form-label">
+                        &nbsp;
+                    </label>
+                    <input type="checkbox" class="form-check-input" id="result_auditproposal" style="position: inherit; margin-left: 1rem"
+                           onchange="changeAuditRequest(this)">
+                    <label class="form-check-label" for="result_auditproposal">@Resource.AuditProposal</label>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_auditresult" class="col-md-3 col-form-label">
+                        @Resource.AuditReason
+                    </label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="result_auditresult" disabled="disabled">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="result_auditnotresult" class="col-md-3 col-form-label">
+                        @Resource.ReasonPassAudit
+                    </label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" rows="3" id="result_reasonpassaudit"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer btn-action-group">
+                    <div>
+                        <button type="button" id="btnSubmit" class="btn btn-info  modal-btn-submit" onclick="updateBoardResult()"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Resource.Update</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

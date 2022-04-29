@@ -1,0 +1,28 @@
+﻿
+.nav-item {
+    border-bottom: 6px solid #ccc;
+/*    background-color: #f1f1f1;*/
+    border-collapse:collapse;
+}
+.nav-link.active {
+    /*    background-color:aqua !important*/
+    color: #2f80ed !important;
+    font-weight:bold;
+}
+.nav-tabs li a {
+    color:black;
+}
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width: 1200px;
+    }
+}
+#WidthColum {
+    /*max-width: 100px;
+    width: 100px !important;*/
+    min-width: 117px !important;
+}
+/*input[type="file"] */.custorm {
+    color: transparent;
+}

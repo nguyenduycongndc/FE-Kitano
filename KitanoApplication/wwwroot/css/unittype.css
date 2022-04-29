@@ -1,0 +1,60 @@
+﻿tr th.number1 {
+    width: 1% !important;
+}
+tr th.number2 {
+    width: 30% !important;
+}
+tr th.number3 {
+    width: 7% !important;
+}
+tr th.number4 {
+    width: 40% !important;
+}
+/*tr th.number5 {
+    width: 10% !important;
+}*/
+
+@media only screen and (width : 2560px) {
+    #optionCustomer {
+        width: 6% !important
+    }
+}
+@media only screen and (width : 1903px) {
+    #optionCustomer {
+        width: 12% !important
+    }
+}
+@media only screen and (width : 1440px) {
+    #optionCustomer {
+        width: 12% !important
+    }
+}
+@media only screen and (width : 1366px) {
+    #optionCustomer {
+        width: 13% !important
+    }
+}
+@media only screen and (width : 1280px) {
+    #optionCustomer {
+        width: 20% !important
+    }
+}
+@media only screen and (width : 1024px) {
+    #optionCustomer {
+        width: 20% !important
+    }
+}
+@media only screen and (min-device-width : 814px) and (max-device-width : 991px) {
+    #optionCustomer {
+        width: 10% !important
+    }
+}
+
+@media only screen and (min-device-width : 719px) and (max-device-width : 767px) {
+    #optionCustomer {
+        width: 10% !important
+    }
+}
+#OptionUnitType {
+    min-width: 117px !important;
+}

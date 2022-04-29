@@ -1,0 +1,20 @@
+﻿
+@media (min-width: 768px) {
+    .modal-xl {
+        width: 90%;
+        max-width: 1200px;
+    }
+}
+#styleOption{
+   min-width: 117px !important;
+}
+#styleAction {
+    max-width: 85px;
+    width: 85px !important;
+}
+#styleActionRequest {
+    min-width: 117px !important;
+}
+input[type="file"] {
+    color: transparent;
+}

@@ -1,0 +1,211 @@
+﻿<table>
+    <caption hidden></caption>
+    <thead style="background:none !important">
+        <tr>
+            <th scope="col" hidden>
+                <select id="cbPageSize" class="form-control" onchange="onReSearch()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20" selected="selected">20</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                </select>
+            </th>
+            <th scope="col" class="text-center" style="width: 10%">
+                <button class="btn btn-default" onclick="btnViewPages(1)" id="btnViewTopPage"><i
+                        class="fa fa-fast-backward" aria-hidden="true"></i></button>
+            </th>
+            <th scope="col" class="text-center" style="width: 10%;padding-right: 10px;">
+                <button class="btn btn-default" onclick="btnNextPages(-1)" id="btnViewPriPage"><i class="fa fa-backward"
+                        aria-hidden="true"></i></button>
+            </th>
+            <th scope="col" class="text-center" style="width: 20%">
+                <input class="form-control only-number" id="txtCurrentPage" value="1" onchange="onSearch()" />
+            </th>
+            <th scope="col" class="text-center" style="width: 10%">
+                /
+            </th>
+            <th scope="col" class="text-center" style="width: 20%;font-weight:normal" id="laCount">
+            </th>
+
+            <th scope="col" class="text-center" style="width: 10%">
+                <button class="btn btn-default" onclick="btnNextPages(1)" id="btnViewNextPage"><i class="fa fa-forward"
+                        aria-hidden="true"></i></button>
+            </th>
+            <th scope="col" class="text-center" style="width: 10%">
+                <button class="btn btn-default" onclick="btnViewPages(maxPages)" id="btnViewLastPage"><i
+                        class="fa fa-fast-forward" aria-hidden="true"></i></button>
+            </th>
+        </tr>
+    </thead>
+
+</table>
+@*<div class='pagination-container' style="float:right">
+    <input type="hidden" id="cbPageSize" value="5" />
+    <input type="hidden" id="txtCurrentPage" value="1" />
+    <input type="hidden" id="laCount" />
+    <nav>
+    <ul class="pagination">
+    <li data-page="prev">
+    <span> < <span class="sr-only">(current)</span></span>
+    </li>
+    <li data-page="next" id="prev">
+    <span> > <span class="sr-only">(current)</span></span>
+    </li>
+    </ul>
+    </nav>
+    </div>*@
+
+<script type="text/javascript">
+    var dataList = {};
+    dataList.Total = 0;
+    dataList.Sum = 0;
+    var maxPages = 1;
+
+    function reCalculatPagesCustom(total) {
+        dataList.Total = total;
+        var size = parseInt($("#cbPageSize").val());
+        var byBlock = parseInt(dataList.Total / size);
+        var byAdd = dataList.Total % size > 0 ? 1 : 0;
+        maxPages = byBlock + byAdd;
+        $("#laCount").text(maxPages);
+        $("#rqSumValue").text(formatNumberByLocate(dataList.Sum));
+    }
+    function reCalculatPagesCustomNull() {
+        document.getElementById("btnViewTopPage").disabled = true;
+        document.getElementById("btnViewPriPage").disabled = true;
+        document.getElementById("btnViewNextPage").disabled = true;
+        document.getElementById("btnViewLastPage").disabled = true;
+    }
+
+    function reCalculatPages() {
+        var size = parseInt($("#cbPageSize").val());
+        var byBlock = parseInt(dataList.Total / size);
+        var byAdd = dataList.Total % size > 0 ? 1 : 0;
+        maxPages = byBlock + byAdd;
+        $("#laCount").text(formatNumberByLocate(maxPages));
+        $("#rqSumValue").text(formatNumberByLocate(dataList.Sum));
+    }
+
+    function btnNextPages(isAdd) {
+        var currentPage = parseInt($("#txtCurrentPage").val());
+        currentPage += isAdd;
+        if (currentPage <= 1)
+            currentPage = 1;
+        if (currentPage >= maxPages)
+            currentPage = maxPages;
+
+        btnViewPages(currentPage)
+    }
+    function btnViewPages(page) {
+        $("#txtCurrentPage").val(page)
+        onSearch();
+    }
+    function onReSearch() {
+        $("#txtCurrentPage").val(1)
+        onSearch();
+    }
+    function viewBtnActionPage() {
+        var currentPage = parseInt($("#txtCurrentPage").val());
+        document.getElementById("btnViewTopPage").disabled = false;
+        document.getElementById("btnViewPriPage").disabled = false;
+        document.getElementById("btnViewNextPage").disabled = false;
+        document.getElementById("btnViewLastPage").disabled = false;
+        if (currentPage == 1) {
+            document.getElementById("btnViewTopPage").disabled = true;
+            document.getElementById("btnViewPriPage").disabled = true;
+        }
+        if (currentPage == maxPages) {
+            document.getElementById("btnViewNextPage").disabled = true;
+            document.getElementById("btnViewLastPage").disabled = true;
+        }
+    }
+
+    //New Paging
+    //function reCalculatPagesCustom(total) {
+    //    var lastPage = $("#txtCurrentPage").val();
+
+    //    $('.pagination')
+    //        .find('li')
+    //        .slice(1, -1)
+    //        .remove();
+    //    var trnum = 0; // reset tr counter
+    //    var maxRows = $("#cbPageSize").val(); // get Max Rows from select option
+
+    //    if (maxRows == 5000) {
+    //        $('.pagination').hide();
+    //    } else {
+    //        $('.pagination').show();
+    //    }
+
+    //    var totalRows = total; // numbers of rows
+    //    if (totalRows > maxRows) {
+    //        // if tr total rows gt max rows option
+    //        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
+    //        //	numbers of pages
+    //        for (var i = 1; i <= pagenum;) {
+    //            // for each page append pagination li
+    //            $('.pagination #prev')
+    //                .before(
+    //                    '<li data-page="' +
+    //                    i +
+    //                    '">\
+    //                              <span>' +
+    //                    i++ +
+    //                    '<span class="sr-only">(current)</span></span>\
+    //                            </li>'
+    //                )
+    //                .show();
+    //        } // end for i
+    //    } // end if row count > max rows
+    //    $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the first li
+    //    $('.pagination li').on('click', function (evt) {
+    //        // on click each page
+    //        evt.stopImmediatePropagation();
+    //        evt.preventDefault();
+    //        var pageNum = $(this).attr('data-page'); // get it's number
+    //        if (pageNum == 'prev') {
+    //            if (lastPage == 1) {
+    //                return;
+    //            }
+    //            pageNum = --lastPage;
+    //        }
+    //        if (pageNum == 'next') {
+    //            if (lastPage == $('.pagination li').length - 2) {
+    //                return;
+    //            }
+    //            pageNum = ++lastPage;
+    //        }
+
+    //        lastPage = pageNum;
+    //        $('.pagination li').removeClass('active'); // remove active class from all li
+    //        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
+    //        // $(this).addClass('active');					// add active class to the clicked
+    //        limitPagging();
+    //        $("#txtCurrentPage").val(pageNum);
+    //        onSearch();
+    //    }); // end of on click pagination list
+    //    limitPagging();
+    //}
+    //function limitPagging() {
+    //    // alert($('.pagination li').length)
+
+    //    if ($('.pagination li').length > 7) {
+    //        if ($('.pagination li.active').attr('data-page') <= 3) {
+    //            $('.pagination li:gt(5)').hide();
+    //            $('.pagination li:lt(5)').show();
+    //            $('.pagination [data-page="next"]').show();
+    //        } if ($('.pagination li.active').attr('data-page') > 3) {
+    //            $('.pagination li:gt(0)').hide();
+    //            $('.pagination [data-page="next"]').show();
+    //            for (let i = (parseInt($('.pagination li.active').attr('data-page')) - 2); i <= (parseInt($('.pagination li.active').attr('data-page')) + 2); i++) {
+    //                $('.pagination [data-page="' + i + '"]').show();
+
+    //            }
+
+    //        }
+    //    }
+    //}
+</script>

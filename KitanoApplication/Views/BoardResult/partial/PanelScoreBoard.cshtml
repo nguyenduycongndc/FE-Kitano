@@ -1,0 +1,32 @@
+﻿@using RiskAssessment.Resource;
+<!-- panelScoreBoard -->
+<div class="table-responsive  custom-table-scroll">
+    <table id="tblRiskScore" class="table dataTable">
+        <thead class="contain-header-custom m-gray">
+            <tr>
+                <th scope="col" style="width: 3rem; text-align: center"></th>
+                <th scope="col" style="width: 10rem">@Resource.ObjectCode</th>
+                <th scope="col" style="min-width:200px !important">@Resource.Object</th>
+                <th scope="col" style="width: 10rem">@Resource.Class</th>
+                <th scope="col" class="sorting" data-sort-code="AssessmentPoint" style="width: 10rem">@Resource.TotalPoint</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskScale</th>
+                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditResult</th>
+                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                <th scope="col" style="width: 10rem">@Resource.AuditProposal</th>
+                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                <th scope="col" style="width: 10rem">@Resource.StageState</th>
+                <th scope="col" style="width: 10rem">@Resource.Action</th>
+            </tr>
+        </thead>
+        <tbody class="contain-tbody-custom">
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-7"></div>
+    <div class="col-md-5">
+        <partial name="_Pagination" />
+    </div>
+</div>

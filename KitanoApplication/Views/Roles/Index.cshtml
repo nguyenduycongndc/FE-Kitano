@@ -1,0 +1,345 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/js/jstree/themes/default/style.min.css" rel="stylesheet" />
+<style>
+    .jstree-default .jstree-clicked {
+        background: none !important;
+    }
+</style>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; " id="header-view">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.SystemManagement</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.RolesManagement</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; display: none" id="header-create">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.SystemManagement</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.RolesManagement</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.Create</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; display: none" id="header-edit">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.SystemManagement</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.RolesManagement</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.Edit</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; display: none" id="header-detail">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.SystemManagement</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.RolesManagement</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.Detail</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; display: none" id="header-role">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.SystemManagement</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.RolesManagement</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.PermissionOfRole</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.RolesManagement
+        </div>
+        <div class="card-body card-custom">
+            <form action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @if (Utils.IsCheckPemission("M_R", "PER_ADD") == true)
+                    {
+                        <a href="javascript:void(0);" onclick="openView(1,0,'@Html.Raw(Resource.Create)')" class="btn btn-info" onmouseup="setTimeout(function () { document.getElementById('FullName').focus() }, 10); "> @Resource.Create</a>
+                    }
+                    @*<a href="javascript:void(0);" onclick="DeleteAll()" class="btn btn-info"> @Resource.Delete</a>*@
+                    <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i> @Resource.SearchOption</a>
+                </div>
+                <div class="collapse " id="collapseSearch" style="margin-top:5px; margin-bottom:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.RoleName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="filterFullName" name="filterFullName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.Description
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="filterDescription" name="filterDescription">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="filterStatus">
+                                        <option value="-1" selected="selected">-- @Resource.All --</option>
+                                        <option value="0">@Resource.Block</option>
+                                        <option value="1">@Resource.Actived</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3 btn-search-custom">
+                        <div style="text-align:center; ">
+                            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()">@Resource.Search</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive custom-table-scroll">
+                <table id="rolestable" class="table table-striped table-bordered zero-configuration" style="width: 100%;">
+                    <thead class="contain-header-custom m-gray ">
+                        <tr>
+                            <th class="text-center" style="width:4%;max-width:4% ">STT</th>
+                            <th class="text-center" style="width:31%"> @Resource.RoleName</th>
+                            <th class="text-center" style="width:8%;max-width:8% "> @Resource.Status</th>
+                            <th class="text-center" style="width:33%"> @Resource.Description</th>
+                            <th class="text-center" style="width:24%"> @Resource.Option</th>
+                        </tr>
+                    </thead>
+                    <tbody class="contain-tbody-custom ">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="modify" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeader" style=" font-size: 1rem; ">
+            @Resource.Create/@Resource.Edit
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-users" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.RoleName <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="FullName" name="FullName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Status">
+                                        <option value="0">@Resource.Block</option>
+                                        <option value="1" selected="selected">@Resource.Actived</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    @Resource.Description
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="4" id="Description" name="Description" style="margin-top: 0px; margin-bottom: 0px; height: 76px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%"> @Resource.Save</button>
+                            </div>
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)"> @Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="detail" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Detail
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-users-detail" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.RoleName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="FullName" name="FullName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Status">
+                                        <option value="0">@Resource.Block</option>
+                                        <option value="1" selected="selected">@Resource.Actived</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    @Resource.Description
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="4" id="Description" name="Description" style="margin-top: 0px; margin-bottom: 0px; height: 76px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.CreateUser
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="CreateUser" name="CreateUser" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.CreatorAt
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="CreatorAt" name="CreatorAt" class="form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.UpdateUser
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="UpdateUser" name="UpdateUser" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    @Resource.UpdateDate
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="UpdateDate" name="UpdateDate" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)"> @Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card" id="roles" style="display: none">
+        <div class="card-header bg-primary text-white" id="permission_header" style=" font-size: 1rem; ">
+            @Resource.PermissionOfRole
+        </div>
+        <div class="card-body card-custom">
+            <div class="action-control" style="position: -webkit-sticky;position: sticky;top: 0;z-index: 1;background: white;margin: 15px 15px 15px 10px;">
+                <a href="javascript:;" title="Mở tất cả" class="text-toolbox Close-TreeView" style="font-size: 18px;color: black;"><i class="far fa-caret-square-right"></i>&nbsp;Đóng tất cả</a>&nbsp;&nbsp;
+                <a href="javascript:;" title="Đóng tất cả" class="text-toolbox Open-TreeView" style="font-size: 18px;color: black;"><i class="far fa-caret-square-down"></i>&nbsp;Mở tất cả</a>
+            </div>
+            <div style="zoom: 106%;max-height: 500px;overflow: auto;">
+                <form id="form-users-roles" class="form-valide" action="#" method="post">
+                    <input type="hidden" id="Id" name="Id" value="0" />
+                    <div class="well" id="treeview_div">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                    <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-info" style="width:100%" onclick="ActionSave()"> @Resource.Save</button>
+                    </div>
+                    <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)"> @Resource.Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/api.construct.js"></script>
+    <script src="~/js/jsApp/systemroles.js" type="text/javascript" asp-append-version="true"></script>
+}
+

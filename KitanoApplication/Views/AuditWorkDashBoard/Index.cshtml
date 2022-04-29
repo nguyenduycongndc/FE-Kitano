@@ -1,0 +1,239 @@
+﻿@using RiskAssessment.Resource;
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+<link href="~/js/chart/apexcharts/apexcharts.css" rel="stylesheet" />
+<style>
+    .apexcharts-legend {
+        display: flex !important;
+        justify-content: space-evenly !important;
+    }
+</style>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Theo dõi thực hiện các cuộc kiểm toán trong năm
+        </div>
+        <div class="card-body card-custom">
+            <div style="padding: 15px 0px;">
+                <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i> @Resource.SearchOption</a>
+            </div>
+            <div class="collapse " id="collapseSearch" style="margin-top:5px; margin-bottom:5px">
+                <div id="formSearch" class="col-md-12" style=" flex-direction: row; display: inline-flex; justify-content: space-between; align-items: flex-start; width: 100%; ">
+                    <div style="width:45%">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    @Resource.Year
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="yearCreate" name="yearCreate" onchange="onSearchAudit()">
+                                        <option value="">— Chọn —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width:55%">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 required">
+                                    Cuộc kiểm toán
+                                </label>
+                                <div class="col-lg-9">
+                                    <select class="form-control required" id="auditWork" name="auditWork">
+                                        <option value="">— Chọn —</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3 btn-search-custom">
+                    <div style="text-align:center; ">
+                        <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()"><i class="fa fa-search" aria-hidden="true"></i>@Resource.Search</a>
+                    </div>
+                </div>
+            </div>
+            <div id="report" class="row">
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>1. Tiến trình cuộc kiểm toán</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="col-md-12 row">
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-5">
+                                    Người phụ trách
+                                </label>
+                                <strong class="col-lg-7" style="padding: 0.375rem 0.75rem;" id="name"></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-5">
+                                    Số lượng KTV
+                                </label>
+                                <strong class="col-lg-7" style="padding: 0.375rem 0.75rem;" id="numberofauditor"></strong>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-5">
+                                    Ngày phát hành BCKT
+                                </label>
+                                <strong class="col-lg-7" style="padding: 0.375rem 0.75rem;" id="releasedate"></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-5">
+                                    Trạng thái hiện tại
+                                </label>
+                                <strong class="col-lg-7" style="padding: 0.375rem 0.75rem;" id="status"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div id="ChartPlan" style=" border: 1px solid #d5dce5;">
+
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>2. Risk Heat Map cho kế hoạch cuộc kiểm toán</h5>
+                </div>
+                <div class="col-md-9 row" style=" flex-direction: row; display: inline-flex; justify-content: space-between; align-items: flex-start; width: 100%; ">
+                    <div style="width:33%" id="riskhigh">
+                        @*<div class="col-md-12 mb-3" style="padding-right: 5px; ">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #6FCF97 !important; color: black !important; border-color: #6FCF97 !important; white-space: inherit; padding: 0px !important ">Rủi ro 1</button>
+                            </div>*@
+                    </div>
+                    <div style="width:33%" id="riskmedium">
+                        @*<div class="col-md-12 mb-3" style="padding-left: 5px; padding-right: 5px; ">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #ff813a !important; color: black !important; border-color: #ff813a !important; white-space: inherit; padding: 0px !important ">Rủi ro 2</button>
+                            </div>
+                            <div class="col-md-12 mb-3" style="padding-left: 5px; padding-right: 5px;">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #ff813a !important; color: black !important; border-color: #ff813a !important; white-space: inherit; padding: 0px !important ">Rủi ro 3</button>
+                            </div>*@
+                    </div>
+                    <div style="width:33%" id="risklow">
+                        @*<div class="col-md-12 mb-3" style="padding-left: 5px; ">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #fc403b !important; color: black !important; border-color: #fc403b !important; white-space: inherit; padding: 0px !important ">Rủi ro 4</button>
+                            </div>
+                            <div class="col-md-12 mb-3" style="padding-left: 5px; ">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #fc403b !important; color: black !important; border-color: #fc403b !important; white-space: inherit; padding: 0px !important ">Rủi ro 5</button>
+                            </div>
+                            <div class="col-md-12 mb-3" style="padding-left: 5px; ">
+                                <button type="button" class="btn" style="width: 100%; height: 70px; background-color: #fc403b !important; color: black !important; border-color: #fc403b !important; white-space: inherit; padding: 0px !important ">Rủi ro 6</button>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>3. Thống kê số lượng phát hiện kiểm toán</h5>
+                </div>
+                <div class="col-md-12 row-custom" style=" position: inherit; zoom: 95%; display: flex; ">
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-1">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Tổng số phát hiện
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;" id="total_risk"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-2">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Phát hiện RR thấp
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;" id="total_risk_low"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-3">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Phát hiện RR trung bình
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;" id="total_risk_medium"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding: 0px !important;">
+                        <div class="card gradient-4">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Phát hiện RR cao
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;" id="total_risk_high"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div id="chart" style=" border: 1px solid #d5dce5;"></div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>4. Tiến độ công việc của các kiểm toán viên</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="dashboard" class="table table-striped table-bordered dataTable">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray">
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th class="text-center" scope="col">Tên kiểm toán viên</th>
+                                    <th class="text-center" scope="col">Số lượng chương trình kiểm toán được phân công</th>
+                                    <th class="text-center nosticky" scope="col">Số giấy tờ làm việc</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/chart/apexcharts/apexcharts.js"></script>
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/auditworkdashboard.js" asp-append-version="true"></script>
+}

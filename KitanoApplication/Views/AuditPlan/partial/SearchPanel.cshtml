@@ -1,0 +1,119 @@
+﻿@using RiskAssessment.Resource;
+@{
+    var now = DateTime.Now.Year;
+}
+<div class="form-row">
+    <input type="hidden" id="TypeShowTable" name="TypeShowTable" value="0"/>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-year" class="col-md-2 col-form-label required">@Resource.Year</label>
+            <div class="col-md-9">
+                <input type="number" value="@now" class="form-control" id="search-year" aria-label="search-year" aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Cách hiển thị</label>
+            <div class="col-md-9">
+                <select class="form-control" id="TypeDisplay" onchange="ChangeTypeDisplay()">
+                    <option value="-1" selected="selected">--Tất cả--</option>
+                    <option value="1">Theo đơn vị</option>
+                    <option value="2">Theo hoạt động</option>
+                    <option value="3">Theo quy trình</option>
+                </select>
+            </div>
+        </div>
+    </div>
+  
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage" class="col-md-2 col-form-label required">@Resource.Stage</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage" onchange="changeStageValue()">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">@Resource.Year</option>
+                    <option value="2">@Resource.HalfYear</option>
+                    <option value="3">@Resource.Quarter</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search_apply_for" class="col-md-3 col-form-label">@Resource.ClassType</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search_apply_for">
+                    <option value="">----Chọn----</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-2 col-form-label">@Resource.StageValue</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage_value">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">@Resource.RiskLevel</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-risk_level">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="3">@Resource.High</option>
+                    <option value="2">@Resource.Mid</option>
+                    <option value="1">@Resource.Low</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label">Quy trình</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="QuyTrinhSearch" name="QuyTrinhSearch">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Hoạt động</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="HoatDongSearch" name="HoatDongSearch">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label">Đơn vị</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" id="DonViSearch" name="DonViSearch">
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-12 mb-3 btn-search-custom">
+        <div style="text-align:center; ">
+            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearchScope()"><i class="fa fa-search" aria-hidden="true"></i> @Resource.Search</a>
+        </div>
+    </div>
+</div>

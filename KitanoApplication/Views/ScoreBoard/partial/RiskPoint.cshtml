@@ -1,0 +1,77 @@
+﻿@using RiskAssessment.Resource;
+<div class="modal fade" id="modalRiskPoint" tabindex="-1" role="dialog" aria-labelledby="modalRiskPointLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRiskPointLabel">@Resource.EditAssessmentResult</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="riskissue_code" class="col-md-3 col-form-label">
+                        @Resource.RiskIssueCode
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="riskissue_code" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_name" class="col-md-3 col-form-label">
+                        @Resource.RiskIssueName
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="riskissue_name" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1 for-manual need-hide">
+                    <label for="riskissue_point" class="col-md-3 col-form-label required">
+                        @Resource.Point
+                    </label>
+                    <div class="col-md-9">
+                        <select class="form-control" id="riskissue_point" onchange="GetCondition()">
+                            <option value="">@Resource.Choose</option>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_condition" class="col-md-3 col-form-label">
+                        @Resource.Condition
+                    </label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="riskissue_condition" disabled></textarea>
+                    </div>
+                </div>
+                <div class="form-group row mt-1 for-automation d-none">
+                    <label for="riskissue_value" class="col-md-3 col-form-label">
+                        @Resource.Value
+                    </label>
+                    <div class="col-md-9">
+                        <input type="number" onchange="checkNumberValue(this)" class="form-control" id="riskissue_value" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1 for-manual">
+                    <label for="riskissue_description" class="col-md-3 col-form-label">
+                        @Resource.Description
+                    </label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="riskissue_description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer btn-action-group">
+                <div>
+                    <button type="button" id="btnSubmit" class="btn btn-info  modal-btn-submit" onclick="updateRiskPoint(0)"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Resource.Update</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

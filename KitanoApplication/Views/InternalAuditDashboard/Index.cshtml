@@ -1,0 +1,121 @@
+﻿@using RiskAssessment.Resource;
+@{
+    ViewData["Title"] = "Internal Audit Dashboard";
+    Layout = "_Layout";
+}
+<link href="~/js/chart/apexcharts/apexcharts.css" rel="stylesheet" />
+<style>
+    .apexcharts-legend {
+        display: flex !important;
+        justify-content: space-evenly !important;
+    }
+
+    td, th {
+        border-left: none !important;
+        border-right: none !important;
+        text-align: left
+    }
+
+    table {
+        border: 1px solid #d5dce5
+    }
+</style>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Theo dõi hoạt động bộ phận kiểm toán nội bộ
+        </div>
+        <div class="card-body card-custom">
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>1. Tình hình thực hiện các cuộc kiểm toán</h5>
+                </div>
+                <div class="col-md-12 row-custom" style=" position: inherit; zoom: 95%; display: flex; ">
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-1">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Cuộc KT đã hoàn thành
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span id="total_audit_completed" class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-2">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Cuộc KT chưa hoàn thành
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span id="total_audit_pending" class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding-left: 0px !important;">
+                        <div class="card gradient-3">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Cuộc KT theo kế hoạch
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span id="total_audit_plan" class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6" style="padding: 0px !important;">
+                        <div class="card gradient-4">
+                            <div class="card-body col-md-12" style=" display: flex; align-items: center; ">
+                                <div class="col-md-9">
+                                    <h3 class="text-white" style="font-size: 20px;margin: 0 !important;">
+                                        Cuộc KT đột xuất
+                                    </h3>
+                                </div>
+                                <div class="col-md-3">
+                                    <span id="total_audit_expected" class="float-right display-5" style="padding-left: 8px;font-size: 40px;font-weight: bold;">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                    <br />
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-7" style="margin-bottom: 20px">
+                        <h5>2. Tình hình thực hiện kiến nghị của kiếm toán trong năm</h5>
+                    </div>
+
+                    <div class="col-md-5" style="margin-bottom: 20px">
+                        <h5>3. Số lượng phát hiện của kiểm toán trong năm theo mức rủi ro</h5>
+                    </div>
+
+                    <div class="col-md-7" style="margin-bottom: 20px">
+                        <div id="RangeChart1" style=" border: 1px solid #d5dce5;"></div>
+                    </div>
+                    <div class="col-md-5" style="margin-bottom: 20px">
+                        <div id="DonutChart" style=" border: 1px solid #d5dce5;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/js/chart/apexcharts/apexcharts.js"></script>
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/internalauditdashboard.js" asp-append-version="true"></script>
+}

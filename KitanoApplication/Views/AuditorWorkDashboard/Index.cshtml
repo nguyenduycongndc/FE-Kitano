@@ -1,0 +1,133 @@
+﻿@using RiskAssessment.Resource;
+@{
+    ViewData["Title"] = "Internal Audit Dashboard";
+    Layout = "_Layout";
+}
+<link href="~/js/chart/apexcharts/apexcharts.css" rel="stylesheet" />
+<style>
+    .apexcharts-legend {
+        display: flex !important;
+        justify-content: space-evenly !important;
+    }
+
+    td, th {
+        border-left: none !important;
+        border-right: none !important;
+        text-align: left
+    }
+
+    #dashboard {
+        border: 1px solid #d5dce5
+    }
+</style>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Theo dõi công việc của từng kiểm toán viên
+        </div>
+        <div class="card-body card-custom">
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>1. Các cuộc kiểm toán được phân công tham gia trong năm (hiện tại)</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="dashboard_1" class="table table-striped table-bordered dataTable">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray">
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th scope="col">Tên cuộc kiểm toán</th>
+                                    <th scope="col">Thời gian bắt đầu dự kiến</th>
+                                    <th scope="col">Thời gian kết thúc dự kiến</th>
+                                    <th scope="col">Trạng thái cuộc kiểm toán </th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>2. Các giấy tờ làm việc đang xử lý</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="dashboard_2" class="table table-striped table-bordered dataTable">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray">
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th scope="col">Tên cuộc kiểm toán</th>
+                                    <th scope="col">Ngày kết thúc thực địa dự kiến</th>
+                                    <th scope="col">mã giấy tờ làm việc</th>
+                                    <th scope="col">Trạng thái giấy tờ làm việc</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom:5px">
+                    <h5>3. Các phát hiện đang phát triển</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="dashboard_3" class="table table-striped table-bordered dataTable">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray">
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th scope="col">Tên cuộc kiểm toán</th>
+                                    <th scope="col">Mã phát hiện</th>
+                                    <th scope="col">Trạng thái phát hiện</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <br />
+                </div>
+                <div class="col-md-12 row-custom" style="margin-bottom: 20px">
+                    <h5>4. Các kiến nghị được phân công theo dõi</h5>
+                </div>
+                <div class="col-md-12 row-custom">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="dashboard_4" class="table table-striped table-bordered dataTable">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray">
+                                <tr>
+                                    <th class="text-center" scope="col">#</th>
+                                    <th scope="col">Mã kiến nghị</th>
+                                    <th scope="col">Trạng thái thực hiện</th>
+                                    <th scope="col">Trạng thái thời gian</th>
+                                    <th scope="col">Người chịu trách nhiệm</th>
+                                    <th scope="col">Đơn vị đầu mối</th>
+                                    <th scope="col">Thời hạn hoàn thành</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/chart/apexcharts/apexcharts.js"></script>
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/auditorworkdashboard.js" asp-append-version="true"></script>
+}

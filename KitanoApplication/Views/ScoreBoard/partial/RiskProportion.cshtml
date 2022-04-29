@@ -1,0 +1,71 @@
+﻿@using RiskAssessment.Resource;
+<div class="modal fade" id="modalRiskProportion" tabindex="-1" role="dialog" aria-labelledby="modalRiskProportionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRiskProportionLabel">@Resource.EditAssessmentProporsal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="riskissue_code" class="col-md-3 col-form-label">
+                        @Resource.RiskIssueCode
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="riskissue_code" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_name" class="col-md-3 col-form-label">
+                        @Resource.RiskIssueName
+                    </label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="riskissue_name" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_proportion" class="col-md-3 col-form-label">
+                        @Resource.Proportion hiện tại (%)
+                    </label>
+                    <div class="col-md-9">
+                        <input type="number" min="0" max="100" onchange="checkNumberValue(this)" class="form-control" id="riskissue_proportion" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_proportion_edit" class="col-md-3 col-form-label required">
+                        @(Resource.Proportion) điều chỉnh (%)
+                    </label>
+                    <div class="col-md-9">
+                        <input type="number" min="0" max="100" onchange="checkNumberValue(this)" class="form-control" id="riskissue_proportion_edit" />
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label class="col-md-3 col-form-label">                       
+                    </label>
+                    <div class="col-md-9" style=" display: flex; align-items: center; ">
+                        <input type="checkbox" id="is_apply" name="is_apply" style="margin-left: 1px;">&nbsp;
+                        <span>Không áp dụng</span>
+                    </div>
+                </div>
+                <div class="form-group row mt-1">
+                    <label for="riskissue_reason" class="col-md-3 col-form-label required">
+                        @Resource.Reason
+                    </label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" id="riskissue_reason"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer btn-action-group">
+                <div>
+                    <button type="button" id="btnSubmit" class="btn btn-info  modal-btn-submit" onclick="updateRiskPoint(1)"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Resource.Update</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

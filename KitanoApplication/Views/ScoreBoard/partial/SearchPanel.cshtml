@@ -1,0 +1,70 @@
+﻿@using RiskAssessment.Resource;
+@{
+    var now = DateTime.Now.Year;
+}
+<div class="form-row">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-year" class="col-md-3 col-form-label required">@Resource.StageYear</label>
+            <div class="col-md-9">
+                <input type="number" value="@now" @*min="@(now-1)" max="@(now+4)"*@ onchange="checkNumberValue(this)" class="form-control" id="search-year" aria-label="search-year" aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search_apply_for" class="col-md-3 col-form-label required">@Resource.ClassType</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search_apply_for" onchange="loadObjects(this)">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage" class="col-md-3 col-form-label required">@Resource.StageQar</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage" onchange="changeStageValue()">
+                    <option value="" selected="selected">--@Resource.All--</option>
+                    <option value="1">@Resource.Year</option>
+                    <option value="2">@Resource.HalfYear</option>
+                    <option value="3">@Resource.Quarter</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-object" class="col-md-3 col-form-label required">@Resource.Object</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-object">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-3 col-form-label">@Resource.StageValue</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage_value">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-12 mb-3 btn-search-custom">
+        <div style="text-align:center; ">
+            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()"><i class="fa fa-search" aria-hidden="true"></i> @Resource.Search</a>
+        </div>
+    </div>
+</div>

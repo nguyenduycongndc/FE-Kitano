@@ -1,0 +1,41 @@
+﻿@using RiskAssessment.Resource;
+@{
+    Layout = "_Layout";
+}
+<style>
+        .custom-card-config {
+            display: block;
+            box-shadow: 6px 11px 41px -28px #a99de7;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            background-color: rgba(242, 242, 242, 1);
+        }
+
+        .table td {
+            padding: 0.3rem !important;
+        }
+    </style>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Cấu hình biểu mẫu tài liệu</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Cấu hình biểu mẫu tài liệu
+        </div>
+        <div id="lstDocument">
+
+        </div>
+
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/configdocument.js" type="text/javascript" asp-append-version="true"></script>
+}

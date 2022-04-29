@@ -1,0 +1,232 @@
+﻿//$(function () {
+//    $("##unitTypeTable").dataTable({
+//        "bPaginate": false,
+//        "bLengthChange": false,
+//        "bFilter": false,
+//        "bInfo": false
+//    });
+//    reCalculatPages();
+//    viewBtnActionPage();
+
+//});
+
+$.ajaxSetup({
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', getSessionToken());
+        xhr.setRequestHeader('Accept-Language', 'vi-VN');
+        showLoading();
+    },
+    complete: function (xhr, status, error) {
+        hideLoading();
+
+        if (xhr.status == 401)
+            swal("Unauthorized!", "Bạn cần phải đăng nhập vào hệ thống!", "warning");
+        else if (xhr.status == 404)
+            swal("Not found!", "Không tìm thấy đối tượng để xử lý!", "warning");
+        else if (xhr.status == 500)
+            swal("Internal Server Error!", "Có lỗi xảy ra trong quá trình xử lý!", "warning");
+        else if (xhr.status == 400)
+            swal("Lỗi dữ liệu!", "Dữ liệu đầu vào hoặc thông tin tài khoản không hợp lệ!", "warning");
+        else if (xhr.status != 200)
+            swal(error + "!", "Có lỗi trong quá trình xử lý!", "error");
+    }
+});
+function callApi_multipleselect(selector, placeholder) {
+    $("#" + selector).select2({
+        placeholder: placeholder,
+        minimumInputLength: 0,
+        multiple: true,
+        closeOnSelect: true,
+        ajax: {
+            headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+            url: apiConfig.api.host_user_service + apiConfig.api.systemusergroup.controller + apiConfig.api.systemusergroup.action.select.path,
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    q: params.term,
+                    type: 'public'
+                }
+                return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data.data, function (item) {
+                        return {
+                            text: item.full_name,
+                            id: item.id
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+}
+function Delete(id) {
+    swal({
+        title: "Thông báo",
+        text: "Bạn có chắc muốn xóa loại đơn vị!",
+        type: 'warning',
+        showCancelButton: !0,
+    }, function (isConfirm) {
+        if (isConfirm) {
+            fnDeleteUnitType(id);
+        }
+    });
+}
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+function UnitTypeActive(id, input) {
+    var status = 1;
+    //if ($(input).hasClass("active")) {
+    if ($(input).prop("checked") == false) {
+        status = 0;
+    }
+    fnActive(id, status);
+}
+function updateUnitTypeSuccess(data) {
+    if (data.code === '1') {
+        createdLog("Loại đơn vị", "Chỉnh sửa loại đơn vị")
+        swal("Thông báo!", "Cập nhật dữ liệu thành công!", "success");
+        setTimeout(function () {
+            window.location.href = "/UnitType"
+        }, 2000);
+    }
+    else {
+        swal("Error!", "Cập nhật thất bại!", "error");
+    }
+}
+function createUnitTypeSuccess(data) {
+    if (data.code === '1') {
+        createdLog("Loại đơn vị", "Thêm mới loại đơn vị")
+        swal("Thông báo!", "Thêm mới dữ liệu thành công!", "success");
+        setTimeout(function () {
+            window.location.href = "/UnitType"
+        }, 2000);
+    }
+    else {
+        swal("Error!", "Thêm mới thất bại!", "error");
+    }
+}
+function updateFail(request, status, error) {
+    swal("Error!", "Lưu dữ liệu thất bại!", "error");
+}
+
+function validateObj(obj) {
+    if (obj.name.isBlank()) {
+        swal("Lỗi dữ liệu!", "Tên hoạt động không được để trống!", "error");
+        return false;
+    }
+
+    return true;
+}
+//function createUnitTypeSuccess(data) {
+//    if (data.code === '1') {
+//        swal("Thông báo!", "Thêm mới thành công!", "success");
+//        onSearch();
+//        $('#modalUnitType .close').click();
+
+//    }
+//    else {
+//        swal("Error!", "Thêm mới thất bại!", "error");
+
+//    }
+//}
+//function updateUnitTypeSuccess(data) {
+//    if (data.code === '1') {
+//        swal("Thông báo!", "Cập nhật thành công!", "success");
+//        onSearch();
+//        $('#modalUnitTypeEdit .close').click();
+
+//    }
+//    else {
+//        swal("Error!", "Cập nhật thất bại!", "error");
+
+//    }
+//}
+function fnDeleteUnitTypeSuccess(rspn) {
+    if (rspn.code === '1') {
+        swal("Thông báo!", "Xóa dữ liệu thành công!", "success");
+        onSearch();
+    }
+    else {
+        swal("Error!", "Xóa dữ liệu không thành công!", "error");
+
+    }
+
+}
+function fnActiveSuccess(rspn) {
+    if (rspn.code === '1') {
+        swal("Thông báo!", "Cập nhật trạng thái  thành công!", "success");
+        onSearch();
+    }
+    else {
+        swal("Error!", "Cập nhật trạng thái không thành công!", "error");
+
+    }
+}
+
+function openView(type, value, frmHeader) {
+    var index = $("#view");
+    var create = $("#create");
+    var edit = $("#edit");
+    var detail = $("#detail");
+    if (type === 0) {
+        index.show();
+        create.hide();
+        edit.hide();
+        detail.hide();
+    }
+    else if (type === 1) {
+        index.hide();
+        create.show();
+        document.getElementById("nameCreate").focus();
+        edit.hide();
+        detail.hide();
+        document.getElementById("formCreate").reset();
+        $("#frmHeaderCreate").val(frmHeaderCreate);
+    }
+    else if (type === 2) {
+        index.hide();
+        create.hide();
+        edit.hide();
+        detail.show();
+        fnGetDetail(type, value);
+    }
+    else if (type === 3) {
+        index.hide();
+        create.hide();
+        edit.show();
+        document.getElementById("nameEdit").focus();
+        detail.hide();
+        fnGetDetail(type, value);
+    }
+}
+
+function fnSearchUnitTypeSuccess(rspn) {
+    if (rspn !== undefined && rspn !== null && rspn.code === '1' && rspn.total > 0) {
+        var data = rspn.data;
+        var tbBody = $('#unitTypeTable tbody');
+        $("#unitTypeTable").dataTable().fnDestroy();
+        tbBody.html('');
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+
+            var html = '<tr>' +
+                '<td class="text-center">' + (i + 1) + '</td>' +
+                '<td>' + obj.name + '</td>' +
+                '<td class="text-center"><div class="custom-control custom-switch"><input type="checkbox" class="custom-control-input" id="customSwitch' + obj.id + '" ' + (obj.status === true ? 'checked' : '') + ' onclick="UnitTypeActive(' + obj.id + ',this)"> <label class="custom-control-label" for="customSwitch' + obj.id + '"> <a hidden>'+ obj.status  + '<a></label> </div></td>' +
+                /*'<td class="col-action"><button type="button" class="btn btn-sm btn-toggle ' + (obj.status === true ? 'active' : '') + '" id="toggle_' + obj.id + '" data-toggle="button" aria-pressed="' + (obj.status === true ? 'true' : 'false') + '" autocomplete="off" onclick="UnitTypeActive(' + obj.id + ',this)"><div class="handle"></div></button></td>' +*/
+                '<td>' + obj.description + '</td>' +
+                '<td class="col-action">' +
+                //'<td style="text-align:center">' +
+                //'<button type="button" class="btn btn-info" title="Chi tiết" style="padding: 0px 4px;" onclick="openView(2,' + obj.id + ')"><i class="fa fa-eye" aria-hidden="true" style="font-size: 15px;"></i>

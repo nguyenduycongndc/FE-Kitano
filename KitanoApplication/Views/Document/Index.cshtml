@@ -1,0 +1,480 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@{
+    ViewData["Title"] = "Thư viện tài liệu";
+    Layout = "_Layout";
+}
+
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Thư viện tài liệu</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            Thư viện tài liệu
+        </div>
+        <div class="card-body card-custom">
+            <form id="formView" action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @if (Utils.IsCheckPemission("M_DOC", "PER_ADD") == true)
+                    {
+                        <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info"> @Resource.Create</a>
+                    }
+                    @*<a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info">@Resource.Create</a>*@
+                    <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i>@Resource.SearchOption</a>
+                </div>
+                <div class="collapse" id="collapseSearch" style="margin-top:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="FullName">
+                                    Tên tài liệu
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Nhập tên hiển thị...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="FullName">
+                                    Số hiệu tài liệu
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="Code" name="Code" placeholder="Nhập mã tài liệu...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="unit">
+                                    Cơ quan ban hành
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Unit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Status">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Status" onchange="statusChange()">
+                                        <option value="-1" selected>@Resource.All</option>
+                                        <option value="1">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row btn-search-custom">
+                            <div style="text-align:center; ">
+                                <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()">@Resource.Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive custom-table-scroll">
+                <table id="documenttable" class="table table-striped table-bordered zero-configuration" style="width:100%">
+                    <thead class="contain-header-custom m-gray">
+                        <tr>
+                            <th class="text-center" scope="col" style="width: 5%  !important;">@Resource.No</th>
+                            <th class="text-center" scope="col" style="width: 10% !important;">Số hiệu tài liệu</th>
+                            <th class="text-center" scope="col" style="width: 30% !important;">Tên tài liệu</th>
+                            <th class="text-center" scope="col" style="width: 10% !important;">Ngày ban hành</th>
+                            <th class="text-center" scope="col" style="width: 25% !important;">Cơ quan ban hành</th>
+                            <th class="text-center" scope="col" style="width: 10% !important;">@Resource.Status</th>
+                            <th class="text-center" scope="col" style="width: 10% !important;">@Resource.Option</th>
+                        </tr>
+                    </thead>
+                    <tbody class="contain-tbody-custom">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="create" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderCreate" style=" font-size: 1rem; ">
+            @Resource.Create
+        </div>
+        <div class="card-body card-custom">
+            <form id="formCreate" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="nameCreate" class="col-form-label">Tên tài liệu</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="nameCreate" name="nameCreate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="codeCreate" class="col-form-label">Số hiệu tài liệu</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control required" id="codeCreate" name="codeCreate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="publicdateCreate" class="col-form-label">Ngày ban hành</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control required" id="publicdateCreate" name="publicdateCreate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="unitCreate" class="col-form-label">Cơ quan ban hành</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="unitCreate" name="unitCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="descriptionCreate" class="col-form-label">@Resource.Description</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="descriptionCreate" name="descriptionCreate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="statusCreate" class="col-form-label">@Resource.Status</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="statusCreate" name="statusCreate">
+                                        <option value="1" selected="selected">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    File đính kèm<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="file" class="form-control required" id="FileDinhKemCreate" name="FileDinhKemCreate" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="submitCreate();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="detail" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderDetail" style=" font-size: 1rem; ">
+            @Resource.Detail
+        </div>
+        <div class="card-body card-custom">
+            <form id="formDetail" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                <input type="hidden" id="pathDetail" name="pathDetail" />
+
+                <div class="row">
+
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="nameDetail" class="col-form-label">Tên tài liệu</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="nameDetail" name="nameDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="codeDetail" class="col-form-label">Số hiệu tài liệu</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="codeDetail" name="codeDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="publicdateDetail" class="col-form-label">Ngày ban hành</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control" id="publicdateDetail" name="publicdateDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="unitDetail" class="col-form-label">Cơ quan ban hành</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control" id="unitDetail" name="unitDetail" disabled>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="descriptionDetail" class="col-form-label">@Resource.Description</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="descriptionDetail" name="descriptionDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="statusDetail" class="col-form-label">@Resource.Status</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="statusDetail" name="statusDetail" disabled>
+                                        <option value="1" selected="selected">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">
+                                File đính kèm
+                            </label>
+                            <div class="col-lg-10" style="display: flex;flex-direction: column;margin: auto;" id="FileDetail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start;">
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="edit" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderEdit" style=" font-size: 1rem; ">
+            @Resource.Edit
+        </div>
+        <div class="card-body card-custom">
+            <form id="formEdit" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdEdit" name="IdEdit" />
+                <div class="row">
+                    <div class="col-md-12 row  mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="nameEdit" class="col-form-label">Tên tài liệu</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="nameEdit" name="nameEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="codeEdit" class="col-form-label">Số hiệu tài liệu <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control required" id="codeEdit" name="codeEdit">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="publicdateEdit" class="col-form-label">Ngày ban hành <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control required" id="publicdateEdit" name="publicdateEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="unitEdit" class="col-form-label">Cơ quan ban hành <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="col-lg-10">
+                                    <select class="form-control required" id="unitEdit" name="unitEdit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="descriptionEdit" class="col-form-label">@Resource.Description</label><span class="text-danger">*</span>
+                                </div>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control required" id="descriptionEdit" name="descriptionEdit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div class="form-group row">
+                                <div class="col-lg-4">
+                                    <label for="statusEdit" class="col-form-label">@Resource.Status</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="statusEdit" name="statusEdit">
+                                        <option value="1" selected="selected">@Resource.Used</option>
+                                        <option value="0">@Resource.NotUsed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4">
+                                    File đính kèm<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="file" class="form-control" id="FileDinhKemEdit" name="FileDinhKemEdit" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Đây là hiển thị các file tồn tại trong hệ thống*@
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                </label>
+                                <div class="col-lg-10" style=" display: flex; flex-direction: column;" id="FileDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start;">
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width:100%" onclick="submitEdit();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 15%; display: inline-flex; flex-direction: row; justify-content: right; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+
+    <script src="~/js/jsApp/document.js" type="text/javascript" asp-append-version="true"></script>
+    @*<script>$("#dashboard").dataTable();</script>*@
+
+    <script type="text/javascript">
+                                                                                                //onSearch();
+    </script>
+}

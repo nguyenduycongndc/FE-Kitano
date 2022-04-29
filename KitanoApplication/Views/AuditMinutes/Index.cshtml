@@ -1,0 +1,1214 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+<link rel="stylesheet" type="text/css" href="~/css/auditminutes.css?v=1.1">
+
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Biên bản kiểm toán</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            Danh sách biên bản kiếm toán
+        </div>
+        <div class="card-body card-custom">
+            <form action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @*@if (Utils.IsCheckPemission("M_AD", "PER_ADD") == true)
+                        {
+                            <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info"> @Resource.Create</a>
+                        }*@
+                    <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info">@Resource.Create</a>
+                    <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i>@Resource.SearchOption</a>
+                </div>
+                <div class="collapse" id="collapseSearch" style="margin-top:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="YearAuditWork">
+                                    @Resource.Year
+                                </label>
+                                <div class="col-lg-8">
+                                    <select onchange="setValueYear(this)" class="form-control" id="YearAuditWork">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditWork">
+                                    @Resource.Audit
+                                </label>
+                                <div class="col-lg-8">
+                                    <select onchange="setValueAuditWork(this)" class="form-control" id="AuditWork">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Auditfacility">
+                                    @Resource.AuditUnit
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Auditfacility">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditMinutesStatus">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="AuditMinutesStatus">
+                                        <option value="-1">--@Resource.All--</option>
+                                        <option value="1">Chưa xác nhận</option>
+                                        <option value="2">Đã xác nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3 btn-search-custom">
+                            <div style="text-align:center; ">
+                                <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()">@Resource.Search</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive custom-table-scroll">
+                        <table id="AuditMinutesTable" class="table table-bordered table-striped table-hover dataTable" style="width:100%" text-align="center">
+                            <caption hidden></caption>
+                            <thead class="contain-header-custom m-gray" text-align="center">
+                                <tr>
+                                    <th class="text-center" scope="col">@Resource.No</th>
+                                    <th class="text-center" scope="col">Năm</th>
+                                    <th class="text-center" scope="col">Mã cuộc KT</th>
+                                    <th class="text-center" scope="col">Tên cuộc kiểm toán</th>
+                                    <th class="text-center" scope="col">Đơn vị được kiểm toán</th>
+                                    <th class="text-center" scope="col">Trạng thái</th>
+                                    <th id="styleOption" class="text-center" scope="col">@Resource.Option</th>
+                                </tr>
+                            </thead>
+                            <tbody class="contain-tbody-custom">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="create" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderCreate" style=" font-size: 1rem; ">
+            Thêm mới biên bản kiểm toán
+        </div>
+        <div class="card-body card-custom">
+            <form id="formAuditMinutesCreate" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdCreate" name="IdCreate" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="YearAuditWorkCreate">
+                                    @Resource.Year <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select onchange="setValueYearCreate(this)" class="form-control required" id="YearAuditWorkCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditWorkCreate">
+                                    @Resource.Audit <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select onchange="setValueAuditWorkCreate(this)" class="form-control required" id="AuditWorkCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditfacilityCreate">
+                                    @Resource.AuditUnit&ensp; <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control required" id="AuditfacilityCreate">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="StatusCreate">@Resource.Status</label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="StatusCreate" name="StatusCreate">
+                                        <option value="1" selected="selected">Chưa xác nhận</option>
+                                        <option value="2">Đã xác nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    @* Thao tác lưu *@
+                    <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+                        <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width: 100%" onclick="submitCreate();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)" @*onclick="clearDetectCodeNew()"*@>@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card" id="detail" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderDetail" style=" font-size: 1rem; ">
+            @Resource.Detail
+        </div>
+        <div class="card-body card-custom">
+            <form id="formAuditMinutesDetail" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">1.Thông tin chung</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="YearAuditWorkDetail">
+                                    @Resource.Year
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="YearAuditWorkDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditWorkCodeDetail">
+                                    Mã cuộc kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="AuditWorkCodeDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="AuditWorkDetail">
+                                    @Resource.Audit
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="AuditWorkDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="AuditWorkTagetDetail">
+                                    Mục tiêu kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="AuditWorkTagetDetail" name="AuditWorkTagetDetail" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="PersonDetail">
+                                    Người phụ trách
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="PersonDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="ClassifyDetail">
+                                    Phân loại
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="ClassifyDetail" name="ClassifyDetail" disabled>
+                                        <option value="1">Theo kế hoạch</option>
+                                        <option value="2">Đột xuất</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditfacilitiesDetail">
+                                    Đơn vị được kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="AuditfacilitiesDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="StatusDetail">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="StatusDetail" name="StatusDetail" disabled>
+                                        <option value="1">Chưa xác nhận</option>
+                                        <option value="2">Đã xác nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* table Phạm vi kiểm toán *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phạm vi kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="auditScopeDetail" name="auditScopeDetail" disabled></textarea>
+                                </div>
+                                @*<div class="col-lg-10">
+                                        <div class="table-responsive custom-table-scroll">
+                                            <table id="AuditScopeAuditMinutesDetailTable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                                <caption hidden></caption>
+                                                <thead class="contain-header-custom m-gray ">
+                                                    <tr>
+                                                        <th class="text-center" scope="col">Quy trình được KT</th>
+                                                        <th class="text-center" scope="col">Đơn vị được KT</th>
+                                                        <th class="text-center" scope="col">Hoạt động được KT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="AuditScopeAuditMinutesDetailbody" class="contain-tbody-custom ">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="outsideDetail">
+                                    Giới hạn kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="outsideDetail" name="outsideDetail" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="fromDDetail">
+                                    Thời hiệu KT từ
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control" id="fromDDetail" name="fromDDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="toDDetail">
+                                    Thời hiệu KT đến
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control" id="toDDetail" name="toDDetail" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    File biên bản
+                                </label>
+                                @*<div class="col-lg-10">
+                                        <a href="javascript:DownloadAuditMinutes()"><span id="FileNameDetail"></span></a>
+                                    </div>*@
+                                <div class="col-lg-10" style="display: flex;flex-direction: column;margin: auto;" id="FileDetail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    2. Kết luận
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="RatingDetail">
+                                    Mức xếp hạng KT <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-3">
+                                    <select class="form-control" id="RatingDetail" name="RatingDetail" disabled>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="ProblemDetail">
+                                    Các vấn đề kiểm soát hiệu quả
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="ProblemDetail" name="ProblemDetail" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="ideaDetail">
+                                    Ý kiến của ĐVĐKT
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="ideaDetail" name="ideaDetail" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    3. Thống kê số lượng phát hiện
+                                </label>
+                            </div>
+                        </div>
+                        @* table Tổng số lượng phát hiện *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive custom-table-scroll">
+                                        <table id="SumAuditMinutesDetailtable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                            <caption hidden></caption>
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th rowspan="2" class="text-center" scope="col">Loại phát hiện</th>
+                                                    <th rowspan="2" class="text-center" scope="col">Tổng cộng</th>
+                                                    <th colspan="3" class="text-center" scope="col">Số lượng phát hiện</th>
+                                                    <th colspan="2" class="text-center" scope="col">Ý kiến của ĐVĐKT</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center" scope="col">Cao/Quan trọng</th>
+                                                    <th class="text-center" scope="col">Trung bình</th>
+                                                    <th class="text-center" scope="col">Thấp/Ít quan trọng</th>
+                                                    <th class="text-center" scope="col">Đồng ý</th>
+                                                    <th class="text-center" scope="col">Không đồng ý</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="SumAuditMinutesDetailbody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    4. Danh sách phát hiện
+                                </label>
+                            </div>
+                        </div>
+                        @* table Danh sách phát hiện *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive custom-table-scroll">
+                                        <table id="AuditDetectAuditMinutesDetailtable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                            <caption hidden></caption>
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th class="text-center" scope="col">STT</th>
+                                                    <th class="text-center" scope="col">Mã phát hiện</th>
+                                                    <th class="text-center" scope="col">Tiêu đề phát hiện</th>
+                                                    <th class="text-center" scope="col">Loại phát hiện</th>
+                                                    <th class="text-center" scope="col">Xếp hạng rủi ro</th>
+                                                    <th class="text-center" scope="col">Ý kiến của ĐVĐKT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="AuditMinutesDetailbody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    5. Thông tin khác
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-bottom:10px">
+                            <textarea class="form-control col-md-12" rows="3" id="OtherContentDetail" name="OtherContentDetail"></textarea>
+                        </div>
+
+                    </div>
+                    @* Thao tác *@
+                    <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+                        <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="card" id="edit" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderEdit" style=" font-size: 1rem; ">
+            @Resource.Edit
+        </div>
+        <div class="card-body card-custom">
+            <form id="formAuditMinutesEdit" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdEdit" name="IdEdit" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">1.Thông tin chung</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="YearAuditWorkEdit">
+                                    @Resource.Year
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="YearAuditWorkEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditWorkCodeEdit">
+                                    Mã cuộc kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="AuditWorkCodeEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="AuditWorkEdit">
+                                    @Resource.Audit
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="AuditWorkEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="AuditWorkTagetEdit">
+                                    Mục tiêu kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="AuditWorkTagetEdit" name="AuditWorkTagetEdit" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="PersonEdit">
+                                    Người phụ trách
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="PersonEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="ClassifyEdit">
+                                    Phân loại
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="ClassifyEdit" name="ClassifyEdit" disabled>
+                                        <option value="1">Theo kế hoạch</option>
+                                        <option value="2">Đột xuất</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="AuditfacilitiesEdit">
+                                    Đơn vị được kiểm toán
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="AuditfacilitiesEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="StatusEdit">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="StatusEdit" name="StatusEdit">
+                                        <option value="1">Chưa xác nhận</option>
+                                        <option value="2">Đã xác nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* table Phạm vi kiểm toán *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Phạm vi kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="auditScopeEdit" name="auditScopeEdit" disabled></textarea>
+                                </div>
+                                @*<div class="col-lg-10">
+                                        <div class="table-responsive custom-table-scroll">
+                                            <table id="AuditScopeAuditMinutesEditTable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                                <caption hidden></caption>
+                                                <thead class="contain-header-custom m-gray ">
+                                                    <tr>
+                                                        <th class="text-center" scope="col">Quy trình được KT</th>
+                                                        <th class="text-center" scope="col">Đơn vị được KT</th>
+                                                        <th class="text-center" scope="col">Hoạt động được KT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="AuditScopeAuditMinutesEditbody" class="contain-tbody-custom ">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="outsideEdit">
+                                    Giới hạn kiểm toán
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="outsideEdit" name="outsideEdit" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="fromDEdit">
+                                    Thời hiệu KT từ
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control required" id="fromDEdit" name="fromDEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="toDEdit">
+                                    Thời hiệu KT đến
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control required" id="toDEdit" name="toDEdit" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    File biên bản
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="file" onchange="ChangeFileEdit()" id="PathEdit" name="PathEdit" multiple>
+                                    @*<a id="FileOldAuditMinutes" style="position: relative; right: 160px;" href="javascript:DownloadAuditMinutes()"><span id="fileNameEdit"></span></a>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 row-custom">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2">
+                                    </label>
+                                    <div class="col-lg-10" style=" display: flex; flex-direction: column;" id="FileDetail">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    2. Kết luận
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="RatingEdit">
+                                    Mức xếp hạng KT <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-3">
+                                    <select class="form-control required" id="RatingEdit" name="RatingEdit">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="ProblemEdit">
+                                    Các vấn đề kiểm soát hiệu quả
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="ProblemEdit" name="ProblemEdit"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="ideaEdit">
+                                    Ý kiến của ĐVĐKT
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="ideaEdit" name="ideaEdit"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    3. Thống kê số lượng phát hiện
+                                </label>
+                            </div>
+                        </div>
+                        @* table Tổng số lượng phát hiện *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive custom-table-scroll">
+                                        <table id="SumAuditMinutesEditTable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                            <caption hidden></caption>
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th rowspan="2" class="text-center" scope="col">Loại phát hiện</th>
+                                                    <th rowspan="2" class="text-center" scope="col">Tổng cộng</th>
+                                                    <th colspan="3" class="text-center" scope="col">Số lượng phát hiện</th>
+                                                    <th colspan="2" class="text-center" scope="col">Ý kiến của ĐVĐKT</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center" scope="col">Cao/Quan trọng</th>
+                                                    <th class="text-center" scope="col">Trung bình</th>
+                                                    <th class="text-center" scope="col">Thấp/Ít quan trọng</th>
+                                                    <th class="text-center" scope="col">Đồng ý</th>
+                                                    <th class="text-center" scope="col">Không đồng ý</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="SumAuditMinutesEditBody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    4. Danh sách phát hiện
+                                </label>
+                            </div>
+                        </div>
+                        @* table Danh sách phát hiện *@
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive custom-table-scroll">
+                                        <table id="AuditDetectAuditMinutesEditTable" class="table table-bordered table-striped table-hover dataTable" style="width: 100% !important">
+                                            <caption hidden></caption>
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th class="text-center" scope="col">STT</th>
+                                                    <th class="text-center" scope="col">Mã phát hiện</th>
+                                                    <th class="text-center" scope="col">Tiêu đề phát hiện</th>
+                                                    <th class="text-center" scope="col">Loại phát hiện</th>
+                                                    <th class="text-center" scope="col">Xếp hạng rủi ro</th>
+                                                    <th class="text-center" scope="col">Ý kiến của ĐVĐKT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="AuditDetectAuditMinutesEditBody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-12" style="font-weight: bold">
+                                    5. Thông tin khác
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-bottom:10px">
+                            <textarea class="form-control col-md-12" rows="3" id="OtherContentEdit" name="OtherContentEdit"></textarea>
+                        </div>
+                    </div>
+                    @* Thao tác lưu *@
+                    <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+                        <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" style="width: 100%" onclick="submitEdit();">@Resource.Save</button>
+                            </div>
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0)">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@* Modal Phát hiện detail*@
+<div class="modal hide fade" id="modalDetailAuditDetect" role="dialog" aria-labelledby="modalDetailAuditDetectLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDetailAuditDetectLabel">Xem chi tiết phát hiện kiểm toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formDetailAuditDetect" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                    <input type="hidden" id="IdDetailDetailAuditDetect" name="IdDetailDetailAuditDetect" value="0" />
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectTitle" class="col-sm-2 col-form-label">Tiêu đề phát hiện</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectTitle" name="DetailAuditDetectTitle" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectDescription" class="col-sm-2 col-form-label">Mô tả phát hiện</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectDescription" name="DetailAuditDetectDescription" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectEvidence" class="col-sm-2 col-form-label">Dẫn chiếu/Bằng chứng</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectEvidence" name="DetailAuditDetectEvidence" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectEvidence" class="col-sm-2 col-form-label">File đính kèm</label>
+                                @*<div class="col-sm-10">
+                                        <a href="javascript:DownloadFileAuditDetect()"><span id="FileDetailAuditDetectEvidence"></span></a>
+                                    </div>*@
+                                <div class="col-lg-10" style="display: flex;flex-direction: column;margin: auto;" id="FileDetailAuditDetectEvidence">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectAffect" class="col-sm-2 col-form-label">Ảnh hưởng</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectAffect" name="DetailAuditDetectAffect" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="DetailAuditDetectRatingRisk">Xếp hạng rủi ro</label>
+                                <div class="col-lg-2">
+                                    <select class="form-control" id="DetailAuditDetectRatingRisk" name="DetailAuditDetectRatingRisk" disabled>
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Cao/Quan trọng</option>
+                                        <option value="2">Trung bình</option>
+                                        <option value="3">Thấp/Ít quan trọng</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="DetailAuditDetectCause" class="col-sm-2 col-form-label">Nguyên nhân</label>
+                                <div class="col-sm-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectCause" name="DetailAuditDetectCause" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* table Kiến nghị *@
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Kiến nghị
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <table id="DetailAuditDetectAuditRequestMonitorTable" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                <caption hidden></caption>
+                                <thead class="contain-header-custom m-gray ">
+                                    <tr>
+                                        <th style="width:10%" class="text-center" scope="col">Mã kiến nghị</th>
+                                        <th style="width:10%" class="text-center" scope="col">Nội dung kiến nghị</th>
+                                        <th style="width:10%" class="text-center" scope="col">Phân loại</th>
+                                        <th style="width:10%" class="text-center" scope="col">Người chịu trách nhiệm</th>
+                                        <th style="width:10%" class="text-center" scope="col">Đơn vị đầu mối</th>
+                                        <th style="width:10%" class="text-center" scope="col">Đơn vị phối hợp</th>
+                                        <th style="width:10%" class="text-center" scope="col">Thời hạn hoàn thành</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="DetailAuditDetectAuditRequestMonitorBody" class="contain-tbody-custom ">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <div class="col-lg-2">
+                                    <label for="Risk">
+                                        Ý kiến của đơn vị được kiểm toán
+                                    </label>
+                                </div>
+                                <div class="form-group row col-lg-9">
+                                    <div class="col-lg-2" style="max-width: 13%;">
+                                        <input type="radio" name="DetailAuditDetectOpinion" id="DetailAuditDetectOpinionTrue" value="1" disabled>&ensp;Đồng ý
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input type="radio" name="DetailAuditDetectOpinion" id="DetailAuditDetectOpinionFalse" value="2" disabled>&ensp;Không đồng ý
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="DetailAuditDetectReasonDetail">
+                                    Lý do
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control" id="DetailAuditDetectReasonDetail" name="DetailAuditDetectReasonDetail" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/ckeditor/ckeditor.js"></script>
+    <script src="~/js/jsApp/auditminutes.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        callApi_oneselect("YearAuditWork", "Chọn năm...",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listyearauditwork.path);
+
+        callApi_oneselect("YearAuditWorkCreate", "Chọn năm...",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listyearauditwork.path);
+
+        callapi_ratting_auditminutes("RatingEdit", "---Chọn---",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditminutes.controller,
+            apiConfig.api.auditminutes.action.rattingtype.path);
+
+        callapi_ratting_auditminutes("RatingDetail", "---Chọn---",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditminutes.controller,
+            apiConfig.api.auditminutes.action.rattingtype.path);
+    </script>
+    <script>
+        //Cuộc kiểm toán
+        function callApi_multipleselect_auditwork(selector, placeholder, host, controller, action) {
+            $("#" + selector).select2({
+                placeholder: placeholder,
+                minimumInputLength: 0,
+                multiple: false,
+                closeOnSelect: false,
+                ajax: {
+                    headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                    url: function () {
+                        return getUrl(host, controller, action);
+                    },
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            q: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data.data, function (item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name,
+                                    year: item.year,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        }
+        function getUrl(host, controller, action) {
+            var url = "";
+            let Type = localStorage.getItem('type');
+            //var _year = $("#YearAuditWork").val() != null ? $("#YearAuditWork").val() : $("#YearAuditWorkCreate").val();
+            var _year = Type != "1" ? $("#YearAuditWork").val() : $("#YearAuditWorkCreate").val();
+            url = host + controller + action + "?" + "year" + "=" + parseInt(_year);
+            return url;
+        }
+        callApi_multipleselect_auditwork("AuditWork", "Chọn cuộc kiểm toán...", apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listauditwork.path);
+
+        callApi_multipleselect_auditwork("AuditWorkCreate", "Chọn cuộc kiểm toán...", apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listauditwork.path);
+
+    </script>
+    <script>
+        //Đơn vị được kiểm toán
+        function callapi_multipleselect_auditfacility(selector, placeholder, host, controller, action) {
+            $("#" + selector).select2({
+                placeholder: placeholder,
+                minimumInputLength: 0,
+                multiple: false,
+                closeOnSelect: false,
+                ajax: {
+                    headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                    url: function () {
+                        return getUrlAuditfacility(host, controller, action);
+                    },
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            q: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data.data, function (item) {
+                                return {
+                                    id: item.auditfacilities_id,
+                                    text: item.auditfacilities_name,
+                                    keyid: item.id,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        }
+        function getUrlAuditfacility(host, controller, action) {
+            var url = "";
+            var _auditwork = $("#AuditWork").val() != null ? $("#AuditWork").val() : $("#AuditWorkCreate").val();
+            url = host + controller + action + "?" + "auditwork_id" + "=" + parseInt(_auditwork);
+            return url;
+        }
+        callapi_multipleselect_auditfacility("Auditfacility", "Chọn đơn vị được kiểm toán...", apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listauditfacility.path);
+
+        callapi_multipleselect_auditfacility("AuditfacilityCreate", "Chọn đơn vị được kiểm toán...", apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listauditfacility.path);
+    </script>
+    <script>
+                                                        //Quy trình được KT
+                                                        //function callapi_multipleselect_auditprocess(selector, placeholder, host, controller, action) {
+                                                        //    $("#" + selector).select2({
+                                                        //        placeholder: placeholder,
+                                                        //        minimumInputLength: 0,
+                                                        //        multiple: false,
+                                                        //        closeOnSelect: false,
+                                                        //        ajax: {
+                                                        //            headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                                                        //            url: function () {
+                                                        //                return getUrlAuditprocess(host, controller, action);
+                                                        //            },
+                                                        //            dataType: 'json',
+                                                        //            data: function (params) {
+                                                        //                var query = {
+                                                        //                    q: params.term,
+                                                        //                    type: 'public'
+                                                        //                }
+                                                        //                return query;
+                                                        //            },
+                                                        //            processResults: function (data) {
+                                                        //                return {
+                                                        //                    results: $.map(data.data, function (item) {
+                                                        //                        return {
+                                                        //                            id: item.auditprocess_id,
+                                                        //                            text: item.auditprocess_name,
+                                                        //                            keyid: item.id,
+                                                        //                        }
+                                                        //                    })
+                                                        //                };
+                                                        //            },
+                                                        //            cache: true
+                                                        //        }
+                                                        //    });
+                                                        //}
+                                                        //function getUrlAuditprocess(host, controller, action) {
+                                                        //    var url = "";
+                                                        //    var _auditwork = $("#AuditWork").val() != null ? $("#AuditWork").val() : $("#AuditWorkCreate").val() != null ? $("#AuditWorkCreate").val() : $("#AuditWorkEdit").val();
+                                                        //    var _auditfacility = $("#Auditfacility").val() != null ? $("#Auditfacility").val() : $("#AuditfacilityCreate").val() != null ? $("#AuditfacilityCreate").val() : $("#AuditfacilityEdit").val();
+                                                        //    url = host + controller + action + "?" + "auditwork_id" + "=" + parseInt(_auditwork) + "&" + "auditfacilities_id" + "=" + parseInt(_auditfacility);
+                                                        //    return url;
+                                                        //}
+                                                        //callapi_multipleselect_auditprocess("AuditProcess", "Chọn quy trình được kiểm toán...", apiConfig.api.host_audit_service,
+                                                        //    apiConfig.api.auditplan.controller,
+                                                        //    apiConfig.api.auditplan.action.listauditprocess.path);
+
+                                                        //callapi_multipleselect_auditprocess("AuditProcessCreate", "Chọn quy trình được kiểm toán...", apiConfig.api.host_audit_service,
+                                                        //    apiConfig.api.auditplan.controller,
+                                                        //    apiConfig.api.auditplan.action.listauditprocess.path);
+
+                                                        //callapi_multipleselect_auditprocess("AuditProcessEdit", "Chọn quy trình được kiểm toán...", apiConfig.api.host_audit_service,
+                                                        //    apiConfig.api.auditplan.controller,
+                                                        //    apiConfig.api.auditplan.action.listauditprocess.path);
+    </script>
+    <script>
+                                                        //Người chịu trách nghiệm (AuditDetect thêm mới sửa kiến nghị)
+                                                        //function callApi_multipleselect_follower(selector, placeholder, host, controller, action) {
+                                                        //    $("#" + selector).select2({
+                                                        //        placeholder: placeholder,
+                                                        //        minimumInputLength: 0,
+                                                        //        multiple: false,
+                                                        //        closeOnSelect: false,
+                                                        //        ajax: {
+                                                        //            headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                                                        //            url: function () {
+                                                        //                return getUrlFollower(host, controller, action);
+                                                        //            },
+                                                        //            dataType: 'json',
+                                                        //            data: function (params) {
+                                                        //                var query = {
+                                                        //                    q: params.term,
+                                                        //                    type: 'public'
+                                                        //                }
+                                                        //                return query;
+                                                        //            },
+                                                        //            processResults: function (data) {
+                                                        //                return {
+                                                        //                    results: $.map(data.data, function (item) {
+                                                        //                        return {
+                                                        //                            email: item.email,
+                                                        //                            text: item.full_name,
+                                                        //                            id: item.id
+                                                        //                        }
+                                                        //                    })
+                                                        //                };
+                                                        //            },
+                                                        //            cache: true
+                                                        //        }
+                                                        //    });
+                                                        //}
+                                                        //function getUrlFollower(host, controller, action) {
+                                                        //    var url = "";
+                                                        //    var _facilityid = $("#CreateUnit").val() != null ? $("#CreateUnit").val() : $("#EditUnit").val();
+                                                        //    url = host + controller + action + "?" + "facility_id" + "=" + parseInt(_facilityid);
+                                                        //    return url;
+                                                        //}
+
+                                            //callApi_multipleselect_follower("CreateUser", "Chọn người chịu trách nghiệm..",
+                                            //    apiConfig.api.host_audit_service,
+                                            //    apiConfig.api.auditdetect.controller,
+                                            //    apiConfig.api.auditdetect.action.listuserresponsible.path);
+
+                                            //callApi_multipleselect_follower("EditUser", "Chọn người chịu trách nghiệm..",
+                                            //    apiConfig.api.host_audit_service,
+                                            //    apiConfig.api.auditdetect.controller,
+                                            //    apiConfig.api.auditdetect.action.listuserresponsible.path);
+    </script>
+
+}

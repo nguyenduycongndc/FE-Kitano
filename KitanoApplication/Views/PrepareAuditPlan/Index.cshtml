@@ -1,0 +1,2594 @@
+﻿@{ Layout = "_Layout"; }
+@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@{
+    var now = DateTime.Now.Year;
+}
+<link rel="stylesheet" type="text/css" href="~/css/prepareAuditPlan.css?v=1.4">
+
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.PrepareAuditPlan</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card" id="view">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.List_Audit
+        </div>
+        <div class="card-body card-custom">
+            <form action="javascript:void(0)">
+                <div style="padding: 15px 0px;">
+                    @if (Utils.IsCheckPemission("M_PAP", "PER_ADD") == true)
+                    {
+                        <a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info"> @Resource.Create</a>
+                    }
+                    @*<a href="javascript:void(0);" onclick="openView(1,0)" class="btn btn-info"> @Resource.Create</a>*@
+                    @*<a class="btn btn-info" data-toggle="modal" data-target="#modalCopyRecords" style="color:white">Sao chép hồ sơ kiểm toán</a>*@
+                    <a href="javascript:void(0);" class="btn btn-info" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="true" aria-controls="collapseSearch"><i class="fa fa-search" aria-hidden="true"></i>@Resource.SearchOption</a>
+                </div>
+                <div class="collapse" id="collapseSearch" style="margin-top:5px">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Year">
+                                    @Resource.Year_Audit
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="Year" name="Year">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Classify">
+                                    @Resource.Classify
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Classify">
+                                        <option value="-1" selected="selected">--Chọn--</option>
+                                        <option value="1">Kiểm toán theo kế hoạch năm</option>
+                                        <option value="2">Kiểm toán đột xuất</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Code">
+                                    @Resource.Code_Audit
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="Code" name="Code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Name">
+                                    @Resource.Name_Audit
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="Name" name="Name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Person">
+                                    @Resource.PersonCharge
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="PersonInCharge">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="StatusSuccess">
+                                    @Resource.Execution_Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="StatusSuccess">
+                                        <option value="">--Chọn--</option>
+                                        <option value="Chưa thực hiện">Chưa thực hiện</option>
+                                        <option value="Đang lập kế hoạch">Đang lập kế hoạch</option>
+                                        <option value="Chuẩn bị KT tại thựa địa">Chuẩn bị KT tại thựa địa</option>
+                                        <option value="Đang KT tại thực địa">Đang KT tại thực địa</option>
+                                        <option value="Đang lập BCKT">Đang lập BCKT</option>
+                                        <option value="Đã phát hành BCKT">Đã phát hành BCKT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Status">
+                                    @Resource.Browsing_Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="Status">
+                                        <option value="-1">---- @Resource.Choose ----</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()">@Resource.Search</a>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class=" table-responsive custom-table-scroll ">
+                <table id="prepareAuditPlanTable" class="table table-striped table-bordered zero-configuration">
+                    <thead class="contain-header-custom m-gray">
+                        <tr>
+                            <th style="text-align: center; width: 2%">@Resource.No</th>
+                            <th style="text-align: center; width: 2%">@Resource.Year</th>
+                            <th style="text-align: center; width: 7%">@Resource.Code_Audit</th>
+                            <th style="text-align: center">@Resource.Name_Audit</th>
+                            <th style="text-align: center; width: 3%">@Resource.Start_Time</th>
+                            <th style="text-align: center; width: 3%">@Resource.End_Time</th>
+                            @*<th style="text-align: center; width: 3%">Thời gian gia hạn</th>*@
+                            <th style="text-align: center; width: 7%">@Resource.PersonCharge</th>
+                            <th style="text-align: center; width: 7%">@Resource.Browsing_Status</th>
+                            <th style="text-align: center; width: 7%">@Resource.Execution_Status</th>
+                            <th id="WidthColum" style="text-align: center; width: 18%">@Resource.Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="contain-tbody-custom">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="edit" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Update_Audit
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInformationEdit-tab" data-toggle="tab" href="#generalInformationEdit" role="tab" aria-controls="generalInformationEdit" aria-selected="true">@Resource.General_Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="personnelEdit-tab" data-toggle="tab" href="#personnelEdit" role="tab" aria-controls="personnelEdit" aria-selected="false">@Resource.Audit_Personnel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scopeEdit-tab" data-toggle="tab" href="#scopeEdit" role="tab" aria-controls="scopeEdit" aria-selected="false">@Resource.Scope_Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scheduleEdit-tab" data-toggle="tab" href="#scheduleEdit" role="tab" aria-controls="scheduleEdit" aria-selected="false">@Resource.Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="unitInformationEdit-tab" data-toggle="tab" href="#unitInformationEdit" role="tab" aria-controls="unitInformationEdit" aria-selected="false">@Resource.Audit_Entity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="budgetTab()" id="budgetEdit-tab" data-toggle="tab" href="#budgetEdit" role="tab" aria-controls="budgetEdit" aria-selected="false">Ngân sách</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="otherTab()" id="otherEdit-tab" data-toggle="tab" href="#otherEdit" role="tab" aria-controls="otherEdit" aria-selected="false">Khác</a>
+            </li>
+        </ul>
+        @*Tab panes*@
+        <div class="tab-content">
+            @*<form id="formEdit" class="form-valide" action="#" method="post" style="margin-top: 20px;">*@
+            <div class="tab-pane active" id="generalInformationEdit" role="tabpanel" aria-labelledby="generalInformationEdit-tab">
+                <input type="hidden" id="IdEdit" name="IdEdit" value="0" />
+                <div class="col-md-12 row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>1.Tổng quan</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row" @*style="margin-top:30px !important"*@>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearEdit">
+                                @Resource.Year_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="YearEdit" name="YearEdit" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="CodeEdit">
+                                @Resource.Code_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="CodeEdit" name="CodeEdit" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="NameEdit">
+                                @Resource.Name_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control required" id="NameEdit" name="NameEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="TargetEdit">
+                                @Resource.Audit_Purpose <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control required" id="TargetEdit" name="TargetEdit"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="PersonInEdit">
+                                @Resource.PersonCharge <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control required" id="PersonInChargeEdit">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ClassifyEdit">
+                                @Resource.Classify
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="ClassifyEdit" disabled>
+                                    <option value="1">Kiểm toán theo kế hoạch năm</option>
+                                    <option value="2">Kiểm toán đột xuất</option>
+                                </select>
+                                @*<input type="text" class="form-control" id="ClassifyEdit" name="ClassifyEdit">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberAuditorsEdit">
+                                @Resource.Expected_Number_Audits
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberAuditorsEdit" name="NumberAuditorsEdit" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberWorkdayEdit">
+                                @Resource.Estimated_Working_Days
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" onkeypress='validateIndex(event)' class="form-control" id="NumberWorkdayEdit" name="NumberWorkdayEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusEdit">
+                                @Resource.Browsing_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="StatusEdit" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusSuccessEdit">
+                                @Resource.Execution_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="StatusSuccessEdit" disabled />
+                                @*<select class="form-control" id="StatusSuccessEdit" disabled>
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Chưa thực hiện</option>
+                                        <option value="2">Đang thực hiện</option>
+                                        <option value="3">Hoàn thành</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="fromDEdit">
+                                Thời hiệu KT từ <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="fromDEdit" name="fromDEdit">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="toDEdit">
+                                Thời hiệu KT đến <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="toDEdit" name="toDEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>2.Giai đoạn chính</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="FromDateEdit">
+                                Ngày bắt đầu lập KH <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="FromDateEdit" name="FromDateEdit">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="EndDatePlanningEdit">
+                                Ngày kết thúc lập KH <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="EndDatePlanningEdit" name="EndDatePlanningEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StartDateRealEdit">
+                                Ngày bắt đầu thực địa <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="StartDateRealEdit" name="StartDateRealEdit">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ToDateEdit">
+                                Ngày kết thúc thực địa <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="ToDateEdit" name="ToDateEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ReleaseDateEdit">
+                                Ngày phát hành BC <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control required" id="ReleaseDateEdit" name="ReleaseDateEdit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="personnelEdit" role="tabpanel" aria-labelledby="personnelEdit-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row-custom">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <table id="auditworkNum2table" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th style="width: 48% !important;" class="text-center">@Resource.FullName</th>
+                                                    <th style="width: 48% !important;" class="text-center">@Resource.Email</th>
+                                                    <th style="width: 4%  !important;" class="text-center"> @Resource.Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="auditworkNum2body" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-custom">
+                        <div class="col-md-12 row ">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" onclick="AddRow()" style="width:100%">Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="scopeEdit" role="tabpanel" aria-labelledby="scopeEdit-tab">
+                <div class="card">
+                    <div class="card-body">
+                        @*<label>Thêm phạm vi KT</label>*@
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="AuditScopeEdit">
+                                        Phạm vi kiểm toán
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="AuditScopeEdit" name="AuditScopeEdit"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#modalSelectScope" onclick="showModalScope()">Chọn đối tượng</a>
+                        <div class="col-md-12"></div>
+                        <label class="mt-3"><b>Quy trình được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkNum3table" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.Audited_Process</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audited_Activity</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Audit_Team_Leader</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Auditor</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkNum3body" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <label><b>Đơn vị được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditscopeFacilitytable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditscopeFacilitybody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="OutsideAudit">
+                                        @Resource.Audit_Scope_OutSide
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="OutsideAudit" name="OutsideAudit"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="scheduleEdit" role="tabpanel" aria-labelledby="scheduleEdit-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkNum4table" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center">@Resource.Work</th>
+                                        <th style="text-align: center">@Resource.Responsible_Person</th>
+                                        <th style="text-align: center">@Resource.Expected_Date</th>
+                                        <th style="text-align: center; width: 10% !important">@Resource.Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkNum4body" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-custom">
+                        <div class="col-md-12 row ">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-info" onclick="AddRowTabNum4()" style="width:100%">Thêm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="unitInformationEdit" role="tabpanel" aria-labelledby="unitInformationEdit-tab">
+                <div id="accordion">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="budgetEdit" role="tabpanel" aria-labelledby="budgetEdit-tab">
+                <div id="accordionBudget">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="otherEdit" role="tabpanel" aria-labelledby="otherEdit-tab">
+                <div id="accordionOther">
+
+                </div>
+            </div>
+            @*</form>*@
+        </div>
+        <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+            <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-info" style="width: 100%" onclick="submitEdit();">@Resource.Save</button>
+                </div>
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Form thêm mới *@
+    <div class="card" id="create" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Create_Audit
+        </div>
+        <div class="card-body card-custom">
+            <form id="formAuditWorkCreate" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ClassifyCreate">
+                                @Resource.Classify <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="ClassifyCreate" onchange="SelectOption()">
+                                    @*<option value="-1" selected="selected">--Chọn--</option>*@
+                                    <option value="1" selected="selected">Kiểm toán theo kế hoạch năm</option>
+                                    <option value="2">Kiểm toán đột xuất</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row" id="flowPlan">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearCreateDrop">
+                                @Resource.Year_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control required" id="YearCreateDrop">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NameAuditCreateDrop">
+                                @Resource.Name_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control required" id="NameAuditCreateDrop">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row" id="unFlowPlan" style="display: none">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearCreate">
+                                @Resource.Year_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control required" id="YearCreate" name="YearCreate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NameAuditCreate">
+                                @Resource.Name_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control required" id="NameAuditCreate" name="NameAuditCreate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;">
+                    <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                        <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                            <button type="button" class="btn btn-info" style="width: 100%" onclick="submitAuditWorkCreate()">@Resource.Save</button>
+                        </div>
+                        <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                            <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*  Form chi tiết *@
+    <div class="card" id="detail" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Details_Audit
+        </div>
+        <ul class="nav nav-tabs" id="myTabDetail" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInformationDetail-tab" data-toggle="tab" href="#generalInformationDetail" role="tab" aria-controls="generalInformationDetail" aria-selected="true">@Resource.General_Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="personnelDetail-tab" data-toggle="tab" href="#personnelDetail" role="tab" aria-controls="personnelDetail" aria-selected="false">@Resource.Audit_Personnel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scopeDetail-tab" data-toggle="tab" href="#scopeDetail" role="tab" aria-controls="scopeDetail" aria-selected="false">@Resource.Scope_Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scheduleDetail-tab" data-toggle="tab" href="#scheduleDetail" role="tab" aria-controls="scheduleDetail" aria-selected="false">@Resource.Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="unitInformationDetail-tab" data-toggle="tab" href="#unitInformationDetail" role="tab" aria-controls="unitInformationDetail" aria-selected="false">@Resource.Audit_Entity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="budgetTab()" id="budgetDetail-tab" data-toggle="tab" href="#budgetDetail" role="tab" aria-controls="budgetDetail" aria-selected="false">Ngân sách</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="otherTab()" id="otherDetail-tab" data-toggle="tab" href="#otherDetail" role="tab" aria-controls="otherDetail" aria-selected="false">Khác</a>
+            </li>
+        </ul>
+        @*Tab panes*@
+        <div class="tab-content">
+            @*<form id="formDetail" class="form-valide" action="#" method="post" style="margin-top: 20px;">*@
+            <div class="tab-pane active" id="generalInformationDetail" role="tabpanel" aria-labelledby="generalInformationDetail-tab">
+                <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                <div class="col-md-12 row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>1.Tổng quan</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearDetail">
+                                @Resource.Year_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="YearDetail" name="YearDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="CodeDetail">
+                                @Resource.Code_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="CodeDetail" name="CodeDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="NameDetail">
+                                @Resource.Name_Audit <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control required" id="NameDetail" name="NameDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="TargetDetail">
+                                @Resource.Audit_Purpose <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control required" id="TargetDetail" name="TargetDetail" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="PersonInDetail">
+                                @Resource.PersonCharge
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="PersonInChargeDetail" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ClassifyDetail">
+                                @Resource.Classify
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="ClassifyDetail" disabled>
+                                    <option value="1">Kiểm toán theo kế hoạch năm</option>
+                                    <option value="2">Kiểm toán đột xuất</option>
+                                </select>
+                                @*<input type="text" class="form-control" id="ClassifyDetail" name="ClassifyDetail">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberAuditorsDetail">
+                                @Resource.Expected_Number_Audits
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberAuditorsDetail" name="NumberAuditorsDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberWorkdayDetail">
+                                @Resource.Estimated_Working_Days
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberWorkdayDetail" name="NumberWorkdayDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusDetail">
+                                @Resource.Browsing_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="StatusDetail" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusSuccessDetail">
+                                @Resource.Execution_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="StatusSuccessDetail" disabled />
+                                @*<select class="form-control" id="StatusSuccessDetail" disabled>
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Chưa thực hiện</option>
+                                        <option value="2">Đang thực hiện</option>
+                                        <option value="3">Hoàn thành</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="fromDDetail">
+                                Thời hiệu KT từ
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="fromDDetail" name="fromDDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="toDDetail">
+                                Thời hiệu KT đến
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="toDDetail" name="toDDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>2.Giai đoạn chính</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="FromDateDetail">
+                                Ngày bắt đầu lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="FromDateDetail" name="FromDateDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="EndDatePlanningDetail">
+                                Ngày kết thúc lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="EndDatePlanningDetail" name="EndDatePlanningDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StartDateRealDetail">
+                                Ngày bắt đầu thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="StartDateRealDetail" name="StartDateRealDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ToDateDetail">
+                                Ngày kết thúc thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ToDateDetail" name="ToDateDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ReleaseDateDetail">
+                                Ngày phát hành BC
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ReleaseDateDetail" name="ReleaseDateDetail" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ApprovalFunctionFileDetail">
+                                File đã duyệt
+                            </label>
+                            <div class="col-lg-8" style="display: flex;flex-direction: column;margin: auto;" id="ApprovalFunctionFileDetail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="personnelDetail" role="tabpanel" aria-labelledby="personnelDetail-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row-custom">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <table id="auditworkpersonnelDetailtable" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th style="width:10%" class="text-center">@Resource.FullName</th>
+                                                    <th style="width:10%" class="text-center">@Resource.Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="auditworkpersonnelDetailbody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="scopeDetail" role="tabpanel" aria-labelledby="scopeDetail-tab">
+                <div class="card">
+                    <div class="card-body">
+                        @*<label>Thêm phạm vi KT</label>*@
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="AuditScopeDettail">
+                                        Phạm vi kiểm toán
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="AuditScopeDettail" name="AuditScopeDettail" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#modalSelectScope" onclick="showModalScope()">Chọn đối tượng</a>*@
+                        <div class="col-md-12"></div>
+                        <label class="mt-3"><b>Quy trình được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscopeDetailtable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.Audited_Process</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audited_Activity</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Audit_Team_Leader</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Auditor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscopeDetailbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <label><b>Đơn vị được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditscopeFacilityDetailtable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditscopeFacilityDetailbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="OutsideAudit">
+                                        @Resource.Audit_Scope_OutSide
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="OutsideAudit" name="OutsideAudit" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="scheduleDetail" role="tabpanel" aria-labelledby="scheduleDetail-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscheduleDetailtable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center">@Resource.Work</th>
+                                        <th style="text-align: center">@Resource.Responsible_Person</th>
+                                        <th style="text-align: center">@Resource.Expected_Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscheduleDetailbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="unitInformationDetail" role="tabpanel" aria-labelledby="unitInformationDetail-tab">
+                <div id="accordionDetail">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="budgetDetail" role="tabpanel" aria-labelledby="budgetDetail-tab">
+                <div id="accordionBudgetDetail">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="otherDetail" role="tabpanel" aria-labelledby="otherDetail-tab">
+                <div id="accordionOtherDetail">
+
+                </div>
+            </div>
+            @*</form>*@
+        </div>
+        <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+            <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*  Form duyệt/từ chối duyệt *@
+    <div class="card" id="censorship" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Auditing_Censorship
+        </div>
+        <ul class="nav nav-tabs" id="myTabCensorship" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInformationCensorship-tab" data-toggle="tab" href="#generalInformationCensorship" role="tab" aria-controls="generalInformationCensorship" aria-selected="true">@Resource.General_Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="personnelCensorship-tab" data-toggle="tab" href="#personnelCensorship" role="tab" aria-controls="personnelCensorship" aria-selected="false">@Resource.Audit_Personnel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scopeCensorship-tab" data-toggle="tab" href="#scopeCensorship" role="tab" aria-controls="scopeCensorship" aria-selected="false">@Resource.Scope_Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scheduleCensorship-tab" data-toggle="tab" href="#scheduleCensorship" role="tab" aria-controls="scheduleCensorship" aria-selected="false">@Resource.Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="unitInformationCensorship-tab" data-toggle="tab" href="#unitInformationCensorship" role="tab" aria-controls="unitInformationCensorship" aria-selected="false">@Resource.Audit_Entity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="budgetTab()" id="budgetCensorship-tab" data-toggle="tab" href="#budgetCensorship" role="tab" aria-controls="budgetCensorship" aria-selected="false">Ngân sách</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="otherTab()" id="otherCensorship-tab" data-toggle="tab" href="#otherCensorship" role="tab" aria-controls="otherCensorship" aria-selected="false">Khác</a>
+            </li>
+        </ul>
+        @*Tab panes*@
+        <div class="tab-content">
+            @*<form id="formCensorship" class="form-valide" action="#" method="post" style="margin-top: 20px;">*@
+            <div class="tab-pane active" id="generalInformationCensorship" role="tabpanel" aria-labelledby="generalInformationCensorship-tab">
+                <input type="hidden" id="statusCodeCensorship" name="statusCodeCensorship" />
+                <input type="hidden" id="IdCensorship" name="IdCensorship" value="0" />
+                <div class="col-md-12 row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>1.Tổng quan</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearCensorship">
+                                @Resource.Year_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="YearCensorship" name="YearCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="CodeCensorship">
+                                @Resource.Code_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="CodeCensorship" name="CodeCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="NameCensorship">
+                                @Resource.Name_Audit
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control required" id="NameCensorship" name="NameCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="TargetCensorship">
+                                @Resource.Audit_Purpose
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control required" id="TargetCensorship" name="TargetCensorship" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="PersonInCensorship">
+                                @Resource.PersonCharge
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="PersonInCensorship" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ClassifyCensorship">
+                                @Resource.Classify
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="ClassifyCensorship" disabled>
+                                    <option value="1">Kiểm toán theo kế hoạch năm</option>
+                                    <option value="2">Kiểm toán đột xuất</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberAuditorsCensorship">
+                                @Resource.Expected_Number_Audits
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberAuditorsCensorship" name="NumberAuditorsCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberWorkdayCensorship">
+                                @Resource.Estimated_Working_Days
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberWorkdayCensorship" name="NumberWorkdayCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusCensorship">
+                                @Resource.Browsing_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="StatusCensorship" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusSuccessCensorship">
+                                @Resource.Execution_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="StatusSuccessCensorship" disabled />
+                                @*<select class="form-control" id="StatusSuccessCensorship" disabled>
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Chưa thực hiện</option>
+                                        <option value="2">Đang thực hiện</option>
+                                        <option value="3">Hoàn thành</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="fromDCensorship">
+                                Thời hiệu KT từ
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="fromDCensorship" name="fromDCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="toDCensorship">
+                                Thời hiệu KT đến
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="toDCensorship" name="toDCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>2.Giai đoạn chính</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="FromDateCensorship">
+                                Ngày bắt đầu lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="FromDateCensorship" name="FromDateCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="EndDatePlanningCensorship">
+                                Ngày kết thúc lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="EndDatePlanningCensorship" name="EndDatePlanningCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StartDateRealCensorship">
+                                Ngày bắt đầu thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="StartDateRealCensorship" name="StartDateRealCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ToDateCensorship">
+                                Ngày kết thúc thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ToDateCensorship" name="ToDateCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ReleaseDateCensorship">
+                                Ngày phát hành BC
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ReleaseDateCensorship" name="ReleaseDateCensorship" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="personnelCensorship" role="tabpanel" aria-labelledby="personnelCensorship-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row-custom">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <table id="auditworkpersonnelCensorshiptable" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th style="width:10%" class="text-center">@Resource.FullName</th>
+                                                    <th style="width:10%" class="text-center">@Resource.Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="auditworkpersonnelCensorshipbody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="scopeCensorship" role="tabpanel" aria-labelledby="scopeCensorship-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="AuditScopeCensorship">
+                                        Phạm vi kiểm toán
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="AuditScopeCensorship" name="AuditScopeCensorship" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<label>Thêm phạm vi KT</label>*@
+                        @*<a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#modalSelectScope" onclick="showModalScope()">Chọn phạm vi</a>*@
+                        <div class="col-md-12"></div>
+                        <label class="mt-3"><b>Quy trình được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscopeCensorshiptable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.Audited_Process</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audited_Activity</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Audit_Team_Leader</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Auditor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscopeCensorshipbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <label><b>Đơn vị được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditscopeFacilityCensorshiptable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditscopeFacilityCensorshipbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="OutsideAudit">
+                                        @*@Resource.Audit_Scope_OutSide*@
+                                        @Resource.Audit_Scope_OutSide
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="OutsideAudit" name="OutsideAudit" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="scheduleCensorship" role="tabpanel" aria-labelledby="scheduleCensorship-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscheduleCensorshiptable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center">@Resource.Work</th>
+                                        <th style="text-align: center">@Resource.Responsible_Person</th>
+                                        <th style="text-align: center">@Resource.Expected_Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscheduleCensorshipbody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="unitInformationCensorship" role="tabpanel" aria-labelledby="unitInformationCensorship-tab">
+                <div id="accordionCensorship">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="budgetCensorship" role="tabpanel" aria-labelledby="budgetCensorship-tab">
+                <div id="accordionBudgetCensorship">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="otherCensorship" role="tabpanel" aria-labelledby="otherCensorship-tab">
+                <div id="accordionOtherCensorship">
+
+                </div>
+            </div>
+            @*</form>*@
+        </div>
+        <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+            <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    @*<button id="C1" type="button" class="btn btn-info" style="width: 100%" onclick="submitBrowserRefuse();">@Resource.Approve</button>*@
+                    <button type="button" class="btn btn-info" style="width: 100%" onclick="SubmitApproval('#generalInformationCensorship','#IdCensorship','#CodeCensorship','M_PAP','Kế hoạch cuộc kiểm toán','','#statusCodeCensorship')">@Resource.Approve</button>
+                </div>
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-info" style="width: 100%" data-toggle="modal" data-target="#modalContent" onclick="submitContent();">@Resource.Refuse</button>
+                </div>
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*  Form Gửi duyệt *@
+    <div class="card" id="sendBrowse" style="display: none">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.SendBrowse
+        </div>
+        <ul class="nav nav-tabs" id="myTabSendBrowse" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generalInformationSendBrowse-tab" data-toggle="tab" href="#generalInformationSendBrowse" role="tab" aria-controls="generalInformationSendBrowse" aria-selected="true">@Resource.General_Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="personnelSendBrowse-tab" data-toggle="tab" href="#personnelSendBrowse" role="tab" aria-controls="personnelSendBrowse" aria-selected="false">@Resource.Audit_Personnel</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scopeSendBrowse-tab" data-toggle="tab" href="#scopeSendBrowse" role="tab" aria-controls="scopeSendBrowse" aria-selected="false">@Resource.Scope_Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="scheduleSendBrowse-tab" data-toggle="tab" href="#scheduleSendBrowse" role="tab" aria-controls="scheduleSendBrowse" aria-selected="false">@Resource.Schedule</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="unitInformationSendBrowse-tab" data-toggle="tab" href="#unitInformationSendBrowse" role="tab" aria-controls="unitInformationSendBrowse" aria-selected="false">@Resource.Audit_Entity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="budgetTab()" id="budgetSendBrowse-tab" data-toggle="tab" href="#budgetSendBrowse" role="tab" aria-controls="budgetSendBrowse" aria-selected="false">Ngân sách</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="otherTab()" id="otherSendBrowse-tab" data-toggle="tab" href="#otherSendBrowse" role="tab" aria-controls="otherSendBrowse" aria-selected="false">Khác</a>
+            </li>
+        </ul>
+        @*Tab panes*@
+        <div class="tab-content">
+            @*<form id="formSendBrowse" class="form-valide" action="#" method="post" style="margin-top: 20px;">*@
+            <div class="tab-pane active" id="generalInformationSendBrowse" role="tabpanel" aria-labelledby="generalInformationSendBrowse-tab">
+                <input type="hidden" id="IdSendBrowse" name="IdSendBrowse" value="0" />
+                <div class="col-md-12 row mt-3">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>1.Tổng quan</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="YearSendBrowse">
+                                @Resource.Year_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="YearSendBrowse" name="YearSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="CodeSendBrowse">
+                                @Resource.Code_Audit
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="CodeSendBrowse" name="CodeSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="NameSendBrowse">
+                                @Resource.Name_Audit
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control required" id="NameSendBrowse" name="NameSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2" for="TargetSendBrowse">
+                                @Resource.Audit_Purpose
+                            </label>
+                            <div class="col-lg-10">
+                                <textarea type="text" class="form-control required" id="TargetSendBrowse" name="TargetSendBrowse" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="PersonInSendBrowse">
+                                @Resource.PersonCharge
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="PersonInSendBrowse" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ClassifySendBrowse">
+                                @Resource.Classify
+                            </label>
+                            <div class="col-lg-8">
+                                <select class="form-control" id="ClassifySendBrowse" disabled>
+                                    <option value="1">Kiểm toán theo kế hoạch năm</option>
+                                    <option value="2">Kiểm toán đột xuất</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberAuditorsSendBrowse">
+                                @Resource.Expected_Number_Audits
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberAuditorsSendBrowse" name="NumberAuditorsSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="NumberWorkdaySendBrowse">
+                                @Resource.Estimated_Working_Days
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="NumberWorkdaySendBrowse" name="NumberWorkdaySendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusSendBrowse">
+                                @Resource.Browsing_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="StatusSendBrowse" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StatusSuccessSendBrowse">
+                                @Resource.Execution_Status
+                            </label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="StatusSuccessSendBrowse" disabled />
+                                @*<select class="form-control" id="StatusSuccessSendBrowse" disabled>
+                                        <option value="-1">--Chọn--</option>
+                                        <option value="1">Chưa thực hiện</option>
+                                        <option value="2">Đang thực hiện</option>
+                                        <option value="3">Hoàn thành</option>
+                                    </select>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*</div>*@
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="fromDSendBrowse">
+                                Thời hiệu KT từ
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="fromDSendBrowse" name="fromDSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="toDSendBrowse">
+                                Thời hiệu KT đến
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="toDSendBrowse" name="toDSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4">
+                                <b>2.Giai đoạn chính</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="FromDateSendBrowse">
+                                Ngày bắt đầu lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="FromDateSendBrowse" name="FromDateSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="EndDatePlanningSendBrowse">
+                                Ngày kết thúc lập KH
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="EndDatePlanningSendBrowse" name="EndDatePlanningSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="StartDateRealSendBrowse">
+                                Ngày bắt đầu thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="StartDateRealSendBrowse" name="StartDateRealSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ToDateSendBrowse">
+                                Ngày kết thúc thực địa
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ToDateSendBrowse" name="ToDateSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-4" for="ReleaseDateSendBrowse">
+                                Ngày phát hành BC
+                            </label>
+                            <div class="col-lg-8">
+                                <input type="date" class="form-control" id="ReleaseDateSendBrowse" name="ReleaseDateSendBrowse" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="personnelSendBrowse" role="tabpanel" aria-labelledby="personnelSendBrowse-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row-custom">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <table id="auditworkpersonnelSendBrowsetable" class="table table-striped table-bordered zero-configuration" style="width: 100% !important">
+                                            <thead class="contain-header-custom m-gray ">
+                                                <tr>
+                                                    <th style="width:10%" class="text-center">@Resource.FullName</th>
+                                                    <th style="width:10%" class="text-center">@Resource.Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="auditworkpersonnelSendBrowsebody" class="contain-tbody-custom ">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="scopeSendBrowse" role="tabpanel" aria-labelledby="scopeSendBrowse-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="AuditScopeSendBrowse">
+                                        Phạm vi kiểm toán
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="AuditScopeSendBrowse" name="AuditScopeSendBrowse" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<label>Thêm phạm vi KT</label>*@
+                        @*<a href="javascript:void(0);" class="btn btn-info" data-toggle="modal" data-target="#modalSelectScope" onclick="showModalScope()">Chọn phạm vi</a>*@
+                        <div class="col-md-12"></div>
+                        <label class="mt-3"><b>Quy trình được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscopeSendBrowsetable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.Audited_Process</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audited_Activity</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Audit_Team_Leader</th>
+                                        <th style="text-align: center; max-width: 10%">@Resource.Auditor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscopeSendBrowsebody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <label><b>Đơn vị được kiểm toán</b></label>
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditscopeFacilitySendBrowsetable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center; max-width: 2%">@Resource.No</th>
+                                        <th style="text-align: center">@Resource.AuditUnit</th>
+                                        <th style="text-align: center">@Resource.Audit_Reason</th>
+                                        <th style="text-align: center; max-width: 2%">@Resource.RiskLevelEdit</th>
+                                        <th style="text-align: center">@Resource.Last_Audit_Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditscopeFacilitySendBrowsebody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 row">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-lg-2" for="OutsideAudit">
+                                        @*@Resource.Audit_Scope_OutSide*@
+                                        @Resource.Audit_Scope_OutSide
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <textarea type="text" class="form-control" id="OutsideAudit" name="OutsideAudit" disabled></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane" id="scheduleSendBrowse" role="tabpanel" aria-labelledby="scheduleSendBrowse-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive custom-table-scroll ">
+                            <table id="auditworkscheduleSendBrowsetable" class="table table-striped table-bordered zero-configuration">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th style="text-align: center">@Resource.Work</th>
+                                        <th style="text-align: center">@Resource.Responsible_Person</th>
+                                        <th style="text-align: center">@Resource.Expected_Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditworkscheduleSendBrowsebody" class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="unitInformationSendBrowse" role="tabpanel" aria-labelledby="unitInformationSendBrowse-tab">
+                <div id="accordionSendBrowse">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="budgetSendBrowse" role="tabpanel" aria-labelledby="budgetSendBrowse-tab">
+                <div id="accordionBudgetSendBrowse">
+
+                </div>
+            </div>
+            <div class="tab-pane" id="otherSendBrowse" role="tabpanel" aria-labelledby="otherSendBrowse-tab">
+                <div id="accordionOtherSendBrowse">
+
+                </div>
+            </div>
+            @*</form>*@
+        </div>
+        <div class="col-md-12 row " style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start; width: 100%;margin-bottom:10px">
+            <div class="mb-2" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-start;">
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-info" style="width: 100%" data-toggle="modal" data-target="#modalSubmitApproval" onclick="submitApproval()">@Resource.SendBrowse</button>
+                </div>
+                <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                    <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Lịch sử *@
+    <div class="card" id="history-log" style="display: none">
+        <div class="card-header bg-primary text-white" id="frmHeaderDetail" style=" font-size: 1rem; ">
+            Lịch sử thay đổi
+        </div>
+        <div class="card-body card-custom">
+            <form id="formHistoryLog" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="IdDetail" name="IdDetail" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row-custom">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2">
+                                    Kế hoạch cuộc kiểm toán
+                                </label>
+                                <strong class="col-lg-10" style="margin-top:5px" id="nameAuditWork"></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row-custom">
+                        <div class="table-responsive custom-table-scroll">
+                            <table id="auditAuditWorkHistory" class="table dataTable">
+                                <thead class="contain-header-custom m-gray">
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 15%">Thời gian</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Người thực hiện</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Thao tác</th>
+                                        <th class="text-center" scope="col" style="width: 15%">Ý kiến</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="contain-tbody-custom">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row mb-3" style="display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; width: 100%;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="width: 50%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end;">
+                            <div style=" display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="openView(0,0,'')">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Thêm mới rủi ro *@
+<div class="modal fade" id="modalCreateRisk" tabindex="-1" role="dialog" aria-labelledby="modalCreateRiskLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #544f90 !important ">
+                <h5 class="modal-title" id="createModalLabel" style="color:white">Thêm rủi ro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmCreateRisk">
+                    <div class="form-group row mb-3">
+                        <label for="NameRisk" class="col-form-label col-lg-2">Tên rủi ro <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control required" id="nameRiskCreate" placeholder="Tên rủi ro" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label for="Description" class="col-form-label col-lg-2">Mô tả <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <textarea type="text" class="form-control required" id="descriptionCreate" placeholder="Mô tả"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="RiskLevel" class="col-form-label col-lg-2">Mức độ rủi ro <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <select class="form-control required" id="riskLevelCreate" name="riskLevelCreate">
+                                <option value="1">Cao</option>
+                                <option value="2">Trung bình</option>
+                                <option value="3">Thấp</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="AuditStrategy" class="col-form-label col-lg-2">Chiến lược KT <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <textarea type="text" class="form-control required" id="auditStrategyCreate" placeholder="Chiến lược KT"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="creatRisk()" class="btn btn-info">Lưu</button>
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*  *@
+@* Cập nhật rủi ro *@
+<div class="modal fade" id="modalEditRisk" tabindex="-1" role="dialog" aria-labelledby="modalEditRiskLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #544f90 !important ">
+                <h5 class="modal-title" id="editModalLabel" style="color:white">Cập nhật rủi ro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmEditRisk">
+                    <input type="hidden" id="IdRisk" name="IdRisk" value="0" />
+                    <input type="hidden" id="IdAuditWorkScope" name="IdAuditWorkScope" value="0" />
+                    <div class="form-group row mb-3">
+                        <label for="NameRisk" class="col-form-label col-lg-2">Tên rủi ro <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control required" id="nameRiskEdit" placeholder="Tên rủi ro" />
+                        </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="Description" class="col-form-label col-lg-2">Mô tả <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <textarea type="text" class="form-control required" id="descriptionEdit" placeholder="Mô tả"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="RiskLevel" class="col-form-label col-lg-2">Mức độ rủi ro <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <select class="form-control required" id="riskLevelEdit" name="riskLevelEdit">
+                                <option value="1">Cao</option>
+                                <option value="2">Trung bình</option>
+                                <option value="3">Thấp</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label for="AuditStrategy" class="col-form-label col-lg-2">Chiến lược KT <span class="text-danger">*</span></label>
+                        <div class="col-lg-10">
+                            <textarea type="text" class="form-control required" id="auditStrategyEdit" placeholder="Chiến lược KT"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="editRisk()" class="btn btn-info">Lưu</button>
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*  *@
+@* kết xuất thông báo *@
+@*<div class="modal fade" id="modalRenderNotification" tabindex="-1" role="dialog" aria-labelledby="modalRenderNotificationLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #544f90 !important ">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white">Kết xuất thông báo kiểm toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmRenderNotification">
+                    <input type="hidden" id="IdAuditWork" name="IdAuditWork" value="0" />
+                    <div class="form-group">
+                        <label for="YearRenderNotification" class="col-form-label">@Resource.Year_Audit</label> <span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="YearRenderNotification" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label for="AuditWorkRenderNotification" class="col-form-label">Cuộc kiểm toán</label> <span class="text-danger">*</span>
+                        <input type="text" class="form-control" id="AuditWorkRenderNotification" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label for="AuditFacilityRenderNotification" class="col-form-label">Đơn vị được KT</label> <span class="text-danger">*</span>
+                        <select class="form-control required" id="AuditFacilityRenderNotification" name="AuditFacilityRenderNotification">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-info" onclick="ExportNotificationWord()">Kết xuất</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+@*  *@
+@*<div class="modal fade" id="modalCopyRecords" tabindex="-1" role="dialog" aria-labelledby="modalCopyRecordsLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #544f90 !important ">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white">Sao chép hồ sơ kiểm toán</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="frmDocumentsProvided">
+                    <h5 class="mt-3">1. Sao chép từ hồ sơ cuộc kiểm toán</h5>
+                    <div class="form-group">
+                        <label for="YearCopyRecords" class="col-form-label">@Resource.Year_Audit</label>
+                        <select class="form-control selectpicker" id="YearCopyRecords">
+                            <option value="-1" selected="selected">--Chọn--</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="AuditCopyRecords" class="col-form-label">Cuộc kiểm toán</label>
+                        <select class="form-control" id="AuditCopyRecords" name="AuditCopyRecords">
+                            <option value="-1" selected="selected">--Chọn cuộc kiểm toán--</option>
+                            <option value="Kiểm toán quy trình bán hàng">Kiểm toán quy trình bán hàng</option>
+                            <option value="Kiểm toán chi nhánh">Kiểm toán chi nhánh</option>
+                            <option value="Kiểm toán hoạt động thu hồi nợ">Kiểm toán hoạt động thu hồi nợ</option>
+                        </select>
+                    </div>
+                    <h5 class="mt-3">2. Hồ sơ cuộc kiểm toán mới</h5>
+                    <div class="form-group">
+                        <label for="YearCopyRecords2" class="col-form-label">@Resource.Year_Audit</label>
+                        <select class="form-control selectpicker" id="YearCopyRecords2">
+                            <option value="-1" selected="selected">--Chọn--</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="AuditCopyRecords2" class="col-form-label">Cuộc kiểm toán</label>
+                        <select class="form-control" id="AuditCopyRecords2" name="AuditCopyRecords2">
+                            <option value="-1" selected="selected">--Chọn cuộc kiểm toán--</option>
+                            <option value="Kiểm toán quy trình bán hàng">Kiểm toán quy trình bán hàng</option>
+                            <option value="Kiểm toán chi nhánh">Kiểm toán chi nhánh</option>
+                            <option value="Kiểm toán hoạt động thu hồi nợ">Kiểm toán hoạt động thu hồi nợ</option>
+                        </select>
+                    </div>
+                    <h5 class="mt-3">3. Nội dung sao chép</h5>
+                    <div class="form-group">
+                        <input class="mb-1" type="checkbox" />&emsp;
+                        <label for="AuditCopyRecords2" class="col-form-label">Kế hoạch cuộc kiểm toán</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="mb-1" type="checkbox" />&emsp;
+                        <label for="AuditCopyRecords2" class="col-form-label">Chương trình kiểm toán</label>
+                    </div>
+                    <div class="form-group">
+                        <input class="mb-1" type="checkbox" />&emsp;
+                        <label for="AuditCopyRecords2" class="col-form-label">Giấy tờ làm việc</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Back</button>
+                <button type="button" class="btn btn-info">Lưu</button>
+
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@* Modal Chọn phạm vi *@
+<div class="modal fade" id="modalSelectScope" tabindex="-1" role="dialog" aria-labelledby="modalSelectScopeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalSelectScopeObserve">Chọn phạm vi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <input type="hidden" id="TypeShowTable" name="TypeShowTable" value="0" />
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label for="search-year" class="col-md-2 col-form-label required">@Resource.Year</label>
+                            <div class="col-md-9">
+                                <input type="number" value="@now" min="@(now-1)" max="@(now+4)" onchange="checkNumberValue(this)" class="form-control" id="search-year" aria-label="search-year" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Cách hiển thị</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="TypeDisplay" onchange="ChangeTypeDisplay()">
+                                    <option value="-1" selected="selected">--Tất cả--</option>
+                                    <option value="1">Theo đơn vị</option>
+                                    <option value="2">Theo hoạt động</option>
+                                    <option value="3">Theo quy trình</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row mt-3">
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label for="search-stage" class="col-md-2 col-form-label required">@Resource.Stage</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="search-stage" onchange="changeStageValue()">
+                                    <option value="-1" selected="selected">--@Resource.Choose--</option>
+                                    <option value="1">@Resource.Year</option>
+                                    <option value="2">@Resource.HalfYear</option>
+                                    <option value="3">@Resource.Quarter</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label for="search_apply_for" class="col-md-3 col-form-label">@Resource.ClassType</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="search_apply_for">
+                                    <option value="">----Chọn----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mt-3">
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label for="search-stage_value" class="col-md-2 col-form-label">@Resource.StageValue</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="search-stage_value">
+                                    <option value="" selected="selected">--@Resource.Choose--</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">@Resource.RiskLevel</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="search-risk_level">
+                                    <option value="" selected="selected">--@Resource.Choose--</option>
+                                    <option value="3">@Resource.High</option>
+                                    <option value="2">@Resource.Mid</option>
+                                    <option value="1">@Resource.Low</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mt-3">
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Quy trình</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="QuyTrinhSearch" name="QuyTrinhSearch">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Hoạt động</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="HoatDongSearch" name="HoatDongSearch">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mt-3">
+                    <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Đơn vị</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="DonViSearch" name="DonViSearch">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12 mb-3 btn-search-custom">
+                        <div style="text-align:center; ">
+                            <a href="javascript:void(0);" class="btn btn-info" onclick="onSearchScope()">@Resource.Search</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="table-responsive custom-table-scroll" style="max-height: 420px; overflow-y: auto">
+                <table id="tblScope" class="table table-striped table-bordered zero-configuration">
+                    <thead class="m-gray">
+                        <tr>-->
+                @*<th scope="col" style="width: 50px"><input id="checkAllAuditObserve" type="checkbox" name="checkAllAuditObserve"></th>
+                    <th scope="col" style="width: 50px">@Resource.No</th>
+                    <th scope="col">Tên quan sát</th>
+                    <th scope="col">Mô tả</th>
+                    <th scope="col">Giấy tờ</th>*@
+                <!--<th scope="col" style="width: 3rem; text-align: center"></th>
+                                <th scope="col" style="width: 10rem">Mã hoạt động</th>
+                                <th scope="col" style="width: 20rem">Hoạt động</th>
+                                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkHoatDongAll" name="checkHoatDongAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyScope">
+                        </tbody>
+                    </table>
+                </div>-->
+                <div class="table-responsive custom-table-scroll" id="TableViewAll">
+                    <table id="tblRiskScore" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 3rem; text-align: center">@Resource.No</th>
+                                <th scope="col" style="width: 10rem">@Resource.Object</th>
+                                <th scope="col" style="width: 20rem">@Resource.Name</th>
+                                <th scope="col" style="width: 5rem">@Resource.Class</th>
+                                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkAll" name="checkAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive custom-table-scroll" id="TableViewDonVi" style="display:none">
+                    <table id="tblRiskScore" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 3rem; text-align: center"></th>
+                                <th scope="col" style="width: 10rem">Mã đơn vị</th>
+                                <th scope="col" style="width: 20rem">Đơn vị</th>
+                                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkDonViAll" name="checkDonViAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive custom-table-scroll" id="TableViewHoatDong" style="display:none">
+                    <table id="tblRiskScore" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 3rem; text-align: center"></th>
+                                <th scope="col" style="width: 10rem">Mã hoạt động</th>
+                                <th scope="col" style="width: 20rem">Hoạt động</th>
+                                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkHoatDongAll" name="checkHoatDongAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive custom-table-scroll" id="TableViewQuyTrinh" style="display:none">
+                    <table id="tblRiskScore" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 3rem; text-align: center">@Resource.No</th>
+                                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                                <th scope="col" style="width: 20rem">Quy trình</th>
+                                <th scope="col" style="width: 20rem">Đơn vị liên quan</th>
+                                <th scope="col" style="width: 20rem">Hoạt động liên quan</th>
+                                <th scope="col" style="width: 10rem">@Resource.RiskLevelEdit</th>
+                                <th scope="col" style="width: 10rem">@Resource.LastAuditDate</th>
+                                <th scope="col" style="width: 10rem">@Resource.AuditCycle</th>
+                                <th scope="col" style="width: 20rem">@Resource.AuditReason</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkQuyTrinhAll" name="checkQuyTrinhAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody class="contain-tbody-custom">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive" id="TableViewDetailDonVi" hidden>
+                    <table id="tblRiskScoreDonViDetail" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                                <th scope="col" style="width: 20rem">Tên quy trình</th>
+                                <th scope="col" style="width: 20rem">Hoạt động liên quan</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkDonViDetailAll" name="checkDonViDetailAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblRiskScoreDonViBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" id="TableViewDetailHoatDong" hidden>
+                    <table id="tblRiskScoreHoatDongDetail" class="table">
+                        <thead class="contain-header-custom m-gray">
+                            <tr>
+                                <th scope="col" style="width: 10rem">Mã quy trình</th>
+                                <th scope="col" style="width: 20rem">Tên quy trình</th>
+                                <th scope="col" style="width: 20rem">Đơn vị liên quan</th>
+                                <th scope="col" style="width: 4rem"><input type="checkbox" class="form-control" id="checkHoatDongDetailAll" name="checkHoatDongDetailAll" /></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblRiskScoreHoatDongBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" class="btn btn-info" onclick="onSubmitScope()">@Resource.SaveAndClose</a>
+            </div>
+        </div>
+    </div>
+</div>
+@* Modal Gửi duyệt*@
+<div class="modal hide fade" id="modalSubmitApproval" role="dialog" aria-labelledby="modalSubmitApprovalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalSubmitApproval">@Resource.SendBrowse</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formModalSubmitApproval" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                    <input type="hidden" id="IdAuditWork" name="IdAuditWork" value="0" />
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="Approved" class="col-sm-3 col-form-label">@Resource.PersonBrowse <span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <select class="form-control required" id="Approved">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" class="btn btn-info" onclick="onclickSubmitApproval()">@Resource.SendBrowse</a>
+                <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal lý do từ chối duyệt*@
+<div class="modal hide fade" id="modalContent" role="dialog" aria-labelledby="modalContentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="examplemodalSubmitContent">@Resource.Refuse</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formmodalSubmitContent" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                    <input type="hidden" id="IdAuditDetectModal" name="IdAuditDetectModal" value="0" />
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label for="PersonBrowse" class="col-sm-3 col-form-label">@*@Resource.PersonBrowse*@ Ý kiến <span class="text-danger">*</span></label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control required" id="textContent">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" class="btn btn-info" onclick="onclickSubmitContent()">@Resource.Save</a>
+                <button type="button" class="btn btn-outline" data-dismiss="modal">@Resource.Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/prepareAuditPlan.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        //$('#YearCreateDrop').val(null).trigger('change');
+        //$('#YearCreateDrop').html('');
+        //$('#PersonInCharge').val(null).trigger('change');
+        //$('#PersonInCharge').html('');
+        //$('#PersonInChargeEdit').val(null).trigger('change');
+        //$('#PersonInChargeEdit').html('');
+        //$('#YearCreateDrop').val(null).trigger('change');
+        //$('#YearCreateDrop').html('');
+        callApi_oneselectperson("PersonInCharge", "Chọn người phụ trách..",
+            apiConfig.api.host_user_service,
+            apiConfig.api.systemuser.controller,
+            apiConfig.api.systemuser.action.selectaudiWork.path);
+
+        callApi_oneselectperson("PersonInChargeEdit", "Chọn người phụ trách..",
+            apiConfig.api.host_user_service,
+            apiConfig.api.systemuser.controller,
+            apiConfig.api.systemuser.action.selectaudiWork.path);
+
+        callapi_selectyearapproved("YearCreateDrop", "Chọn cuộc kiểm toán...",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.selectyearapproved.path);
+    </script>
+    <script>
+        function callapi_selectnameauditwork(selector, placeholder, host, controller, action) {
+            $("#" + selector).select2({
+                placeholder: placeholder,
+                minimumInputLength: 0,
+                multiple: false,
+                closeOnSelect: false,
+                ajax: {
+                    headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                    url: function () {
+                        return getUrl(host, controller, action);
+                    },
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            q: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data.data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.name
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        }
+        function getUrl(host, controller, action) {
+            var url = "";
+            var _year = $("#YearCreateDrop").val();
+            url = host + controller + action + "?" + "year" + "=" + parseInt(_year);
+            return url;
+        }
+        callapi_selectnameauditwork("NameAuditCreateDrop", "Chọn cuộc kiểm toán...",
+            apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.selectnameauditwork.path);
+    </script>
+    <script type="text/javascript">
+
+        $('#myTab a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+
+    </script>
+    <script>
+        //<b>Đơn vị được kiểm toán</b>
+        function callapi_multipleselect_auditfacility(selector, placeholder, host, controller, action) {
+            $("#" + selector).select2({
+                placeholder: placeholder,
+                minimumInputLength: 0,
+                multiple: false,
+                closeOnSelect: false,
+                ajax: {
+                    headers: { "Authorization": "Bearer " + sessionStorage['SessionToken'] },
+                    url: function () {
+                        return getUrlAuditfacility(host, controller, action);
+                    },
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            q: params.term,
+                            type: 'public'
+                        }
+                        return query;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data.data, function (item) {
+                                return {
+                                    id: item.auditfacilities_id,
+                                    text: item.auditfacilities_name,
+                                    keyid: item.id,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        }
+        function getUrlAuditfacility(host, controller, action) {
+            var url = "";
+            var _auditwork = $("#IdAuditWork").val();
+            if (_auditwork) {
+                url = host + controller + action + "?" + "auditwork_id" + "=" + parseInt(_auditwork);
+            } else {
+                url = host + controller + action;
+            }
+            return url;
+        }
+        callapi_multipleselect_auditfacility("AuditFacilityRenderNotification", "Chọn đơn vị được kiểm toán...", apiConfig.api.host_audit_service,
+            apiConfig.api.auditplan.controller,
+            apiConfig.api.auditplan.action.listauditfacility.path);
+
+    </script>
+    <script src="~/js/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/js/ckeditor/ckeditor.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>*@
+    @*<script>
+            CKEDITOR.replace('NoteCKEUp', {
+                height: 300,
+                disableObjectResizing: true
+            });
+        </script>*@
+}

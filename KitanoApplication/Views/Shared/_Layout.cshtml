@@ -1,0 +1,569 @@
+﻿@using RiskAssessment.Resource;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <title>Phần mềm kiểm toán nội bộ</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-k.png" />
+    <!-- Pignose Calender -->
+    <!-- Chartist -->
+    <link rel="stylesheet" href="~/plugins/chartist/css/chartist.min.css" />
+    <link rel="stylesheet" href="~/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css" />
+
+    <!-- Custom Stylesheet -->
+    <link href="~/css/context-menu.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="./plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link href="./plugins/sweetalert/css/sweetalert.css" rel="stylesheet" />
+    <link href="~/plugins/toastr/css/toastr.min.css" rel="stylesheet" />
+    <link href="~/css/styleswith.css" rel="stylesheet" />
+    <link href="~/js/select2/css/select2.css" rel="stylesheet" />
+    <script src="~/js/host.js" asp-append-version="true"></script>
+    <script src="~/js/customer.js" asp-append-version="true"></script>
+
+</head>
+<body>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    <div id="main-wrapper">
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <!-- Header -->
+        <div class="nav-header" style="position: fixed;">
+            <div class="brand-logo">
+                <a href="/Home" style="text-align: center;">
+                    <b class="logo-abbr"><img src="images/logo-k.png" alt="" /> </b>
+                    <span class="brand-title">
+                        <img src="images/Kitano-logo.png" alt="" style="border-width: 0px;width: 129px;height: 43px;" />
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!-- Top Navigation -->
+        <div class="header" style="z-index:10">
+            <div class="header-content clearfix">
+                @{await Html.RenderPartialAsync("_TopNavigation.cshtml");}
+
+            </div>
+        </div>
+        <!-- Menu Left-->
+        <div class="nk-sidebar" style="flex-direction: column; position: fixed; background: #544f90; max-height: 100%; display: flex;">
+            @{await Html.RenderPartialAsync("_MenuLeftRender.cshtml");}
+            <div class="footer" style="color: white;height: 5px;white-space: normal;font-size: 13px;line-height: initial;text-align: center;position: relative;">
+                <p style="padding-top: 15px;"> 2021 &copy; Tinhvan JSC. All rights reserved </p>
+            </div>
+        </div>
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <main role="main" class="pb-3" style=" margin-bottom: 25px; ">
+            <div class="content-body">
+                @RenderBody()
+            </div>
+        </main>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+    </div>
+    <div class="modal fade" id="modelRequest" role="dialog" aria-labelledby="modelRequestLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #544f90 !important ">
+                    <h5 class="modal-title" style="color:white">Gửi phê duyệt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmRequestModal">
+                        <input type="hidden" id="function_code" name="function_code" />
+                        <input type="hidden" id="function_name" name="function_name" />
+                        <input type="hidden" id="item_id" name="item_id" />
+                        <div class="form-group">
+                            <label for="item_name" class="col-form-label">Tên</label>
+                            <input class="form-control" id="item_name" name="item_name" disabled=disabled />
+                        </div>
+                        <div class="form-group">
+                            <label for="approver" class="col-form-label">Người duyệt</label><span class="text-danger">*</span>
+                            <select class="form-control" id="approver" name="approver">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-info" onclick="return $('#frmRequestModal').submit();">@Resource.SaveAndClose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modelApprovalAndRequest" role="dialog" aria-labelledby="modelApprovalAndRequestLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #544f90 !important ">
+                    <h5 class="modal-title" style="color:white">Phê duyệt </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmApprovalRequestModal">
+                        <input type="hidden" id="function_code" name="function_code" />
+                        <input type="hidden" id="function_name" name="function_name" />
+                        <input type="hidden" id="year" name="year" />
+                        <input type="hidden" id="item_id" name="item_id" />
+                        <div class="form-group" id="showTitle">
+                            <label class="col-form-label" style="font-style:italic;text-align:center;">Vui lòng chọn người duyệt để tiếp tục trình duyệt </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="item_name" class="col-form-label">Tên</label>
+                            <input class="form-control" id="item_name" name="item_name" disabled=disabled />
+                        </div>
+                        <div class="form-group">
+                            <label for="approver_level" class="col-form-label">Người duyệt </label><span class="text-danger">*</span>
+                            <select class="form-control" id="approver_level" name="approver_level">
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-info" onclick="return $('#frmApprovalRequestModal').submit();">@Resource.SaveAndClose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modelReject" role="dialog" aria-labelledby="modelRejectLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #544f90 !important ">
+                    <h5 class="modal-title" style="color:white">Từ chối phê duyệt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmRejectModal">
+                        <input type="hidden" id="function_code" name="function_code" />
+                        <input type="hidden" id="function_name" name="function_name" />
+                        <input type="hidden" id="item_id" name="item_id" />
+                        <div class="form-group">
+                            <label for="item_name" class="col-form-label">Tên </label>
+                            <input class="form-control" id="item_name" name="item_name" disabled=disabled />
+                        </div>
+                        <div class="form-group">
+                            <label for="reasonnote" class="col-form-label">Lý do từ chối</label><span class="text-danger">*</span>
+                            <textarea class="form-control" rows="3" id="reasonnote" name="reasonnote"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-info" onclick="return $('#frmRejectModal').submit();">@Resource.SaveAndClose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalChangeStatusApproval" role="dialog" aria-labelledby="modalChangeStatusApprovalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #544f90 !important ">
+                    <h5 class="modal-title" id="changeStatusLabel" style="color:white">Cập nhật trạng thái</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmChangeStatusModal">
+                        <input type="hidden" id="function_code" name="function_code" />
+                        <input type="hidden" id="function_name" name="function_name" />
+                        <input type="hidden" id="year" name="year" />
+                        <input type="hidden" id="item_id" name="item_id" />
+                        <div class="form-group">
+                            <label for="item_name" class="col-form-label">Tên </label>
+                            <input class="form-control" id="item_name" name="item_name" disabled=disabled />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="StatusChange" class="col-form-label">Trạng thái:</label><span class="text-danger">*</span>
+                            <select class="form-control required" onchange="showFileUpload()" id="StatusChange" name="StatusChange">
+                                <option value="3.1">Đã duyệt</option>
+                                <option value="3.2" selected=selected>Từ chối duyệt</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="shownote">
+                            <label for="reasonnote" class="col-form-label">Lý do từ chối</label><span class="text-danger">*</span>
+                            <textarea class="form-control" rows="3" id="reasonnote" name="reasonnote"></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="DateChangeStatus" class="col-form-label">Ngày duyệt/từ chối duyệt:</label><span class="text-danger">*</span>
+                            <input type="date" class="form-control required" id="DateChangeStatus" placeholder="Ngày duyệt/từ chối duyệt" />
+                        </div>
+                        <div class="form-group mt-3" id="fileUploadModal" style="display: none">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                    <button type="button" onclick="updateChangeStatusApproval()" class="btn btn-info">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modelCancelApproval" role="dialog" aria-labelledby="modelCancelApprovalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #544f90 !important ">
+                    <h5 class="modal-title" style="color:white">Hủy phê duyệt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmCancelApproval">
+                        <input type="hidden" id="function_code" name="function_code" />
+                        <input type="hidden" id="function_name" name="function_name" />
+                        <input type="hidden" id="item_id" name="item_id" />
+                        <div class="form-group">
+                            <label for="item_name" class="col-form-label">Tên </label>
+                            <input class="form-control" id="item_name" name="item_name" disabled=disabled />
+                        </div>
+                        <div class="form-group">
+                            <label for="reasonnote" class="col-form-label">Lý do hủy</label><span class="text-danger">*</span>
+                            <textarea class="form-control" rows="3" id="reasonnote" name="reasonnote"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-info" onclick="return $('#frmCancelApproval').submit();">@Resource.SaveAndClose</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--js loader-->
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    @*<script src="~/js/jquery-2.2.0.js"></script>
+        <script src="~/plugins/jquery/jquery.min.js"></script>*@
+    <script src="~/js/jquery/jquery/jquery.min.js"></script>
+    <script src="~/plugins/toastr/js/toastr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="./plugins/moment/moment.js"></script>
+    <script src="~/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <script src="./plugins/sweetalert/js/sweetalert.min.js"></script>
+    <script src="~/js/select2/js/select2.js"></script>
+    <script src="~/js/jsApp/api.construct.js" asp-append-version="true"></script>
+    <script src="~/js/kitano-custom.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    @*<script src="js/styleSwitcher.js"></script>*@
+    <!-- Pignose Calender -->
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script src="/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <script src="~/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="~/js/select2/js/select2.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/jquery-dateFormat/jquery.dateFormat.js"></script>
+    <script src="~/js/chart/apexcharts/apexcharts.min.js"></script>
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/api.construct.js" asp-append-version="true"></script>
+    <script>
+        var localizationResources = {
+            'Automation': '@Html.Raw(Resource.Automation)',
+            'Manual': '@Html.Raw(Resource.Manual)',
+            'Choose': '@Html.Raw(Resource.Choose)',
+            'Confirm': '@Html.Raw(Resource.Confirm)',
+            'Delete': '@Html.Raw(Resource.Delete)',
+            'Deleted': '@Html.Raw(Resource.Deleted)',
+            'Successfully': '@Html.Raw(Resource.Successfully)',
+            'Fail': '@Html.Raw(Resource.Fail)',
+            'SaveFail': '@Html.Raw(Resource.SaveFail)',
+            'SaveSuccess': '@Html.Raw(Resource.SaveSuccess)',
+            'DoDelete': '@Html.Raw(Resource.DoDelete)',
+            'AndSub': '@Html.Raw(Resource.AndSub)',
+            'Active': '@Html.Raw(Resource.Active)',
+            'InActive': '@Html.Raw(Resource.InActive)',
+            'Valid': '@Html.Raw(Resource.Valid)',
+            'Invalid': '@Html.Raw(Resource.Invalid)',
+            'Available': '@Html.Raw(Resource.Available)',
+            'Unavailable': '@Html.Raw(Resource.Unavailable)',
+            'Error500': '@Html.Raw(Resource.Error500)',
+            'Error404': '@Html.Raw(Resource.Error404)',
+            'Error401': '@Html.Raw(Resource.Error401)',
+            'Error102': '@Html.Raw(Resource.Error102)',
+            'Error103': '@Html.Raw(Resource.Error103)',
+            'Error104': '@Html.Raw(Resource.Error104)',
+            'Error105': '@Html.Raw(Resource.Error105)',
+            'Error106': '@Html.Raw(Resource.Error106)',
+            'Error107': '@Html.Raw(Resource.Error107)',
+            'Error108': '@Html.Raw(Resource.Error108)',
+            'Error109': '@Html.Raw(Resource.Error109)',
+            'Error010': '@Html.Raw(Resource.Error010)',
+            'Error011': '@Html.Raw(Resource.Error011)',
+            'Error003': '@Html.Raw(Resource.Error003)',
+            'Error008': '@Html.Raw(Resource.Error008)',
+            'Error007': '@Html.Raw(Resource.Error007)',
+            'Error006': '@Html.Raw(Resource.Error006)',
+            'Error009': '@Html.Raw(Resource.Error009)',
+            'Error201': '@Html.Raw(Resource.Error201)',
+            'Error202': '@Html.Raw(Resource.Error202)',
+            'Error203': '@Html.Raw(Resource.Error203)',
+            'Error204': '@Html.Raw(Resource.Error204)',
+            'Error205': '@Html.Raw(Resource.Error205)',
+            'Error206': '@Html.Raw(Resource.Error206)',
+            'Error301': '@Html.Raw(Resource.Error301)',
+            'Error302': '@Html.Raw(Resource.Error302)',
+            'Error303': '@Html.Raw(Resource.Error303)',
+            'Error800': '@Html.Raw(Resource.Error800)',
+            'Error601': '@Html.Raw(Resource.Error601)',
+            'Error002': '@Html.Raw(Resource.Error002)',
+            'CanNotNull': '@Html.Raw(Resource.CanNotNull)',
+            'PersonChargeNotSelected': '@Html.Raw(Resource.PersonChargeNotSelected)',
+            'Cancel': '@Html.Raw(Resource.Cancel)',
+            'Accept': '@Html.Raw(Resource.Accept)',
+            'ExcelAllow': '@Html.Raw(Resource.ExcelAllow)',
+            'ExcelError': '@Html.Raw(Resource.ExcelError)',
+            'Import': '@Html.Raw(Resource.Import)',
+            'From': '@Html.Raw(Resource.From)',
+            'To': '@Html.Raw(Resource.To)',
+            'InputInvalid': '@Html.Raw(Resource.InputInvalid)',
+            'Low': '@Html.Raw(Resource.Low)',
+            'Mid': '@Html.Raw(Resource.Mid)',
+            'High': '@Html.Raw(Resource.High)',
+            'Point': '@Html.Raw(Resource.Point)',
+            'ValueInvalid': '@Html.Raw(Resource.ValueInvalid)',
+            'Year': '@Html.Raw(Resource.Year)',
+            'HalfYear': '@Html.Raw(Resource.HalfYear)',
+            'Quarter': '@Html.Raw(Resource.Quarter)',
+            'Completed': '@Html.Raw(Resource.Completed)',
+            'InComplete': '@Html.Raw(Resource.InComplete)',
+            'AssessmentStageInvalid': '@Html.Raw(Resource.AssessmentStageInvalid)',
+            'FacilityInvalid': '@Html.Raw(Resource.FacilityInvalid)',
+            'ScoreBoardNotInit': '@Html.Raw(Resource.ScoreBoardNotInit)',
+            'NotHaveIssue': '@Html.Raw(Resource.NotHaveIssue)',
+            'ScoreBoardExists': '@Html.Raw(Resource.ScoreBoardExists)',
+            'ScoreBoardInited': '@Html.Raw(Resource.ScoreBoardInited)',
+            'InitNow': '@Html.Raw(Resource.InitNow)',
+            'AttachDenied': '@Html.Raw(Resource.AttachDenied)',
+            'BoardDone': '@Html.Raw(Resource.BoardDone)',
+            'Reason': '@Html.Raw(Resource.Reason)',
+            'UpdateSuccess': '@Html.Raw(Resource.UpdateSuccess)',
+            'InProcess': '@Html.Raw(Resource.InProcess)',
+            'YesAnswer': '@Html.Raw(Resource.YesAnswer)',
+            'NoAnswer': '@Html.Raw(Resource.NoAnswer)',
+            'Edit': '@Html.Raw(Resource.Edit)',
+            'DeletedSuccessfully': '@Html.Raw(Resource.DeletedSuccessfully)',
+            'UserGroupContaintUser': '@Html.Raw(Resource.UserGroupContaintUser)',
+            'Error': '@Html.Raw(Resource.Error)',
+            'Error101': '@Html.Raw(Resource.Error101)',
+            'PwCheckLower': '@Html.Raw(Resource.PwCheckLower)',
+            'PwCheckUpper': '@Html.Raw(Resource.PwCheckUpper)',
+            'PwCheckDigit': '@Html.Raw(Resource.PwCheckDigit)',
+            'PwCheckSpechars': '@Html.Raw(Resource.PwCheckSpechars)',
+            'MaillCheck': '@Html.Raw(Resource.MaillCheck)',
+            'HasWhiteSpace': '@Html.Raw(Resource.HasWhiteSpace)',
+            'HasDoubleWhiteSpace': '@Html.Raw(Resource.HasDoubleWhiteSpace)',
+            'NoSpechars': '@Html.Raw(Resource.NoSpechars)',
+            'Validate_Required': '@Html.Raw(Resource.Validate_Required)',
+            'Validate_MaxLength': '@Html.Raw(Resource.Validate_MaxLength)',
+            'Validate_MinLength': '@Html.Raw(Resource.Validate_MinLength)',
+            'Validate_Max': '@Html.Raw(Resource.Validate_Max)',
+            'Validate_Min': '@Html.Raw(Resource.Validate_Min)',
+            'DeletedFailed': '@Html.Raw(Resource.DeletedFailed)',
+            'Update': '@Html.Raw(Resource.Update)',
+            'Detail': '@Html.Raw(Resource.Detail)',
+            'UpdateStatusSuccess': '@Html.Raw(Resource.UpdateStatusSuccess)',
+            'UpdateStatusFailed': '@Html.Raw(Resource.UpdateStatusFailed)',
+            'ChangePasswordSuccess': '@Html.Raw(Resource.ChangePasswordSuccess)',
+            'ChangePasswordFailed': '@Html.Raw(Resource.ChangePasswordFailed)',
+            'ChangeWorkPlaceSuccess': '@Html.Raw(Resource.ChangeWorkPlaceSuccess)',
+            'ChangeWorkPlaceFailed': '@Html.Raw(Resource.ChangeWorkPlaceFailed)',
+            'CheckMatchPassword': '@Html.Raw(Resource.CheckMatchPassword)',
+            'PermissionOfRole': '@Html.Raw(Resource.PermissionOfRole)',
+            'UserManipulateData': '@Html.Raw(Resource.UserManipulateData)',
+            'NotStart': '@Html.Raw(Resource.NotStart)',
+            'ConfirmDisable': '@Html.Raw(Resource.ConfirmDisable)',
+            'NoDataImport': '@Html.Raw(Resource.NoDataImport)',
+            'RatingScaleDelConf': '@Html.Raw(Resource.RatingScaleDelConf)',
+            'AuditCycleDelCfn': '@Html.Raw(Resource.AuditCycleDelCfn)',
+            'Import000': '@Html.Raw(Resource.Import000)',
+            'ImportEmptyCode': '@Html.Raw(Resource.ImportEmptyCode)',
+            'ImportEmptyName': '@Html.Raw(Resource.ImportEmptyName)',
+            'ImportDublicateCode': '@Html.Raw(Resource.ImportDublicateCode)',
+            'ImportDublicateCodeInExcel': '@Html.Raw(Resource.ImportDublicateCodeInExcel)',
+            'ImportInvalidMail': '@Html.Raw(Resource.ImportInvalidMail)',
+            'ImportFacilityEmpty': '@Html.Raw(Resource.ImportFacilityEmpty)',
+            'ImportFacilityNotFound': '@Html.Raw(Resource.ImportFacilityNotFound)',
+            'ImportActivityEmpty': '@Html.Raw(Resource.ImportActivityEmpty)',
+            'ImportActivityNotFound': '@Html.Raw(Resource.ImportActivityNotFound)',
+            'ImportStatusNotValid': '@Html.Raw(Resource.ImportStatusNotValid)',
+            'ImportCodeControlEmpty': '@Html.Raw(Resource.ImportCodeControlEmpty)',
+            'ImportCodeControlExisting': '@Html.Raw(Resource.ImportCodeControlExisting)',
+            'ImportCodeControlExistingInImportFile': '@Html.Raw(Resource.ImportCodeControlExistingInImportFile)',
+            'ImportProcessNameEmpty': '@Html.Raw(Resource.ImportProcessNameEmpty)',
+            'ImportProcessNameNotFound': '@Html.Raw(Resource.ImportProcessNameNotFound)',
+            'ImportControlFrequencyEmpty': '@Html.Raw(Resource.ImportControlFrequencyEmpty)',
+            'ImportControlFrequencyNotFound': '@Html.Raw(Resource.ImportControlFrequencyNotFound)',
+            'ImportControlFormalEmpty': '@Html.Raw(Resource.ImportControlFormalEmpty)',
+            'ImportControlFormalNotFound': '@Html.Raw(Resource.ImportControlFormalNotFound)',
+            'ImportControlTypeEmpty': '@Html.Raw(Resource.ImportControlTypeEmpty)',
+            'ImportControlTypeNotFound': '@Html.Raw(Resource.ImportControlTypeNotFound)',
+            'ImportDescriptionEmpty': '@Html.Raw(Resource.ImportDescriptionEmpty)',
+
+            'ImportDocumentNameEmpty': '@Html.Raw(Resource.ImportDocumentNameEmpty)',
+            'ImportDocumentExisting': '@Html.Raw(Resource.ImportDocumentExisting)',
+            'EmailResponNotEmpty': '@Html.Raw(Resource.EmailResponNotEmpty)',
+            'ImportProvideDateLessThanCurrentDateError': '@Html.Raw(Resource.ImportProvideDateLessThanCurrentDateError)',
+            'FormatDateError': '@Html.Raw(Resource.FormatDateError)',
+            'DocNameExistingInImportFile': '@Html.Raw(Resource.ImportDocNameExistingInImportFile)',
+            'ImportDocNameExistingInImportFile': '@Html.Raw(Resource.ImportDocNameExistingInImportFile)',
+
+            'Import801': '@Html.Raw(Resource.Import801)',
+            'Import802': '@Html.Raw(Resource.Import802)',
+            'Import803': '@Html.Raw(Resource.Import803)',
+            'Import804': '@Html.Raw(Resource.Import804)',
+            'Import805': '@Html.Raw(Resource.Import805)',
+            'Import806': '@Html.Raw(Resource.Import806)',
+            'Import807': '@Html.Raw(Resource.Import807)',
+            'DelCfnAssessmentStage': '@Html.Raw(Resource.DelCfnAssessmentStage)',
+            'CreateSuccess': '@Html.Raw(Resource.CreateSuccess)',
+            'Error416': '@Html.Raw(Resource.Error416)',
+            'Error426': '@Html.Raw(Resource.Error426)',
+            'ResetSuccess': '@Html.Raw(Resource.ResetSuccess)',
+            'CensorshipSuccess': '@Html.Raw(Resource.CensorshipSuccess)',
+            'SendBrowse': '@Html.Raw(Resource.SendBrowse)',
+            'Error499': '@Html.Raw(Resource.Error499)',
+            'Error403': '@Html.Raw(Resource.Error403)',
+            'Error407': '@Html.Raw(Resource.Error407)',
+            'Used': '@Html.Raw(Resource.Used)',
+            'NotUsed': '@Html.Raw(Resource.NotUsed)',
+            'EvaluationNotInit': '@Html.Raw(Resource.EvaluationNotInit)',
+            'Error417': '@Html.Raw(Resource.Error417)',
+            'Error498': '@Html.Raw(Resource.Error498)',
+            'Error497': '@Html.Raw(Resource.Error497)',
+        };
+        var keyCurrentStage = 'CurrentStage';
+        function logout() {
+            $.ajax({
+                method: "GET",
+                url: "/login/logout",
+                success: function (result) {
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    window.location.href = "/login";
+                }
+            });
+        }
+        function ChangeLanguage(key_value) {
+            $.ajax({
+                method: "POST",
+                url: "/Login/ChangeLanguage",
+                data: { key_value: key_value },
+                success: function (data) {
+                    if (data.result) {
+                        location.reload();
+                    }
+                }
+            });
+        }
+        function ChangePass(id) {
+            if (id != 0) {
+                window.location.href = "/Users/Edit?id=" + id;
+            }
+            else {
+                toastr.error("Người dùng không tồn tại!", "Lỗi!", { progressBar: true });
+            }
+        }
+        function setToken(value) {
+            if (value != undefined && value.token != undefined)
+                sessionStorage['SessionToken'] = value.token;
+        }
+        function loginTest() {
+            callApi(apiConfig.api.authen.controller, apiConfig.api.authen.action.token.path, apiConfig.api.authen.action.token.method,
+                { 'user_name': 'admin' }, 'setToken');
+        }
+
+        if (sessionStorage['SessionToken'] == undefined || sessionStorage['SessionToken'] == null || sessionStorage['SessionToken'] == '')
+            loginTest();
+
+        var sessionStorage_transfer = function (event) {
+            if (!event) { event = window.event; } // ie suq
+            if (!event.newValue) return;          // do nothing if no value to work with
+            if (event.key == 'getSessionStorage') {
+                // another tab asked for the sessionStorage -> send it
+                localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+                // the other tab should now have it, so we're done with it.
+                localStorage.removeItem('sessionStorage'); // <- could do short timeout as well.
+            } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+                // another tab sent data <- get it
+                var data = JSON.parse(event.newValue);
+                for (var key in data) {
+                    sessionStorage.setItem(key, data[key]);
+                }
+            }
+        };
+
+        // listen for changes to localStorage
+        if (window.addEventListener) {
+            window.addEventListener("storage", sessionStorage_transfer, false);
+        } else {
+            window.attachEvent("onstorage", sessionStorage_transfer);
+        };
+
+        if (!sessionStorage.length) {
+            localStorage.setItem('getSessionStorage', 'foobar');
+            localStorage.removeItem('getSessionStorage', 'foobar');
+        };
+        function clickMenuCustom() {
+            localStorage.removeItem("id");
+            localStorage.removeItem("type");
+            localStorage.removeItem("strHeader");
+            localStorage.removeItem("status");
+            clearDetectCodeNew();
+        }
+        $(window).resize(function () {
+            var width = $(document).width();
+            if (width < 900) {
+                if (!$("#main-wrapper").hasClass('menu-toggle')) {
+                    $(".nav-control").click();
+                }
+            }
+            else {
+                $("#main-wrapper").removeClass('menu-toggle');
+                $(".hamburger").removeClass('is-active')
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>

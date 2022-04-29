@@ -1,0 +1,59 @@
+﻿@using RiskAssessment.Resource;
+
+@{
+    ViewData["Title"] = Resource.ScoreBoard;
+    Layout = "_Layout";
+    var now = DateTime.Now.Year;
+}
+<link rel="stylesheet" type="text/css" href="~/css/prepareAuditPlan.css?v=1.0">
+<style>
+    input[type="file"] {
+        color: unset !important;
+    }
+</style>
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">@Resource.Home</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:location.reload()">@Resource.ScoreBoard</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; " id="header-manager">
+            @Resource.ScoreBoard
+        </div>
+        <div class="card-body card-custom mt-2" id="card-index">
+            <div class="row" id="panelSearch">
+                <div class="col-12">
+                    <partial name="~/Views/ScoreBoard/partial/SearchPanel.cshtml" />
+                </div>
+            </div>
+            <div class="row mt-2 d-none" id="panel_obj_info">
+                <div class="col-12">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" style="border-bottom-color: rgb(47, 128, 237);">
+                            <a class="nav-link active show" data-toggle="tab" href="#panelScoreBoard">@Resource.ScoreBoard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panelObjectInfo">@Resource.ObjectInfo</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <partial name="~/Views/ScoreBoard/partial/PanelScoreBoard.cshtml" />
+                        <partial name="~/Views/ScoreBoard/partial/PanelObjectInfo.cshtml" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="~/Views/ScoreBoard/partial/RiskPoint.cshtml" />
+<partial name="~/Views/ScoreBoard/partial/RiskProportion.cshtml" />
+
+@section Scripts{
+    <script src="~/js/jsApp/scorecoard.js" type="text/javascript"></script>
+}

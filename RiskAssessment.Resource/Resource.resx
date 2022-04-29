@@ -1,0 +1,1708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="AndSub" xml:space="preserve">
+    <value> and all sub-items</value>
+  </data>
+  <data name="ApplyFor" xml:space="preserve">
+    <value>Apply for</value>
+  </data>
+  <data name="AuditCycle" xml:space="preserve">
+    <value>Audit Cycle</value>
+  </data>
+  <data name="AuditCycleManager" xml:space="preserve">
+    <value>Audit Cycle Manager</value>
+  </data>
+  <data name="AuditProcess" xml:space="preserve">
+    <value>Audit Process</value>
+  </data>
+  <data name="AuditProcessManagerment" xml:space="preserve">
+    <value>Audit Process Managerment</value>
+  </data>
+  <data name="Automation" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BOManagerment" xml:space="preserve">
+    <value>Business Operations Management</value>
+  </data>
+  <data name="BusinessActivity" xml:space="preserve">
+    <value>Business Operations</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CanNotNull" xml:space="preserve">
+    <value>Cannot be null</value>
+  </data>
+  <data name="CatAuditRequest" xml:space="preserve">
+    <value>Category Audit Request</value>
+  </data>
+  <data name="CategoryManagement" xml:space="preserve">
+    <value>Category Management</value>
+  </data>
+  <data name="CatDetectType" xml:space="preserve">
+    <value>Category Detect Type</value>
+  </data>
+  <data name="CatRiskLevel" xml:space="preserve">
+    <value>Category Risk Level</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ChangeWorkPlace" xml:space="preserve">
+    <value>Change Work Place</value>
+  </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateFormula" xml:space="preserve">
+    <value>Create new formula</value>
+  </data>
+  <data name="DateOfJoining" xml:space="preserve">
+    <value>Date Of Joining</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="DoDelete" xml:space="preserve">
+    <value>Do you want to delete: </value>
+  </data>
+  <data name="DownloadTemp" xml:space="preserve">
+    <value>Download template!</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Error401" xml:space="preserve">
+    <value>You need to log in to the system</value>
+  </data>
+  <data name="Error404" xml:space="preserve">
+    <value>Could not  find object to process</value>
+  </data>
+  <data name="Error500" xml:space="preserve">
+    <value>There was an error during processing</value>
+  </data>
+  <data name="ExcelAllow" xml:space="preserve">
+    <value>Only Excel files are allowed!</value>
+  </data>
+  <data name="ExcelError" xml:space="preserve">
+    <value>File excel has row(s) with error!\nSee column "Error" for more!</value>
+  </data>
+  <data name="Existed" xml:space="preserve">
+    <value>Existed</value>
+  </data>
+  <data name="Facility" xml:space="preserve">
+    <value>Facility</value>
+  </data>
+  <data name="FacilityManagerment" xml:space="preserve">
+    <value>Facilities Management</value>
+  </data>
+  <data name="FacilityType" xml:space="preserve">
+    <value>Facility Type</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Fail</value>
+  </data>
+  <data name="Formula" xml:space="preserve">
+    <value>Formula</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="InActive" xml:space="preserve">
+    <value>In-Active</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="LastOnlineAt" xml:space="preserve">
+    <value>Last Online At</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="ListUnitType" xml:space="preserve">
+    <value>ListUnitType</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Mid" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="Option" xml:space="preserve">
+    <value>Option</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PersonCharge" xml:space="preserve">
+    <value>Person Charge</value>
+  </data>
+  <data name="PersonChargeNotSelected" xml:space="preserve">
+    <value>The person in charge has not been selected</value>
+  </data>
+  <data name="Proportion" xml:space="preserve">
+    <value>Proportion</value>
+  </data>
+  <data name="RatingPoint" xml:space="preserve">
+    <value>Rating poing</value>
+  </data>
+  <data name="RiskIssue" xml:space="preserve">
+    <value>Risk Issue</value>
+  </data>
+  <data name="RiskIssueManagerment" xml:space="preserve">
+    <value>Risk Issue Managerment</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAndClose" xml:space="preserve">
+    <value>Save and Close</value>
+  </data>
+  <data name="SaveFail" xml:space="preserve">
+    <value>Save data failed</value>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Save data successfully</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchOption" xml:space="preserve">
+    <value>Search Option</value>
+  </data>
+  <data name="SelectFacility" xml:space="preserve">
+    <value>Select Facility</value>
+  </data>
+  <data name="SelectUserType" xml:space="preserve">
+    <value>Select User Type</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Successfully" xml:space="preserve">
+    <value>Successfully</value>
+  </data>
+  <data name="SystemManagement" xml:space="preserve">
+    <value>System Management</value>
+  </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>User Group</value>
+  </data>
+  <data name="UserGroupManagement" xml:space="preserve">
+    <value>User Group Management</value>
+  </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>User Type</value>
+  </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="WayToMark" xml:space="preserve">
+    <value>Way to mark</value>
+  </data>
+  <data name="WayToSum" xml:space="preserve">
+    <value>Way to sum</value>
+  </data>
+  <data name="NotUsed" xml:space="preserve">
+    <value>Not use</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="SystemManagements" xml:space="preserve">
+    <value>System Managements</value>
+  </data>
+  <data name="SystemParameter" xml:space="preserve">
+    <value>System Parameter</value>
+  </data>
+  <data name="RolesManagement" xml:space="preserve">
+    <value>Role Management</value>
+  </data>
+  <data name="ListSystemParameter" xml:space="preserve">
+    <value>List System Parameter</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Subsystem" xml:space="preserve">
+    <value>Subsystem</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="RatingScale" xml:space="preserve">
+    <value>Rating Scale</value>
+  </data>
+  <data name="RatingScaleManager" xml:space="preserve">
+    <value>Rating Scale Management</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="LowerLimit" xml:space="preserve">
+    <value>Lower limit</value>
+  </data>
+  <data name="Point" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="QualitativeConditions" xml:space="preserve">
+    <value>Conditions to achieve qualitative factors</value>
+  </data>
+  <data name="QuantitativeConditions" xml:space="preserve">
+    <value>Conditions to achieve quantitative factors</value>
+  </data>
+  <data name="RiskAssessmentScale" xml:space="preserve">
+    <value>Risk Assessment Scale</value>
+  </data>
+  <data name="RiskAssessmentScaleManager" xml:space="preserve">
+    <value>Risk Assessment Scale Management</value>
+  </data>
+  <data name="UpperLimit" xml:space="preserve">
+    <value>Upper limit</value>
+  </data>
+  <data name="ApplyForAll" xml:space="preserve">
+    <value>Apply for all</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="LowerCondition" xml:space="preserve">
+    <value>Lower condition</value>
+  </data>
+  <data name="UpperCondition" xml:space="preserve">
+    <value>Upper condition</value>
+  </data>
+  <data name="InputInvalid" xml:space="preserve">
+    <value>Input invalid!</value>
+  </data>
+  <data name="RiskLevel" xml:space="preserve">
+    <value>Risk level</value>
+  </data>
+  <data name="ValueInvalid" xml:space="preserve">
+    <value>Value invalid!</value>
+  </data>
+  <data name="RangeOfPoint" xml:space="preserve">
+    <value>Range of point</value>
+  </data>
+  <data name="AuditPlan" xml:space="preserve">
+    <value>Audit Plan</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AssessmentStage" xml:space="preserve">
+    <value>Assessment Stage</value>
+  </data>
+  <data name="AssessmentState" xml:space="preserve">
+    <value>Assessment State</value>
+  </data>
+  <data name="LastPullRequest" xml:space="preserve">
+    <value>Last Pull Request</value>
+  </data>
+  <data name="RiskAssessmentStage" xml:space="preserve">
+    <value>Risk Assessment Stage</value>
+  </data>
+  <data name="Stage" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="StageValue" xml:space="preserve">
+    <value>Stage Value</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="StatePullData" xml:space="preserve">
+    <value>State Pull Data</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="ExecutionTime" xml:space="preserve">
+    <value>Execution Time</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ListSystemLog" xml:space="preserve">
+    <value>List System Log</value>
+  </data>
+  <data name="Module" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="PerformTasks" xml:space="preserve">
+    <value>Perform Tasks</value>
+  </data>
+  <data name="SystemLog" xml:space="preserve">
+    <value>System Log</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="HalfYear" xml:space="preserve">
+    <value>Half a year</value>
+  </data>
+  <data name="Quarter" xml:space="preserve">
+    <value>Quarter</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="InComplete" xml:space="preserve">
+    <value>In-Complete</value>
+  </data>
+  <data name="ScoreBoard" xml:space="preserve">
+    <value>Score board</value>
+  </data>
+  <data name="GeneralInfo" xml:space="preserve">
+    <value>General Info</value>
+  </data>
+  <data name="ObjectInfo" xml:space="preserve">
+    <value>Object infomation</value>
+  </data>
+  <data name="AssessmentObject" xml:space="preserve">
+    <value>Assessmented Object</value>
+  </data>
+  <data name="AttachFile" xml:space="preserve">
+    <value>Attach file</value>
+  </data>
+  <data name="InternalRegulations" xml:space="preserve">
+    <value>Internal Regulations</value>
+  </data>
+  <data name="ITSystem" xml:space="preserve">
+    <value>IT System</value>
+  </data>
+  <data name="LawRegulations" xml:space="preserve">
+    <value>Law Regulations</value>
+  </data>
+  <data name="MainProcess" xml:space="preserve">
+    <value>Main process</value>
+  </data>
+  <data name="Outsourcing" xml:space="preserve">
+    <value>Outsourcing</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Strategy" xml:space="preserve">
+    <value>Strategy</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="AssessmentStageInvalid" xml:space="preserve">
+    <value>Assessment stage Invalid!</value>
+  </data>
+  <data name="FacilityInvalid" xml:space="preserve">
+    <value>Facility Invalid</value>
+  </data>
+  <data name="InitNow" xml:space="preserve">
+    <value>Initialization now</value>
+  </data>
+  <data name="NotHaveIssue" xml:space="preserve">
+    <value>Not have any risk issue</value>
+  </data>
+  <data name="ScoreBoardExists" xml:space="preserve">
+    <value>Scoreboard exists</value>
+  </data>
+  <data name="ScoreBoardInited" xml:space="preserve">
+    <value>Scoreboard has been initialization</value>
+  </data>
+  <data name="ScoreBoardNotInit" xml:space="preserve">
+    <value>Scoreboard not initialization</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="Refuse" xml:space="preserve">
+    <value>Refuse</value>
+  </data>
+  <data name="Waiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="AuditCreate" xml:space="preserve">
+    <value>Create Audit</value>
+  </data>
+  <data name="BrowseDate" xml:space="preserve">
+    <value>Approve Date</value>
+  </data>
+  <data name="AttachDenied" xml:space="preserve">
+    <value>Attach Denied</value>
+  </data>
+  <data name="BoardDone" xml:space="preserve">
+    <value>Scoreboard has been finished!</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="UnUse" xml:space="preserve">
+    <value>UnUse</value>
+  </data>
+  <data name="Use" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="Object" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="ControlList" xml:space="preserve">
+    <value>Control List</value>
+  </data>
+  <data name="PrepareAudit" xml:space="preserve">
+    <value>Prepare Audit</value>
+  </data>
+  <data name="ProceduresList" xml:space="preserve">
+    <value>Procedures list</value>
+  </data>
+  <data name="RiskPortfolio" xml:space="preserve">
+    <value>Risk Portfolio</value>
+  </data>
+  <data name="RiskAssessment" xml:space="preserve">
+    <value>Risk assessment</value>
+  </data>
+  <data name="Assessment" xml:space="preserve">
+    <value>Assessment</value>
+  </data>
+  <data name="AssessmentResult" xml:space="preserve">
+    <value>Assessment Result</value>
+  </data>
+  <data name="AuditedObject" xml:space="preserve">
+    <value>Audited Object</value>
+  </data>
+  <data name="AuditFacilities" xml:space="preserve">
+    <value>Audit Facilities</value>
+  </data>
+  <data name="AuditProgram" xml:space="preserve">
+    <value>Audit Program</value>
+  </data>
+  <data name="ConductAudit" xml:space="preserve">
+    <value>Conduct Audit</value>
+  </data>
+  <data name="GeneralParameter" xml:space="preserve">
+    <value>General Parameter</value>
+  </data>
+  <data name="PrepareAuditPlan" xml:space="preserve">
+    <value>Prepare Audit Plan</value>
+  </data>
+  <data name="ReportAudit" xml:space="preserve">
+    <value>Report Audit</value>
+  </data>
+  <data name="ReportAuditWork" xml:space="preserve">
+    <value>Report Audit Work</value>
+  </data>
+  <data name="WorkingPapers" xml:space="preserve">
+    <value>Working Papers</value>
+  </data>
+  <data name="Audit" xml:space="preserve">
+    <value>Audit</value>
+  </data>
+  <data name="AuditUnit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="PaperCode" xml:space="preserve">
+    <value>Paper Code</value>
+  </data>
+  <data name="WorkingPaper" xml:space="preserve">
+    <value>Working Paper</value>
+  </data>
+  <data name="ActivityCode" xml:space="preserve">
+    <value>Activity code</value>
+  </data>
+  <data name="ActivityName" xml:space="preserve">
+    <value>Activity name</value>
+  </data>
+  <data name="ActivityParent" xml:space="preserve">
+    <value>Activity root</value>
+  </data>
+  <data name="Error003" xml:space="preserve">
+    <value>Code had exists</value>
+  </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>Update successfully</value>
+  </data>
+  <data name="AuditDetect" xml:space="preserve">
+    <value>Audit Detect</value>
+  </data>
+  <data name="AuditDetectList" xml:space="preserve">
+    <value>Audit Detect List</value>
+  </data>
+  <data name="AuditObserve" xml:space="preserve">
+    <value>Audit Observe</value>
+  </data>
+  <data name="LevelRiskAssessment" xml:space="preserve">
+    <value>Level Risk Assessment</value>
+  </data>
+  <data name="AuditProposal" xml:space="preserve">
+    <value>Audit proposal</value>
+  </data>
+  <data name="EndStage" xml:space="preserve">
+    <value>End Stage</value>
+  </data>
+  <data name="ExportExcel" xml:space="preserve">
+    <value>Export Excel</value>
+  </data>
+  <data name="InProcess" xml:space="preserve">
+    <value>In-Process</value>
+  </data>
+  <data name="NoAnswer" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ScoreBoardResult" xml:space="preserve">
+    <value>Summary of the results of the risk assessment at the organization level</value>
+  </data>
+  <data name="YesAnswer" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AuditReason" xml:space="preserve">
+    <value>Audit reason</value>
+  </data>
+  <data name="AuditResult" xml:space="preserve">
+    <value>Audit Result</value>
+  </data>
+  <data name="LastAuditDate" xml:space="preserve">
+    <value>Last Audit Date</value>
+  </data>
+  <data name="LastAuditResult" xml:space="preserve">
+    <value>Last Audit Result</value>
+  </data>
+  <data name="RiskLevelEdit" xml:space="preserve">
+    <value>Risk Level Edit</value>
+  </data>
+  <data name="StageState" xml:space="preserve">
+    <value>Stage State</value>
+  </data>
+  <data name="AuditDate" xml:space="preserve">
+    <value>Audit date</value>
+  </data>
+  <data name="AuditEvent" xml:space="preserve">
+    <value>Audit event</value>
+  </data>
+  <data name="AuditHistory" xml:space="preserve">
+    <value>Audit history</value>
+  </data>
+  <data name="AuditLevel" xml:space="preserve">
+    <value>Audit level</value>
+  </data>
+  <data name="LastAssessment" xml:space="preserve">
+    <value>Last assessment</value>
+  </data>
+  <data name="LastAudit" xml:space="preserve">
+    <value>Last Audit</value>
+  </data>
+  <data name="ClassType" xml:space="preserve">
+    <value>Class type</value>
+  </data>
+  <data name="CurrentRiskLevel" xml:space="preserve">
+    <value>Current risk level</value>
+  </data>
+  <data name="ReasonForEdit" xml:space="preserve">
+    <value>Reason for editing</value>
+  </data>
+  <data name="ReasonPassAudit" xml:space="preserve">
+    <value>Reason for pass audit</value>
+  </data>
+  <data name="CreatorAt" xml:space="preserve">
+    <value>Creator At</value>
+  </data>
+  <data name="CreatorName" xml:space="preserve">
+    <value>Creator Name</value>
+  </data>
+  <data name="EditorAt" xml:space="preserve">
+    <value>Editor At</value>
+  </data>
+  <data name="EditorName" xml:space="preserve">
+    <value>Editor Name</value>
+  </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Request Type</value>
+  </data>
+  <data name="UserDistribution" xml:space="preserve">
+    <value>User Distribution</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Deleted Successfully</value>
+  </data>
+  <data name="UserGroupContaintUser" xml:space="preserve">
+    <value>User group contains users, you cannot delete</value>
+  </data>
+  <data name="PermissionOfRole" xml:space="preserve">
+    <value>Permission Of Role</value>
+  </data>
+  <data name="Error101" xml:space="preserve">
+    <value>The sum of the factor weights is greater than 100%. Please adjust the weights</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+  </data>
+  <data name="CreateUser" xml:space="preserve">
+    <value>Creat User</value>
+  </data>
+  <data name="DetectType" xml:space="preserve">
+    <value>Detect Type</value>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Update Date</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>Update User</value>
+  </data>
+  <data name="RoleName" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="Actived" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="ChangePasswordFailed" xml:space="preserve">
+    <value>Change password failed</value>
+  </data>
+  <data name="ChangePasswordSuccess" xml:space="preserve">
+    <value>Change password successfully</value>
+  </data>
+  <data name="ChangeWorkPlaceFailed" xml:space="preserve">
+    <value>Change workplace failed</value>
+  </data>
+  <data name="ChangeWorkPlaceSuccess" xml:space="preserve">
+    <value>Change workplace successfully</value>
+  </data>
+  <data name="CheckMatchPassword" xml:space="preserve">
+    <value>Password does not match</value>
+  </data>
+  <data name="DeletedFailed" xml:space="preserve">
+    <value>Deleted Unsuccessfully</value>
+  </data>
+  <data name="HasDoubleWhiteSpace" xml:space="preserve">
+    <value>Please enter data without consecutive spaces</value>
+  </data>
+  <data name="HasWhiteSpace" xml:space="preserve">
+    <value>Please enter data without spaces</value>
+  </data>
+  <data name="MaillCheck" xml:space="preserve">
+    <value>Please enter a valid email address</value>
+  </data>
+  <data name="NoSpechars" xml:space="preserve">
+    <value>Please enter data without special characters</value>
+  </data>
+  <data name="PwCheckDigit" xml:space="preserve">
+    <value>Password contains at least 1 digit</value>
+  </data>
+  <data name="PwCheckLower" xml:space="preserve">
+    <value>Password contains at least 1 lowercase letter</value>
+  </data>
+  <data name="PwCheckSpechars" xml:space="preserve">
+    <value>Password contains at least 1 special character</value>
+  </data>
+  <data name="PwCheckUpper" xml:space="preserve">
+    <value>Password contains at least 1 uppercase letter</value>
+  </data>
+  <data name="UpdateStatusFailed" xml:space="preserve">
+    <value>Update status failed</value>
+  </data>
+  <data name="UpdateStatusSuccess" xml:space="preserve">
+    <value>Update status successfully</value>
+  </data>
+  <data name="Validate_Max" xml:space="preserve">
+    <value>Please enter a value less than or equal to {0}</value>
+  </data>
+  <data name="Validate_MaxLength" xml:space="preserve">
+    <value>Please enter no more than {0} characters</value>
+  </data>
+  <data name="Validate_Min" xml:space="preserve">
+    <value>Please enter a value greater than or equal to {0}</value>
+  </data>
+  <data name="Validate_MinLength" xml:space="preserve">
+    <value>Please enter at least {0} characters</value>
+  </data>
+  <data name="Validate_Required" xml:space="preserve">
+    <value>This field is required</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Group Name</value>
+  </data>
+  <data name="UserManipulateData" xml:space="preserve">
+    <value>The user has manipulated the data on the system</value>
+  </data>
+  <data name="ActRelate" xml:space="preserve">
+    <value>Activity relate</value>
+  </data>
+  <data name="Error006" xml:space="preserve">
+    <value>Cannot delete item created by other!</value>
+  </data>
+  <data name="Error007" xml:space="preserve">
+    <value>Item in used. Cannot deleted!</value>
+  </data>
+  <data name="Error008" xml:space="preserve">
+    <value>Item has childs. Cannot deleted!</value>
+  </data>
+  <data name="FacRelate" xml:space="preserve">
+    <value>Facility relate</value>
+  </data>
+  <data name="ProcessCode" xml:space="preserve">
+    <value>Process code</value>
+  </data>
+  <data name="ProcessName" xml:space="preserve">
+    <value>Process name</value>
+  </data>
+  <data name="FacCode" xml:space="preserve">
+    <value>Facility code</value>
+  </data>
+  <data name="FacName" xml:space="preserve">
+    <value>Facility name</value>
+  </data>
+  <data name="FacParent" xml:space="preserve">
+    <value>Facility parent</value>
+  </data>
+  <data name="MucXepHang" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="PointFrom" xml:space="preserve">
+    <value>From point</value>
+  </data>
+  <data name="PointTo" xml:space="preserve">
+    <value>To point</value>
+  </data>
+  <data name="RiskIssueCode" xml:space="preserve">
+    <value>Risk Issue Code</value>
+  </data>
+  <data name="RiskIssueName" xml:space="preserve">
+    <value>Risk Issue name</value>
+  </data>
+  <data name="ConditionPoint" xml:space="preserve">
+    <value>Condition Point</value>
+  </data>
+  <data name="StageQar" xml:space="preserve">
+    <value>Stage value</value>
+  </data>
+  <data name="StageYear" xml:space="preserve">
+    <value>Year of stage</value>
+  </data>
+  <data name="ControlCode" xml:space="preserve">
+    <value>Control Code</value>
+  </data>
+  <data name="ControlName" xml:space="preserve">
+    <value>Control name</value>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="RelateActivation" xml:space="preserve">
+    <value>Relate Activation</value>
+  </data>
+  <data name="RelateUnit" xml:space="preserve">
+    <value>Relate Unit</value>
+  </data>
+  <data name="Error102" xml:space="preserve">
+    <value>The evaluation period cannot end when there is a subject that has not completed the evaluation.</value>
+  </data>
+  <data name="Error103" xml:space="preserve">
+    <value>Assessment stage ended.</value>
+  </data>
+  <data name="Error201" xml:space="preserve">
+    <value>Risk assessment scale of risk issue not declared.</value>
+    <comment>Yếu tố rủi ro chưa được khai báo thang điểm chấm điểm.</comment>
+  </data>
+  <data name="NotStart" xml:space="preserve">
+    <value>Not start</value>
+  </data>
+  <data name="NoDataImport" xml:space="preserve">
+    <value>No data in import file.</value>
+  </data>
+  <data name="Error800" xml:space="preserve">
+    <value>Erro during import!</value>
+  </data>
+  <data name="ImportEmptyCode" xml:space="preserve">
+    <value>Code cannot be empty!</value>
+  </data>
+  <data name="ImportEmptyName" xml:space="preserve">
+    <value>Name cannot be empty!</value>
+  </data>
+  <data name="ImportDublicateCode" xml:space="preserve">
+    <value>Code already exist in the database!</value>
+  </data>
+  <data name="ImportDublicateCodeInExcel" xml:space="preserve">
+    <value>There is one ore more row with the same code in your Excel file!</value>
+  </data>
+  <data name="ImportInvalidMail" xml:space="preserve">
+    <value>Invalid Email!</value>
+  </data>
+  <data name="ImportFacilityEmpty" xml:space="preserve">
+    <value>Facility cannot be empty!</value>
+  </data>
+  <data name="ImportFacilityNotFound" xml:space="preserve">
+    <value>There is no facility found that match given data!</value>
+  </data>
+  <data name="ImportActivityEmpty" xml:space="preserve">
+    <value>Activity cannot be empty!</value>
+  </data>
+  <data name="ImportActivityNotFound" xml:space="preserve">
+    <value>There is no activity found that match given data!</value>
+  </data>
+  <data name="ImportStatusNotValid" xml:space="preserve">
+    <value>Invalid status!</value>
+  </data>
+  <data name="Import801" xml:space="preserve">
+    <value>Code exists!</value>
+  </data>
+  <data name="Import802" xml:space="preserve">
+    <value>Code cannot be null!</value>
+  </data>
+  <data name="Import803" xml:space="preserve">
+    <value>Name cannot be null!</value>
+  </data>
+  <data name="Import804" xml:space="preserve">
+    <value>Parent code not exists!</value>
+  </data>
+  <data name="Import805" xml:space="preserve">
+    <value>Class type in-valid!</value>
+  </data>
+  <data name="Import806" xml:space="preserve">
+    <value>Object code and parent code is same!</value>
+  </data>
+  <data name="EditAssessmentResult" xml:space="preserve">
+    <value>Edit Assessment result</value>
+  </data>
+  <data name="Error104" xml:space="preserve">
+    <value>No assessment risk issue config</value>
+  </data>
+  <data name="Error105" xml:space="preserve">
+    <value>Not Rating scale for object risk point</value>
+  </data>
+  <data name="Import000" xml:space="preserve">
+    <value>Import successfully</value>
+  </data>
+  <data name="Import807" xml:space="preserve">
+    <value>Code exists in import file.</value>
+  </data>
+  <data name="IssueRefresh" xml:space="preserve">
+    <value>Refresh issue list</value>
+  </data>
+  <data name="BsCode" xml:space="preserve">
+    <value>Bussiness activity code</value>
+  </data>
+  <data name="BsName" xml:space="preserve">
+    <value>Bussiness activity name</value>
+  </data>
+  <data name="Error009" xml:space="preserve">
+    <value>Assessment stage ended. Cannot be deleted</value>
+  </data>
+  <data name="Error106" xml:space="preserve">
+    <value>There already exists a rating scale that coincides with the score range</value>
+  </data>
+  <data name="Error202" xml:space="preserve">
+    <value>Risk issue invalid</value>
+  </data>
+  <data name="Error203" xml:space="preserve">
+    <value>Lower condition invalid</value>
+  </data>
+  <data name="Error204" xml:space="preserve">
+    <value>Upper condition invalid</value>
+  </data>
+  <data name="Error205" xml:space="preserve">
+    <value>There already exists a risk assessment scale that coincides with the score range</value>
+  </data>
+  <data name="Error301" xml:space="preserve">
+    <value>Assessment stage invalid</value>
+  </data>
+  <data name="Error302" xml:space="preserve">
+    <value>Assessment stage has exists</value>
+  </data>
+  <data name="Error303" xml:space="preserve">
+    <value>Assessment stage ended</value>
+  </data>
+  <data name="AuditProProcess" xml:space="preserve">
+    <value>Audit process</value>
+  </data>
+  <data name="BsProcess" xml:space="preserve">
+    <value>Activity process</value>
+  </data>
+  <data name="FacProcess" xml:space="preserve">
+    <value>Facility process</value>
+  </data>
+  <data name="EditAssessmentProporsal" xml:space="preserve">
+    <value>Edit proporsal</value>
+  </data>
+  <data name="RiskScale" xml:space="preserve">
+    <value>Risk Scale</value>
+  </data>
+  <data name="EditAuditResult" xml:space="preserve">
+    <value>Edit audit result</value>
+  </data>
+  <data name="ConfirmDisable" xml:space="preserve">
+    <value>De-active item and all sub-items.</value>
+  </data>
+  <data name="ModifiedDate" xml:space="preserve">
+    <value>Modified date</value>
+  </data>
+  <data name="ModifiedUser" xml:space="preserve">
+    <value>Modified user</value>
+  </data>
+  <data name="FacApply" xml:space="preserve">
+    <value>Facility apply</value>
+  </data>
+  <data name="Error206" xml:space="preserve">
+    <value>Risk issue is invalid!</value>
+  </data>
+  <data name="Error601" xml:space="preserve">
+    <value>Rating scale has been using for score board!</value>
+  </data>
+  <data name="RatingScaleDelConf" xml:space="preserve">
+    <value>Do you want to delete this rating?</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Error107" xml:space="preserve">
+    <value>Invalid risk level</value>
+  </data>
+  <data name="Error109" xml:space="preserve">
+    <value>Proportion invalid</value>
+  </data>
+  <data name="AuditCycleDelCfn" xml:space="preserve">
+    <value>Do you want to delete this item?</value>
+  </data>
+  <data name="ParentIssue" xml:space="preserve">
+    <value>Parent Issue</value>
+  </data>
+  <data name="RiskIssueApplyFor" xml:space="preserve">
+    <value>Apply for</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>weight</value>
+  </data>
+  <data name="DelCfnAssessmentStage" xml:space="preserve">
+    <value>Do you want to del this item?</value>
+  </data>
+  <data name="Actual_Date" xml:space="preserve">
+    <value>Actual_Date</value>
+  </data>
+  <data name="Audited_Activity" xml:space="preserve">
+    <value>Audited_Activity</value>
+  </data>
+  <data name="Audited_Process" xml:space="preserve">
+    <value>Audited_Process</value>
+  </data>
+  <data name="Auditing_Censorship" xml:space="preserve">
+    <value>Auditing_Censorship</value>
+  </data>
+  <data name="Auditor" xml:space="preserve">
+    <value>Auditor</value>
+  </data>
+  <data name="Audit_Entity" xml:space="preserve">
+    <value>Audit_Entity</value>
+  </data>
+  <data name="Audit_Personnel" xml:space="preserve">
+    <value>Audit_Personnel</value>
+  </data>
+  <data name="Audit_Purpose" xml:space="preserve">
+    <value>Audit_Purpose</value>
+  </data>
+  <data name="Audit_Reason" xml:space="preserve">
+    <value>Audit_Reason</value>
+  </data>
+  <data name="Audit_Scope_OutSide" xml:space="preserve">
+    <value>Audit_Scope_OutSide</value>
+  </data>
+  <data name="Audit_Team_Leader" xml:space="preserve">
+    <value>Audit_Team_Leader</value>
+  </data>
+  <data name="Browsing_Status" xml:space="preserve">
+    <value>Browsing_Status</value>
+  </data>
+  <data name="Classify" xml:space="preserve">
+    <value>Classify</value>
+  </data>
+  <data name="Code_Audit" xml:space="preserve">
+    <value>Code_Audit</value>
+  </data>
+  <data name="Create_Audit" xml:space="preserve">
+    <value>Create_Audit</value>
+  </data>
+  <data name="Details_Audit" xml:space="preserve">
+    <value>Details_Audit</value>
+  </data>
+  <data name="End_Time" xml:space="preserve">
+    <value>End_Time</value>
+  </data>
+  <data name="Estimated_Working_Days" xml:space="preserve">
+    <value>Estimated_Working_Days</value>
+  </data>
+  <data name="Execution_Status" xml:space="preserve">
+    <value>Execution_Status</value>
+  </data>
+  <data name="Expected_Date" xml:space="preserve">
+    <value>Expected_Date</value>
+  </data>
+  <data name="Expected_Number_Audits" xml:space="preserve">
+    <value>Expected_Number_Audits</value>
+  </data>
+  <data name="General_Information" xml:space="preserve">
+    <value>General_Information</value>
+  </data>
+  <data name="Last_Audit_Time" xml:space="preserve">
+    <value>Last_Audit_Time</value>
+  </data>
+  <data name="List_Audit" xml:space="preserve">
+    <value>List_Audit</value>
+  </data>
+  <data name="Name_Audit" xml:space="preserve">
+    <value>Name_Audit</value>
+  </data>
+  <data name="Responsible_Person" xml:space="preserve">
+    <value>Responsible_Person</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Scope_Assignment" xml:space="preserve">
+    <value>Scope_Assignment</value>
+  </data>
+  <data name="Start_Time" xml:space="preserve">
+    <value>Start_Time</value>
+  </data>
+  <data name="Update_Audit" xml:space="preserve">
+    <value>Update_Audit</value>
+  </data>
+  <data name="Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Year_Audit" xml:space="preserve">
+    <value>Year_Audit</value>
+  </data>
+  <data name="AuditProcedures" xml:space="preserve">
+    <value>Audit Procedures</value>
+  </data>
+  <data name="BrowseUser" xml:space="preserve">
+    <value>BrowseUser</value>
+  </data>
+  <data name="ControlAssessment" xml:space="preserve">
+    <value>Control Assessment</value>
+  </data>
+  <data name="ControlDesignAssessment" xml:space="preserve">
+    <value>Control Design Assessment</value>
+  </data>
+  <data name="ControlDesignConclusion" xml:space="preserve">
+    <value>Control Design Conclusion</value>
+  </data>
+  <data name="ControlDesignObserve" xml:space="preserve">
+    <value>Control Design Observe</value>
+  </data>
+  <data name="InformationFor" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="ObserveCode" xml:space="preserve">
+    <value>Observe Code</value>
+  </data>
+  <data name="ObserveCreate" xml:space="preserve">
+    <value>Observe Create</value>
+  </data>
+  <data name="ObserveDescription" xml:space="preserve">
+    <value>Observe Description</value>
+  </data>
+  <data name="ObserveName" xml:space="preserve">
+    <value>Observe Name</value>
+  </data>
+  <data name="Perform" xml:space="preserve">
+    <value>Perform</value>
+  </data>
+  <data name="Reviewer" xml:space="preserve">
+    <value>Reviewer</value>
+  </data>
+  <data name="Risk" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="RiskCode" xml:space="preserve">
+    <value>Risk code</value>
+  </data>
+  <data name="RiskDescription" xml:space="preserve">
+    <value>Risk description</value>
+  </data>
+  <data name="RiskName" xml:space="preserve">
+    <value>Risk name</value>
+  </data>
+  <data name="SampleChoose" xml:space="preserve">
+    <value>Sample Description</value>
+  </data>
+  <data name="SampleDescription" xml:space="preserve">
+    <value>Sample</value>
+  </data>
+  <data name="WorkAndResult" xml:space="preserve">
+    <value>Work and result</value>
+  </data>
+  <data name="ControlEvidence" xml:space="preserve">
+    <value>Observe Evidence</value>
+  </data>
+  <data name="ControlWorkAssessment" xml:space="preserve">
+    <value>Control Work Assessment</value>
+  </data>
+  <data name="ControlWorkConclusion" xml:space="preserve">
+    <value>Control Work Conclusion</value>
+  </data>
+  <data name="ControlWorkObserve" xml:space="preserve">
+    <value>Control Work Observe</value>
+  </data>
+  <data name="ObserveCreateNew" xml:space="preserve">
+    <value>Observe Create New</value>
+  </data>
+  <data name="SendBrowse" xml:space="preserve">
+    <value>Send Browse</value>
+  </data>
+  <data name="PersonBrowse" xml:space="preserve">
+    <value>Person Browse</value>
+  </data>
+  <data name="CensorshipSuccess" xml:space="preserve">
+    <value>CensorshipSuccess</value>
+  </data>
+  <data name="CreateSuccess" xml:space="preserve">
+    <value>Create Success</value>
+  </data>
+  <data name="Error416" xml:space="preserve">
+    <value>Name already exists</value>
+  </data>
+  <data name="Error426" xml:space="preserve">
+    <value>Name cannot be left blank</value>
+  </data>
+  <data name="ResetSuccess" xml:space="preserve">
+    <value>ResetSuccess</value>
+  </data>
+  <data name="Error403" xml:space="preserve">
+    <value>This user does not have permission to delete data</value>
+  </data>
+  <data name="Error499" xml:space="preserve">
+    <value>The start date cannot be greater than the end date</value>
+  </data>
+  <data name="Error407" xml:space="preserve">
+    <value>There exists a unit to unit link to this unit type</value>
+  </data>
+  <data name="Evaluation_Criteria" xml:space="preserve">
+    <value>Evaluation Criteria</value>
+  </data>
+  <data name="Evaluation_Criteria_Code" xml:space="preserve">
+    <value>Criteria Code</value>
+  </data>
+  <data name="Evaluation_Criteria_Group" xml:space="preserve">
+    <value>Criteria Group</value>
+  </data>
+  <data name="Evaluation_Criteria_Header" xml:space="preserve">
+    <value>Evaluation Criteria	(KPI) quality audit</value>
+  </data>
+  <data name="Evaluation_Criteria_Name" xml:space="preserve">
+    <value>Criteria Name</value>
+  </data>
+  <data name="Evaluation_Criteria_Parent" xml:space="preserve">
+    <value>Criteria Parent</value>
+  </data>
+  <data name="Error002" xml:space="preserve">
+    <value>Point has exists</value>
+  </data>
+  <data name="Evaluation_Scale" xml:space="preserve">
+    <value>Evaluation_Scale</value>
+  </data>
+  <data name="Evaluation_Scale_Header" xml:space="preserve">
+    <value>Evaluation Scale</value>
+  </data>
+  <data name="Evaluation_Scale_Point" xml:space="preserve">
+    <value>Evaluation Point</value>
+  </data>
+  <data name="Evaluation_Standard" xml:space="preserve">
+    <value>Standard KTNB</value>
+  </data>
+  <data name="Evaluation_Standard_Code" xml:space="preserve">
+    <value>NumberNo.</value>
+  </data>
+  <data name="Evaluation_Standard_Header" xml:space="preserve">
+    <value>Evaluation Standard</value>
+  </data>
+  <data name="Evaluation_Standard_Request" xml:space="preserve">
+    <value>Request</value>
+  </data>
+  <data name="Evaluation_Standard_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Actual" xml:space="preserve">
+    <value>Actual</value>
+  </data>
+  <data name="Criteria" xml:space="preserve">
+    <value>Criteria</value>
+  </data>
+  <data name="CriteriaRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Evaluation" xml:space="preserve">
+    <value>Evaluation Audit</value>
+  </data>
+  <data name="Explain" xml:space="preserve">
+    <value>Explain</value>
+  </data>
+  <data name="Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="EvaluationNotInit" xml:space="preserve">
+    <value>EvaluationNotInit</value>
+  </data>
+  <data name="Compliance" xml:space="preserve">
+    <value>Compliance</value>
+  </data>
+  <data name="Evaluation_Compliance" xml:space="preserve">
+    <value>Evaluation Compliance</value>
+  </data>
+  <data name="Evaluation_Compliance_Header" xml:space="preserve">
+    <value>Evaluation Compliance</value>
+  </data>
+  <data name="Evaluation_Compliance_Plan" xml:space="preserve">
+    <value>Evaluation Plan</value>
+  </data>
+  <data name="Evaluation_Compliance_Reason" xml:space="preserve">
+    <value>Evaluation Reson</value>
+  </data>
+  <data name="Evaluation_Compliance_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Evaluation_Compliance_Reponsible" xml:space="preserve">
+    <value>Evaluation Reponsible</value>
+  </data>
+  <data name="Evaluation_Compliance_Time" xml:space="preserve">
+    <value>Evaluation Time</value>
+  </data>
+  <data name="Browsed" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Observe" xml:space="preserve">
+    <value>Observes</value>
+  </data>
+  <data name="Report_Year_Concerns" xml:space="preserve">
+    <value>Report_Year_Concerns</value>
+  </data>
+  <data name="Report_Year_Evaluation" xml:space="preserve">
+    <value>Report_Year_Evaluation</value>
+  </data>
+  <data name="Report_Year_Header_1" xml:space="preserve">
+    <value>Report_Year_Header_1</value>
+  </data>
+  <data name="Report_Year_Header_2" xml:space="preserve">
+    <value>Report_Year_Header_2</value>
+  </data>
+  <data name="Report_Year_Header_2_1" xml:space="preserve">
+    <value>Report_Year_Header_2.1</value>
+  </data>
+  <data name="Report_Year_Header_2_2" xml:space="preserve">
+    <value>Report_Year_Header_2.2</value>
+  </data>
+  <data name="Report_Year_Header_2_3" xml:space="preserve">
+    <value>Report_Year_Header_2.3</value>
+  </data>
+  <data name="Report_Year_Header_2_4" xml:space="preserve">
+    <value>Report_Year_Header_2.4</value>
+  </data>
+  <data name="Report_Year_Header_3" xml:space="preserve">
+    <value>Report_Year_Header_3</value>
+  </data>
+  <data name="Report_Year_Name" xml:space="preserve">
+    <value>Report_Year_Name</value>
+  </data>
+  <data name="Report_Year_Note" xml:space="preserve">
+    <value>Report_Year_Note</value>
+  </data>
+  <data name="Report_Year_Quality" xml:space="preserve">
+    <value>Report_Year_Quality</value>
+  </data>
+  <data name="Report_Year_Reason" xml:space="preserve">
+    <value>Report_Year_Reason</value>
+  </data>
+  <data name="Report_Year_Title" xml:space="preserve">
+    <value>Report_Year_Title</value>
+  </data>
+  <data name="Report_Year_Audit_Complete" xml:space="preserve">
+    <value>Audit Completed</value>
+  </data>
+  <data name="Report_Year_Audit_Plan" xml:space="preserve">
+    <value>Audit Plan</value>
+  </data>
+  <data name="Report_Year_Audit_Unexpected" xml:space="preserve">
+    <value>Audit Unexpected</value>
+  </data>
+  <data name="Report_Year_Complete_Date" xml:space="preserve">
+    <value>Report Completed Date</value>
+  </data>
+  <data name="Report_Year_Content_Request" xml:space="preserve">
+    <value>Content Request</value>
+  </data>
+  <data name="Report_Year_Current" xml:space="preserve">
+    <value>Current Year (N)</value>
+  </data>
+  <data name="Report_Year_Implementation" xml:space="preserve">
+    <value>Implementation</value>
+  </data>
+  <data name="Report_Year_Level_Audit" xml:space="preserve">
+    <value>Level Audit</value>
+  </data>
+  <data name="Report_Year_Number_Audit" xml:space="preserve">
+    <value>Nmber Observe</value>
+  </data>
+  <data name="Report_Year_Previous" xml:space="preserve">
+    <value>Previous Year (N-1)</value>
+  </data>
+  <data name="Report_Year_Risk_High" xml:space="preserve">
+    <value>Risk High</value>
+  </data>
+  <data name="Report_Year_Risk_Medium" xml:space="preserve">
+    <value>Risk Medium</value>
+  </data>
+  <data name="Report_Year_Summon_Observe" xml:space="preserve">
+    <value>Summon Observe</value>
+  </data>
+  <data name="Report_Year_Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Report_Year_Volatility" xml:space="preserve">
+    <value>Violatility</value>
+  </data>
+  <data name="Report_Yeart_Audit_High" xml:space="preserve">
+    <value>Audit risk high</value>
+  </data>
+  <data name="Report_Year_Audit_Medium" xml:space="preserve">
+    <value>Audit risk medium</value>
+  </data>
+  <data name="Report_Year_Beginning" xml:space="preserve">
+    <value>Beginning</value>
+  </data>
+  <data name="Report_Year_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Report_Year_Ending" xml:space="preserve">
+    <value>Ending</value>
+  </data>
+  <data name="Report_Year_Header_2_5" xml:space="preserve">
+    <value>Report_Year_Header_2.5</value>
+  </data>
+  <data name="Report_Year_Notclose" xml:space="preserve">
+    <value>Not close</value>
+  </data>
+  <data name="Report_Year_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Error417" xml:space="preserve">
+    <value>Have a relevant audit program</value>
+  </data>
+  <data name="Error108" xml:space="preserve">
+    <value>Audit cycle exist</value>
+  </data>
+  <data name="ObjectCode" xml:space="preserve">
+    <value>Object Code</value>
+  </data>
+  <data name="TotalPoint" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Error010" xml:space="preserve">
+    <value>Risk Issue is used in score board. Cannot be deleted!</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Error011" xml:space="preserve">
+    <value>Risk Issue has risk assesssment scale . Cannot be deleted!</value>
+  </data>
+  <data name="Error498" xml:space="preserve">
+    <value>The from date cannot be greater than the to date</value>
+  </data>
+  <data name="ProvideUnit" xml:space="preserve">
+    <value>Provide Unit</value>
+  </data>
+  <data name="Error497" xml:space="preserve">
+    <value>Report release date should not be less than field closing date</value>
+  </data>
+  <data name="ImportCodeControlExisting" xml:space="preserve">
+    <value>Code Control Exist!</value>
+  </data>
+  <data name="ImportCodeControlExistingInImportFile" xml:space="preserve">
+    <value>Code control exists in import file.</value>
+  </data>
+  <data name="ImportCodeControlEmpty" xml:space="preserve">
+    <value>Code control cannot be empty!</value>
+  </data>
+  <data name="ImportControlFormalEmpty" xml:space="preserve">
+    <value>Control Formal cannot be empty!</value>
+  </data>
+  <data name="ImportControlFormalNotFound" xml:space="preserve">
+    <value>There is no control formal found that match given data!</value>
+  </data>
+  <data name="ImportControlFrequencyNotFound" xml:space="preserve">
+    <value>There is no control frequency found that match given data!</value>
+  </data>
+  <data name="ImportControlFrequencyEmpty" xml:space="preserve">
+    <value>Control Frequency cannot be empty!</value>
+  </data>
+  <data name="ImportProcessNameEmpty" xml:space="preserve">
+    <value>Code process name cannot be empty!</value>
+  </data>
+  <data name="ImportProcessNameNotFound" xml:space="preserve">
+    <value>There is no process name found that match given data!</value>
+  </data>
+  <data name="ImportControlTypeEmpty" xml:space="preserve">
+    <value>Control type cannot be empty!</value>
+  </data>
+  <data name="ImportControlTypeNotFound" xml:space="preserve">
+    <value>There is no control type found that match given data!</value>
+  </data>
+  <data name="ImportDescriptionEmpty" xml:space="preserve">
+    <value>Description cannot be empty!</value>
+  </data>
+  <data name="ImportDocNameExistingInImportFile" xml:space="preserve">
+    <value>Document name already exist in file!</value>
+  </data>
+  <data name="ImportDocumentExisting" xml:space="preserve">
+    <value>Document name already exist in the database!</value>
+  </data>
+  <data name="ImportDocumentNameEmpty" xml:space="preserve">
+    <value>Document name cannot be empty!</value>
+  </data>
+  <data name="EmailResponNotEmpty" xml:space="preserve">
+    <value>Email cannot be empty!</value>
+  </data>
+  <data name="FormatDateError" xml:space="preserve">
+    <value>Format Date must be dd/MM/yyyy!</value>
+  </data>
+  <data name="ImportProvideDateLessThanCurrentDateError" xml:space="preserve">
+    <value>Provide date must be less than current date!</value>
+  </data>
+  <data name="ImportProvideDateNotEmpty" xml:space="preserve">
+    <value>Provide Date cannot be empty!</value>
+  </data>
+</root>

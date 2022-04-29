@@ -1,0 +1,163 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+    Layout = "_Layout";
+}
+<style>
+    /*        table#dashboard th, table#dashboard td {
+        border-top: 1px solid #96999c !important;
+        border-bottom: 1px solid #96999c !important;
+    }
+        table#dashboard{
+            border: 1px solid #96999c;
+        }*/
+</style>
+<div class="container-fluid">
+    @*<div class="row" style="zoom: 90%;position:inherit;">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-1">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Products Sold</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">4565</h2>
+                            <p class="text-white mb-0">Jan - March 2019</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-2">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Net Profit</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">$ 8541</h2>
+                            <p class="text-white mb-0">Jan - March 2019</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-3">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">New Customers</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">4565</h2>
+                            <p class="text-white mb-0">Jan - March 2019</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-4">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Customer Satisfaction</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">99%</h2>
+                            <p class="text-white mb-0">Jan - March 2019</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    
+    <div class="card">
+
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Theo dõi thực hiện các cuộc kiểm toán trong năm
+        </div>
+        <div class="card-body card-custom" style="margin-top:20px;">
+            <div class="col-md-12" style=" padding-left: 0px;">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2" for="filterFullName">
+                            Tìm kiếm
+                        </label>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="filterFullName" name="filterFullName" placeholder="Nhập thông tin tìm kiếm">
+                                <div class="input-group-append">
+                                    <a onclick="onSearch()"><span class="input-group-text" id="basic-addon2" style="background-color: #2f80ed; height: 38px !important;"><i class="fas fa-search" style="color:white"></i></span></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: inline-flex; flex-direction: row; justify-content: left; align-items: flex-end; width: 100%; margin-bottom: 10px; margin-top: 10px;">
+                <div style="width: 100%; display: inline-flex; flex-direction: row; justify-content: start; align-items: flex-end; ">
+                    <div style="width:16%;display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-info" style="width: 100%; height: 60px; background-color: rgba(250, 205, 145, 1) !important; color: black !important; border-color: rgba(250, 205, 145, 1) !important; white-space: inherit;" onclick="ClickShow(1);">Kế hoạch cuộc kiểm toán</button>
+                    </div>
+                    <div style="width: 16%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-info" style="width: 100%; height: 60px; background-color: rgba(129, 211, 248, 1) !important; color: black !important; border-color: rgba(129, 211, 248, 1) !important; white-space: inherit;" onclick="ClickShow(2);">Chương trình kiểm toán</button>
+                    </div>
+                    <div style="width: 16%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-outline" style="width: 100%; height: 60px; background-color: rgba(202, 249, 130, 1) !important; color: black !important; border-color: rgba(202, 249, 130, 1) !important; white-space: inherit; " onclick="ClickShow(3);">Giấy tờ làm việc</button>
+                    </div>
+                    <div style="width: 16%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-outline" style="width: 100%;height: 60px;background-color: rgb(252 93 93) !important;color: black !important;border-color: rgb(252 93 93) !important;white-space: inherit;" onclick="ClickShow(4);">Báo cáo kiểm toán</button>
+                    </div>
+                    <div style="width: 16%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-outline" style="width: 100%; height: 60px; background-color: rgb(238 151 13) !important; color: black !important; border-color: rgb(238 151 13) !important; white-space: inherit;" onclick="ClickShow(5);">Theo dõi kiến nghị</button>
+                    </div>
+                    <div style="width: 16%; display: inline-flex; flex-direction: row; justify-content: end; align-items: flex-end; padding: 0 5px 0 5px; ">
+                        <button type="button" class="btn btn-outline" style="width: 100%; height: 60px; background-color: rgb(112 250 13) !important; color: black !important; border-color: rgb(112 250 13) !important; white-space: inherit;" onclick="ClickShow(6);">Tình hình thực hiện</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive custom-table-scroll">
+                <table id="dashboard" class="table table-striped table-bordered dataTable">
+                    <thead class="contain-header-custom m-gray">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">#</th>
+                            <th scope="col">Năm</th>
+                            <th scope="col">Mã cuộc kiểm toán</th>
+                            <th scope="col">Tên cuộc kiểm toán</th>
+                            <th scope="col">Thời gian bắt đầu</th>
+                            <th scope="col">Thời gian kết thúc</th>
+                            <th scope="col">Người phụ trách</th>
+                            <th scope="col">Trạng thái hiện tại</th>
+                        </tr>
+                    </thead>
+                    <tbody class="contain-tbody-custom">
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-7"></div>
+                <div class="col-md-5">
+                    <partial name="_Pagination" />
+                </div>
+            </div            
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/home.js" type="text/javascript" asp-append-version="true"></script>
+    @*<script>
+        $("#dashboard").dataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "columnDefs": [
+                {
+                    "targets": [0, 1, 2, 3, 4, 5, 6, 7],
+                    "searchable": false,
+                    "orderable": false
+                }
+            ],
+            "order": [],
+        });
+        reCalculatPagesCustom(4);
+        viewBtnActionPage();
+    </script>*@
+}

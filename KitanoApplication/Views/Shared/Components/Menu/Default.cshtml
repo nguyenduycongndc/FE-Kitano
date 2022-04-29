@@ -1,0 +1,58 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@model List<KitanoApplication.Models.MenuModels>
+    <style>
+        ::marker {
+            font-weight: bolder;
+        }
+    </style>
+<ul class="metismenu" id="menu" style="padding-left: 8px; margin-top: 15px; margin-bottom: 30px;">
+    @if (Model != null && Model.Count() > 0)
+    {
+        var list_parent = Model.Where(a => a.ParentID == 0).OrderBy(a => a.SortOrder);
+        foreach (var item in list_parent)
+        {
+            var list_child = Model.Where(a => a.ParentID == item.Id).OrderBy(a => a.SortOrder);
+            <li style="padding: 3px 0 3px 0;">
+                @if (list_child.Count() == 0)
+                {
+                    <a onclick="clickMenuCustom()" href="@item.DefaultUrl" style="padding-left: 10px; border-radius: 10px 0 0 10px; ">
+                        <i class="@item.Icon" style="text-align:center"></i><span class="nav-text">@(UtilsConstant.GetMenuName().ContainsKey(item.CodeName) ? UtilsConstant.GetMenuName()[item.CodeName] : item.Description)</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="has-arrow" href="javascript:void()" aria-expanded="false" style="padding-left: 10px; border-radius: 10px 0 0 10px; ">
+                        <i class="@item.Icon" style="text-align:center"></i><span class="nav-text">@(UtilsConstant.GetMenuName().ContainsKey(item.CodeName) ? UtilsConstant.GetMenuName()[item.CodeName] : item.Description)</span>
+                    </a>
+                    <ul aria-expanded="false" id="sub-menu"  style="padding: 3px 0 3px 0;">
+                        @foreach (var item_child in list_child)
+                        {
+                            var list_child_ = Model.Where(a => a.ParentID == item_child.Id).OrderBy(a => a.SortOrder);
+                            <li style="padding: 3px 0 3px 0;">
+                                @if (list_child_.Count() == 0)
+                                {
+                                    <a onclick="clickMenuCustom()" style="border-radius: 10px 0 0 10px; " href="@item_child.DefaultUrl">@(UtilsConstant.GetMenuName().ContainsKey(item_child.CodeName) ? UtilsConstant.GetMenuName()[item_child.CodeName] : item_child.Description)</a>
+                                }
+                                else
+                                {
+                                    <a class="has-arrow"  style="border-radius: 10px 0 0 10px; " href="javascript:void()" aria-expanded="false">
+                                        @(UtilsConstant.GetMenuName().ContainsKey(item_child.CodeName) ? UtilsConstant.GetMenuName()[item_child.CodeName] : item_child.Description)
+                                    </a>
+                                    <ul aria-expanded="false" style="padding: 3px 0 3px 0;">
+                                        @foreach (var item_child_ in list_child_)
+                                        {
+                                            <li style="padding: 3px 0 3px 0;"><a onclick="clickMenuCustom()" style="border-radius: 10px 0 0 10px; " href="@item_child_.DefaultUrl">@(UtilsConstant.GetMenuName().ContainsKey(item_child_.CodeName) ? UtilsConstant.GetMenuName()[item_child_.CodeName] : item_child_.Description)</a></li>
+                                        }
+                                    </ul>
+                                }
+
+                            </li>
+                        }
+                    </ul>
+                }
+
+            </li>
+        }
+    }
+</ul>

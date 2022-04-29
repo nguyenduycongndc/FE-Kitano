@@ -1,0 +1,119 @@
+﻿@using RiskAssessment.Resource;
+@using KitanoApplication.DataAccess;
+@{
+    var now = DateTime.Now.Year;
+}
+<div class="form-row">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-year" class="col-md-3 col-form-label required">@Resource.StageYear</label>
+            <div class="col-md-9">
+                <input type="number" value="@now" @*min="@(now-1)" max="@(now+4)"*@ onchange="checkNumberValue(this)" class="form-control" id="search-year" aria-label="search-year" aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search_apply_for" class="col-md-3 col-form-label">@Resource.ClassType</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search_apply_for">
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage" class="col-md-3 col-form-label required">@Resource.AssessmentStage</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage" onchange="changeStageValue()">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">@Resource.Year</option>
+                    <option value="2">@Resource.HalfYear</option>
+                    <option value="3">@Resource.Quarter</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-object" class="col-md-3 col-form-label">@Resource.Object</label>
+            <div class="col-md-9">
+                <input type="text" maxlength="254" id="search-object" class="form-control" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-3 col-form-label">@Resource.StageValue</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-stage_value">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-3 col-form-label">@Resource.RiskScale</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-risk_level">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="3">@Resource.High</option>
+                    <option value="2">@Resource.Mid</option>
+                    <option value="1">@Resource.Low</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-3 col-form-label">@Resource.StageState</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-state">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="0">@Resource.InProcess</option>
+                    <option value="1">@Resource.Completed</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="form-group row">
+            <label for="search-stage_value" class="col-md-3 col-form-label">@Resource.AuditProposal</label>
+            <div class="col-md-9">
+                <select class="form-control" id="search-proposal">
+                    <option value="" selected="selected">--@Resource.Choose--</option>
+                    <option value="1">@Resource.YesAnswer</option>
+                    <option value="0">@Resource.NoAnswer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row mt-3">
+    <div class="col-md-12 mb-3 btn-search-custom">
+        <div style="text-align:center; ">
+            <a href="javascript:void(0)" class="btn btn-info" onclick="onSearch()"><i class="fa fa-search" aria-hidden="true"></i> @Resource.Search</a>
+            @if (Utils.IsCheckPemission("M_ART", "PER_EXPORT"))
+            {
+                <button class="btn btn-info" onclick="onExportExcel()"><i class="fa fa-download" aria-hidden="true"></i> @Resource.ExportExcel</button>
+            }
+
+            @if (Utils.IsCheckPemission("M_ART", "PER_CLOSE_ASSESSMENT"))
+            {
+                <button class="btn btn-info" onclick="onEndStage()"><i class="fa fa-flag-checkered" aria-hidden="true"></i> @Resource.EndStage</button>
+            }
+
+        </div>
+    </div>
+</div>

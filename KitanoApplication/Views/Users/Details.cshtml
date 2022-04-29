@@ -1,0 +1,177 @@
+﻿@using RiskAssessment.Resource;
+@model UsersModifyModels
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.User</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">@Resource.Detail</li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            @Resource.Detail
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-users-detail" class="form-valide" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="FullNameDetail">
+                                    @Resource.FullName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="FullNameDetail" name="FullNameDetail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="EmailDetail">
+                                    Email
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="EmailDetail" name="EmailDetail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="UserNameDetail">
+                                    @Resource.UserName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="UserNameDetail" name="UserNameDetail" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="LastOnlineDetail">
+                                    @Resource.LastOnlineAt
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="LastOnlineDetail" name="LastOnlineDetail" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="UserTypeDetail">
+                                    @Resource.UserType
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="UserTypeDetail" name="UserTypeDetail">
+                                        <option value="1">Kiểm toán nội bộ</option>
+                                        <option value="2">Đơn vị được kiểm toán</option>
+                                        <option value="3">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="UsersGroupDetail">
+                                    @Resource.UserGroup
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="UsersGroupDetail" name="UsersGroupDetail">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="DeparmentDetail">
+                                    @Resource.Facility
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="DeparmentDetail" name="DeparmentDetail">
+                                       
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="DateOfJoiningDetail">
+                                    @Resource.DateOfJoining
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="DateOfJoiningDetail" name="DateOfJoiningDetail" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="RoleIdDetail">
+                                    @Resource.Role
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="RoleIdDetail" name="RoleIdDetail">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="StatusDetail">
+                                    @Resource.Status
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="StatusDetail" name="StatusDetail">
+                                        <option value="0">Dừng hoạt động</option>
+                                        <option value="1" selected="selected">Đang hoạt động</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline-danger" style="width:100%" onclick="window.history.go(-1); return false;">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div hidden>
+    <partial name="_Pagination" />
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/systemusers.js" asp-append-version="true" type="text/javascript"></script>
+    <script type="text/javascript">
+        getParents();
+        setTimeout(function () {  fnGetData(2, getUrlVars()["id"]);}, 300);
+        callApi_multipleselect("UsersGroupDetail", "Chọn nhóm người dùng..", apiConfig.api.host_user_service, apiConfig.api.systemusergroup.controller, apiConfig.api.systemusergroup.action.select.path);
+        callApi_multipleselect("RoleIdDetail", "Chọn vai trò..", apiConfig.api.host_user_service, apiConfig.api.roles.controller, apiConfig.api.roles.action.select.path);
+       
+        $("input").prop("readonly", true);
+        $("select").prop("disabled", true);
+    </script>
+}

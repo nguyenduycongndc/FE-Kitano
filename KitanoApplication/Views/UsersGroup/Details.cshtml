@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Nhóm người dùng</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Chi tiết</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Chỉnh sửa
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-users" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                <input type="hidden" id="Id" name="Id" value="0" />
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="FullName">
+                                    Tên nhóm <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="FullName" name="FullName" placeholder="Nhập tên nhóm...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Status">
+                                    Trạng Thái
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control selectpicker" id="Status">
+                                        <option value="0">Dừng hoạt động</option>
+                                        <option value="1" selected="selected">Đang hoạt động</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2" for="Description">
+                                    Mô tả <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-10">
+                                    <textarea class="form-control" rows="4" id="Description" name="Description" style="margin-top: 0px; margin-bottom: 0px; height: 76px;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="UserType">
+                                    Phân bố người dùng <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control selectpicker" id="ListUsers" name="ListUsers"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="RoleId">
+                                    Vai trò
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="RoleId" name="RoleId" placeholder="Chọn vai trò..">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%;">
+                        <div style="width: 50%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start;">
+                            <div style="width: 24%; display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline-danger" style="width:100%" onclick="window.history.back();">Quay lại</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div hidden>
+    <partial name="_Pagination" />
+</div>
+@section Scripts{
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/systemusersgroup.js" type="text/javascript" asp-append-version="true"></script>
+    <script type="text/javascript">
+        callApi_multipleselect("ListUsers", "Chọn người dùng..");
+        fnGetData(getUrlVars()["id"]);
+        $("input").prop("readonly", true);
+        $("select").prop("disabled", true);
+    </script>
+
+}

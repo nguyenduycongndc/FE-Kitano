@@ -1,0 +1,112 @@
+﻿@using RiskAssessment.Resource;
+@model UsersModifyModels
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row page-titles mx-0" style="padding-bottom: 0px; ">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">@Resource.User</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Cập nhật mật khẩu</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header bg-primary text-white" style=" font-size: 1rem; ">
+            Cập nhật mật khẩu
+        </div>
+        <div class="card-body card-custom">
+            <form id="form-change-pass-users" class="form-valide" action="#" method="post" style="margin-top: 20px;">
+                @Html.HiddenFor(p => p.Id)
+                <div class="row">
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="UserName">
+                                    @Resource.UserName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="FullName">
+                                    @Resource.FullName
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>                   
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Password">
+                                    Mật khẩu cũ <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="password" class="form-control" id="PasswordOld" name="PasswordOld">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Password">
+                                    Mật khẩu mới <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="password" class="form-control" id="PasswordNew" name="PasswordNew">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-4" for="Password">
+                                    Xác nhận lại mất khẩu <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword">
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                    <div class="col-md-12" style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; width: 100%;">
+                        <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start;">
+                            <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="submit" class="btn btn-info" style="width:100%">@Resource.Save</button>
+                            </div>
+                            <div style="display: inline-flex; flex-direction: row; justify-content: center; align-items: flex-start; padding: 0 5px 0 5px; ">
+                                <button type="button" class="btn btn-outline" style="width:100%" onclick="window.history.back();">@Resource.Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div hidden>
+    <partial name="_Pagination" />
+</div>
+@section Scripts{
+    <script src="~/js/jsApp/common.js" asp-append-version="true"></script>
+    <script src="~/js/constant.js" asp-append-version="true"></script>
+    <script src="~/js/jsApp/systemusers.js" asp-append-version="true" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            fnGetData(3,getUrlVars()["id"]);
+        }, 300);
+       
+    </script>
+}

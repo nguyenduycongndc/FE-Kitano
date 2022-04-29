@@ -1,0 +1,151 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    /* color: #fff;*/
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 10px; /* Vertically center the text there */
+}
+
+.col-action {
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+    .col-action a {
+        margin: 0px 5px;
+        color: black;
+    }
+
+        .col-action a.icon-delete :hover {
+            color: red !important;
+        }
+
+        .col-action a.icon-default :hover {
+            color: blue !important;
+        }
+
+        .col-action a.icon-disabled :hover {
+            color: gray !important;
+        }
+
+.row-parent {
+    font-weight: bold;
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+.modal-full {
+    padding: 0 !important;
+}
+
+    .modal-full > .modal-dialog {
+        min-width: 100% !important;
+        min-height: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+    }
+
+        .modal-full > .modal-dialog > .modal-content {
+            min-height: 100% !important;
+        }
+
+.btn-action-group {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: flex-start;
+    width: 100%;
+}
+
+    .btn-action-group > div {
+        width: 10rem;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 5px 0 5px;
+    }
+
+        .btn-action-group > div > button {
+            width: 100%
+        }
+
+/*.nav-tabs .nav-link.active {
+    background-color: #2f81ed;
+    color: white;
+}*/
+
+#card-upload table td{
+    white-space: pre-line;
+}

@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var host = Context.Session.GetString("host_menu_service");
+    var token = Context.Session.GetString("SessionToken");
+}
+@*<script src="~/js/jquery/jquery/jquery.min.js"></script>
+<script src="~/js/host.js" asp-append-version="true"></script>
+<script src="~/js/constant.js" asp-append-version="true"></script>
+<script>
+    $( document ).ready(function() {
+        setTimeout(
+            $.ajax({
+                type: "GET",
+                url: apiConfig.api.host_user_service + apiConfig.api.roles.controller + apiConfig.api.roles.action.rendermenu.path,
+                headers: { 'Authorization': getSessionToken() },
+                success: function (data) {
+                    fetch('/Login/MenuComponent', {
+                            method: 'POST',
+                            headers: {
+                              'Accept': 'application/json',
+                              'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data),
+                    })
+                    .then(response => response.json())
+                    .then(result => {    
+                        //sessionStorage['MenuData'] = result;
+                    })
+                }
+            });       
+        ,5000);
+        
+    });  
+</script>*@
+<div class="nk-nav-scroll" id="menuGenerate">
+    @await Component.InvokeAsync("Menu")
+</div>
+
